@@ -3,10 +3,175 @@ title: "Assignment 1"
 date: "2022-10-01"
 ---
 
-This is a template example qmd output page. You may see an example R code below.
+Download necessary libraries
 
-```{r}
-set.seed(1)
-vec1 <- sample(LETTERS,5)
-paste0(vec1,collapse="")
+```{r libraries, echo=FALSE, warning=FALSE, include=FALSE}
+
+library(readxl)
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+library(tidyr)
+library(scales)
+library(knitr)
 ```
+
+## Key Takeaways
+
+- Top 5 sectors that are invested most in terms of total value are **Ecommerce enabler, Delivery and Logistics, Gaming, SaaS and Fintech** respectively.
+- Most of the investment deals are sealed during period from **June 2021 to August 2021**
+- Regarding the distribution of investments made to the target companies, first 4 startups attracted a total of 3.4 billion USD approximately and accounted for 89.2% of all investments made in 2021.
+- The share of local investors, with a total investment value of 273 million USD, is limited and almost all of the investments are made by foreign investors with a total of 3.5 billion USD. 
+- Most of the investors by far the most are from Turkey in terms of number of deals, where as United States, UAE and Qatar are leading countries of investors in terms of value invested in startups.
+
+### Data Preparation
+
+```{r data_prep, warning=FALSE}
+
+#read data
+startup <- read_excel("/Users/yigitonay/Desktop/calton/MEF/BDA_503/startup/startup_deals_2021.xlsx")
+
+# Convert spaces to underscore in column names
+colnames(startup) <- startup %>% 
+  colnames() %>% 
+  gsub(" ", "_", .)
+
+# Convert data type of numeric columns from string to numeric
+startup$`Deal_Value_(USD)` <- as.numeric(startup$`Deal_Value_(USD)`)
+
+# Convert percentages to numeric format
+startup$`Stake_(%)` <- startup$`Stake_(%)` %>% 
+  gsub("\\..*", "", .) %>% 
+  gsub("%", "", .) %>% 
+  as.numeric()
+
+# Convert string date to date format
+startup$Announcement_Date <- startup$Announcement_Date %>% 
+  paste("01", ., sep = "") %>% 
+  parse_date_time(., "dmy")
+
+# New columns for months and years
+startup$year <- year(startup$Announcement_Date)
+startup$month <- month(startup$Announcement_Date)
+str(startup)
+```
+
+### Determining top 5 sectors in terms of total value of investments
+
+```{r, warning=FALSE}
+
+top_5_sector_table <- startup %>% 
+  group_by(Sector) %>% 
+  summarize(total_value = sum(`Deal_Value_(USD)`, na.rm = TRUE)) %>% 
+  arrange(desc(total_value)) %>% 
+  top_n(n = 5)
+
+kable(top_5_sector_table)
+
+```
+
+### Visualising monthly sectoral investments to startups in 2021
+
+Sectors are grouped as top 5 sectors and the rest is labeled as **"others"**
+```{r, warning=FALSE}
+
+top_5_sector <- top_5_sector_table %>% 
+  select(Sector) %>% 
+  pull()
+print(top_5_sector)
+
+# Create a new variable that classify sectors other than top_5 as others
+startup <- startup %>% 
+  mutate(group_sector = case_when(Sector %in% top_5_sector ~ Sector,!(Sector %in% top_5_sector) ~ "Other"))
+
+# Plotting monthly investment values of top_5_sectors and others
+startup %>% 
+  group_by(Announcement_Date, group_sector) %>% 
+  summarise(value = sum(`Deal_Value_(USD)`, na.rm = TRUE)) %>% 
+  ggplot(aes(x = Announcement_Date, y = value, fill = group_sector)) +
+  geom_col() +
+  scale_y_continuous(labels = comma_format(big.mark = ".",
+                                           decimal.mark = ","))
+```
+
+### Distribution of investments among target companies.
+```{r, warning=FALSE}
+# Obtain percentages of Target_companies in terms of value invested in 2021
+# Classify companies as first 4 companies and others
+
+startup_percent <- startup %>% 
+  group_by(Target_Company) %>% 
+  summarize(Total_Deal_Value = sum(`Deal_Value_(USD)`, na.rm = TRUE)) %>% 
+  mutate(percent = Total_Deal_Value / sum(Total_Deal_Value) * 100) %>% 
+  arrange(desc(percent)) %>% 
+  mutate(group_company = case_when(Target_Company %in% Target_Company[1:4] ~ Target_Company, !(Target_Company %in% Target_Company[1:4])~"others"))
+
+startup_percent[1:4,] %>% 
+  summarize(Total_Value = sum(Total_Deal_Value), percentage = sum(percent))
+
+# Draw a column chart according to group framework given above
+
+startup_percent_group <- startup_percent %>% 
+  group_by(group_company) %>% 
+  summarize(group_percent = sum(percent, na.rm = TRUE)) %>% 
+  arrange(desc(group_percent)) %>% 
+  mutate(cum = cumsum(group_percent)) 
+
+startup_percent_group
+
+startup_percent_group %>% 
+  ggplot(aes(x = group_company, y = group_percent)) +
+  geom_col(fill = "blue")
+```
+### Analysing Country Profile of Investors
+```{r, warning=FALSE}
+# Generate Unique id for each transaction and calculate number of investors as a new column "count"
+id_count <- startup %>% 
+  mutate(id = 1:dim(startup)[1]) %>% 
+  separate_rows(`Investor's_Origin`, sep = ", ") %>% 
+  group_by(id) %>% 
+  summarize(id_count = n()) %>% 
+  pull(id_count)
+
+# Add id_count to startup
+startup_country <- startup %>% 
+  mutate(id_count) %>% 
+  separate_rows(`Investor's_Origin`, sep = ", ") %>% 
+  mutate(new_value = `Deal_Value_(USD)` / id_count) %>% 
+  mutate(country_name = gsub(pattern = "\r\n", replacement = "", x = .$`Investor's_Origin`)) %>% 
+  filter(country_name != "NA")
+
+startup_country_graph <- startup_country %>%   
+  group_by(country_name) %>% 
+  summarise(country_total = sum(new_value, na.rm = TRUE), country_number = n()) %>%
+  arrange(desc(country_total)) %>% 
+  print()
+
+# Graph investment deals and number of transactions of highest 10 countries in 2021
+startup_country_graph %>% 
+  top_n(n = 5) %>% 
+  ggplot(aes(x = country_name, y = country_total)) +
+  geom_col()
+
+startup_country_graph %>% 
+  top_n(n = 5) %>% 
+  ggplot(aes(x = country_name, y = country_number)) +
+  geom_col() 
+```
+
+### Categorizing investors as locals and foreigners
+```{r, warning=FALSE}
+# Categorizing investors as foreign and local
+# Type of investors (local/foreign) as two subgroups is obtained and used for monthly investment deals.
+local_foreign <- startup_country %>% 
+  group_by(Announcement_Date) %>% 
+  summarize(local = sum(new_value[country_name == "Turkey"], na.rm = TRUE), foreign = sum(new_value[country_name != "Turkey"], na.rm = TRUE))
+
+local_foreign %>% 
+  pivot_longer(cols = c(local, foreign),names_to = "type", values_to = "deal_value") %>% 
+  ggplot(aes(x = type, y = deal_value)) + 
+  geom_col() +  
+  scale_y_continuous(labels = comma_format(big.mark = ".",
+                                           decimal.mark = ","))
+```
+
