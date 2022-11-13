@@ -43,7 +43,6 @@ colnames(startup) <- startup %>%
 
 # Convert data type of numeric columns from string to numeric
 startup$`Deal_Value_(USD)` <- as.numeric(startup$`Deal_Value_(USD)`)
-
 # Convert percentages to numeric format
 startup$`Stake_(%)` <- startup$`Stake_(%)` %>% 
   gsub("\\..*", "", .) %>% 
@@ -62,6 +61,7 @@ str(startup)
 
 ```
 
+
 ### Determining top 5 sectors in terms of total value of investments
 
 ```{r, warning=FALSE}
@@ -72,7 +72,8 @@ top_5_sector_table <- startup %>%
   arrange(desc(total_value)) %>% 
   top_n(n = 5)
 
-kable(top_5_sector_table)
+
+kable(top_5_sector_table, format.args = list(big.mark = "."))
 
 ```
 
@@ -97,7 +98,8 @@ startup %>%
   ggplot(aes(x = Announcement_Date, y = value, fill = group_sector)) +
   geom_col() +
   scale_y_continuous(labels = comma_format(big.mark = ".",
-                                           decimal.mark = ","))
+                                           decimal.mark = ","))+
+  ggtitle("Monthly Total Investment Amounts / Sector in USD ")
 ```
 
 ### Distribution of investments among target companies.
@@ -127,7 +129,8 @@ startup_percent_group
 
 startup_percent_group %>% 
   ggplot(aes(x = group_company, y = group_percent)) +
-  geom_col(fill = "blue")
+  geom_col(fill = "blue")+
+  ggtitle("Top 4 Companies With The Largest Total Investment & Shares ")
 ```
 ### Analysing Country Profile of Investors
 ```{r, warning=FALSE}
@@ -153,16 +156,22 @@ startup_country_graph <- startup_country %>%
   arrange(desc(country_total)) %>% 
   print()
 
-# Graph investment deals and number of transactions of highest 10 countries in 2021
+# Graph investment deals and number of transactions for top 10 investor origin countries in 2021
 startup_country_graph %>% 
   top_n(n = 5) %>% 
   ggplot(aes(x = country_name, y = country_total)) +
-  geom_col()
-
+  geom_col()+
+  scale_y_continuous(labels = comma_format(big.mark = ".",
+                                           decimal.mark = ","))+
+  ggtitle("Top Investing Countries (Total Amount in USD) ")
+  
 startup_country_graph %>% 
   top_n(n = 5) %>% 
   ggplot(aes(x = country_name, y = country_number)) +
-  geom_col() 
+  geom_col() +
+  scale_y_continuous(labels = comma_format(big.mark = ".",
+                                           decimal.mark = ","))+
+  ggtitle("Top Investing Countries (# of Investments) ")
 ```
 
 ### Categorizing investors as locals and foreigners
@@ -178,6 +187,7 @@ local_foreign %>%
   ggplot(aes(x = type, y = deal_value)) + 
   geom_col() +  
   scale_y_continuous(labels = comma_format(big.mark = ".",
-                                           decimal.mark = ","))
+                                           decimal.mark = ","))+
+  ggtitle(" Domestic vs. Foreign Investment Amounts ")
 ```
 

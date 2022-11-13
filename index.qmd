@@ -1,6 +1,11 @@
 # Introduction {.unnumbered}
 
 <!-- DO NOT TOUCH THIS PART EXCEPT FILLING YOUR OR YOUR GROUP's NAME -->
+![](https://scitechdaily.com/images/Time-Space-Cosmos-Concept.jpg?ezimgfmt=ng%3Awebp%2Fngcb2%2Frs%3Adevice%2Frscb2-1){fig-align="center" width="390"} 
+
+[Image Source](https://scitechdaily.com/does-time-exist-how-do-we-know/)
+
+
 
 This progress journal covers Time and Space's work during their term at [BDA 503 Fall 2022](https://mef-bda503.github.io/fall22/).
 
