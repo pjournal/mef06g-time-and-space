@@ -1,11 +1,16 @@
 ---
 title: "Assignment 1"
-date: "2022-10-01"
+date: "2022-11-13"
 ---
+Our dataset is a list of startups getting investments from a variety of domestic and international investors. Data is gathered from KPMG and 212’s [Turkish Startup Investments Review 2021 report](https://assets.kpmg/content/dam/kpmg/tr/pdf/2022/03/turkish-startup-investments-review-2021.pdf).
+
+[Startup Deals 2021 Data](https://github.com/berkorbay/datasets/raw/master/startup_deals/startup_deals_2021.xlsx)
+
+
 
 Download necessary libraries
 
-```{r libraries, echo=FALSE, warning=FALSE, include=FALSE}
+```{r,output=FALSE, warning=FALSE}
 
 library(readxl)
 library(dplyr)
@@ -29,7 +34,7 @@ library(knitr)
 ```{r data_prep, warning=FALSE}
 
 #read data
-startup <- read_excel("/Users/yigitonay/Desktop/calton/MEF/BDA_503/startup/startup_deals_2021.xlsx")
+startup <- read_excel("C:/Users/yener/OneDrive/Documents/startup_deals_2021.xlsx")
 
 # Convert spaces to underscore in column names
 colnames(startup) <- startup %>% 
@@ -54,6 +59,7 @@ startup$Announcement_Date <- startup$Announcement_Date %>%
 startup$year <- year(startup$Announcement_Date)
 startup$month <- month(startup$Announcement_Date)
 str(startup)
+
 ```
 
 ### Determining top 5 sectors in terms of total value of investments
