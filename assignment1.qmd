@@ -19,6 +19,7 @@ library(ggplot2)
 library(tidyr)
 library(scales)
 library(knitr)
+library(viridis)
 ```
 
 ## Key Takeaways
@@ -107,7 +108,8 @@ startup %>%
   geom_col() +
   scale_y_continuous(labels = comma_format(big.mark = ".",
                                            decimal.mark = ",")) +
-  labs(x = "Deal Announcement Date", y = "Total Deal Value (USD)", title = "Monthly Investments to Startups in 2021") + 
+  labs(x = "Deal Announcement Date", y = "Total Deal Value (USD)") + 
+  scale_fill_viridis(discrete=TRUE) +
   theme_bw()
 ```
 
@@ -187,7 +189,7 @@ startup_country_graph %>%
   coord_flip() +  
   scale_y_continuous(labels = comma_format(big.mark = ".",
                                            decimal.mark = ",")) +
-  labs(y = "Total Value of Deals", title = "Value of Startup Deals in 2021 (per Investor's Origin Country)") +    
+  labs(y = "Total Value of Deals", title = "Value of Startup Deals in 2021 (per Investor's Origin Country)") +
   theme_bw()
 
 startup_country_graph %>% 
@@ -195,7 +197,7 @@ startup_country_graph %>%
   mutate(Country=factor(country_name, country_name)) %>%
   top_n(n = 10, wt = country_number) %>% 
   ggplot(aes(x = Country, y = country_number)) +
-  geom_col(fill="#69b3a2") + 
+  geom_col(stat="identity", fill="#69b3a2") + 
   coord_flip() +
   labs(y = "Number of Deals", title = "Number of Startup Deals in 2021 (per Investor's Origin Country") +
   theme_bw()
