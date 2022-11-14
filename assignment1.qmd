@@ -246,6 +246,7 @@ ggplot(startup_country_graph) +
   ) +
   geom_map(map = world_map, aes(map_id = country_name, fill = country_total/1e6), size = 0.25) +
   scale_fill_gradient(low = "#56B1F7", high = "#132B43", name = "Investments\n(Million USD)") +
-  expand_limits(x = world_map$long, y = world_map$lat) + labs(title = "Geographic Distribution of Startup Investments in 2021")
+  expand_limits(x = world_map$long, y = world_map$lat) + labs(title = "Geographic Distribution of Startup Investments in 2021") +
+  theme(axis.text = element_blank(), axis.title = element_blank(), axis.ticks = element_blank())
 ```
 
