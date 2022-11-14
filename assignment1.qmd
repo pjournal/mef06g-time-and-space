@@ -7,6 +7,19 @@ Our dataset is a list of startups getting investments from a variety of domestic
 [Startup Deals 2021 Data](https://github.com/berkorbay/datasets/raw/master/startup_deals/startup_deals_2021.xlsx)
 
 
+## Key Takeaways
+
+- Top 5 sectors that are invested most in terms of total value are **Ecommerce enabler, Delivery and Logistics, Gaming, SaaS and Fintech** respectively.
+
+- Most of the investment deals are sealed during period from **June 2021 to August 2021**
+
+- Regarding the distribution of investments made to the target companies, first 4 startups, namely **Trendyol, Getir, Hepsiburada and Dream Games**,  attracted a total of 3.4 billion USD approximately and accounted for **89.2% of all investments made in 2021**.
+
+- The share of **local investors**, with a total investment value of **273 million USD**, is limited and majority of the investments are made by **foreign investors** with a total value of **3.5 billion USD**. 
+
+- Most of the investors by far the most are from **Turkey** in terms of *number of deals*, where as **United States, UAE and Qatar** are leading countries of investors in terms of *value* invested in startups.
+
+## Data Wrangling and Exploratory Data Analysis
 
 Download necessary libraries
 
@@ -22,18 +35,6 @@ library(knitr)
 library(viridis)
 library(maps)
 ```
-
-## Key Takeaways
-
-- Top 5 sectors that are invested most in terms of total value are **Ecommerce enabler, Delivery and Logistics, Gaming, SaaS and Fintech** respectively.
-
-- Most of the investment deals are sealed during period from **June 2021 to August 2021**
-
-- Regarding the distribution of investments made to the target companies, first 4 startups, namely **Trendyol, Getir, Hepsiburada and Dream Games**,  attracted a total of 3.4 billion USD approximately and accounted for **89.2% of all investments made in 2021**.
-
-- The share of **local investors**, with a total investment value of **273 million USD**, is limited and majority of the investments are made by **foreign investors** with a total value of **3.5 billion USD**. 
-
-- Most of the investors by far the most are from **Turkey** in terms of *number of deals*, where as **United States, UAE and Qatar** are leading countries of investors in terms of *value* invested in startups.
 
 ### Data Preparation
 
@@ -70,7 +71,7 @@ str(startup)
 
 ```
 
-### Determining top 5 sectors in terms of total value of investments
+### Determining Top 5 Sectors in terms of Total Value of Investments
 
 Table below shows the top 5 sectors of startups that are invested most in total value in 2021. 
 
@@ -86,7 +87,7 @@ kable(top_5_sector_table)
 
 ```
 
-### Visualising monthly sectoral investments to startups in 2021
+### Visualising Monthly Sectoral Investments to Startups in 2021
 
 Sectors are grouped as top 5 sectors and the remaining sectors are labeled as **"Others"**. As can be seen from the bar plot of monthly distribution of value of total investments, highest value of deals are sealed and announced during summer in 2021.
 
@@ -114,7 +115,7 @@ startup %>%
   theme_bw()
 ```
 
-### Distribution of investments across target companies.
+### Distribution of Investments Across Target Companies.
 
 The deals accomplished in 2021 is concentrated on a few startups. 4 highest valued deals sum up to almost 90% of total value of all deals in 2021.
 
