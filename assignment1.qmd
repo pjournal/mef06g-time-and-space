@@ -20,6 +20,7 @@ library(tidyr)
 library(scales)
 library(knitr)
 library(viridis)
+library(maps)
 ```
 
 ## Key Takeaways
@@ -30,7 +31,7 @@ library(viridis)
 
 - Regarding the distribution of investments made to the target companies, first 4 startups, namely **Trendyol, Getir, Hepsiburada and Dream Games**,  attracted a total of 3.4 billion USD approximately and accounted for **89.2% of all investments made in 2021**.
 
-- The share of local investors, with a total investment value of 273 million USD, is limited and majority of the investments are made by foreign investors with a total value of 3.5 billion USD. 
+- The share of **local investors**, with a total investment value of **273 million USD**, is limited and majority of the investments are made by **foreign investors** with a total value of **3.5 billion USD**. 
 
 - Most of the investors by far the most are from **Turkey** in terms of *number of deals*, where as **United States, UAE and Qatar** are leading countries of investors in terms of *value* invested in startups.
 
@@ -146,13 +147,12 @@ startup_percent_group %>%
   mutate(group_company = factor(group_company, group_company)) %>% 
   ggplot(aes(x = group_company, y = group_percent)) +
   geom_col(fill = "#69b3a2") + 
-  labs(x = "Target Company", y = "Percentage (%)", title = "Concentration of Investments among Startups in 2021") +
+  labs(x = "Target Company", y = "Percentage (%)", title = "Distribution of Startup Investments among Target Companies in 2021") +
   theme_bw()
   
 ```
 
-
-### Analysing Country Profile of Investors
+### Categorizing Investors as Locals and Foreigners
 
 Equal partnership in investments is assumed if number of investors is higher than one in a particular deal. 
 
@@ -173,11 +173,42 @@ startup_country <- startup %>%
   mutate(country_name = gsub(pattern = "\r\n", replacement = "", x = .$`Investor's_Origin`)) %>% 
   filter(country_name != "NA")
 
+# Categorizing investors as foreign and local
+# Type of investors (local/foreign) as two subgroups is obtained and used for monthly investment deals.
+local_foreign <- startup_country %>% 
+  group_by(Announcement_Date) %>% 
+  summarize(local = sum(new_value[country_name == "Turkey"], na.rm = TRUE), foreign = sum(new_value[country_name != "Turkey"], na.rm = TRUE))
+
+local_foreign %>% 
+  pivot_longer(cols = c(local, foreign),names_to = "type", values_to = "deal_value") %>% 
+  group_by(type) %>% 
+  summarize(Sum = sum(deal_value)) %>% 
+  print()
+
+local_foreign %>% 
+  pivot_longer(cols = c(local, foreign),names_to = "type", values_to = "deal_value") %>% 
+  ggplot(aes(x = type, y = deal_value)) + 
+  geom_col(stat="identity", fill="#69b3a2") +  
+  scale_y_continuous(labels = comma_format(big.mark = ".",
+                                           decimal.mark = ",")) +
+  labs(x = "Investor Type", y = "Total Value of Deals", title = "Domestic vs. Foreign Investment") +
+  theme_bw()
+```
+
+
+
+### Analysing Country Profile of Investors
+
+Although number of deals accomplished by local investors is higher than foreigners, total value of transactions completed by foreign investors is 12 times higher than locals.
+
+```{r warning=FALSE}
 startup_country_graph <- startup_country %>%   
   group_by(country_name) %>% 
   summarise(country_total = sum(new_value, na.rm = TRUE), country_number = n()) %>%
   arrange(desc(country_total)) %>% 
   print()
+
+startup_country_graph$country_name[startup_country_graph$country_name == "UAE"] = "United Arab Emirates"
 
 # Graph investment deals and number of transactions of highest 10 countries in 2021
 startup_country_graph %>% 
@@ -199,26 +230,22 @@ startup_country_graph %>%
   ggplot(aes(x = Country, y = country_number)) +
   geom_col(stat="identity", fill="#69b3a2") + 
   coord_flip() +
-  labs(y = "Number of Deals", title = "Number of Startup Deals in 2021 (per Investor's Origin Country") +
+  labs(y = "Number of Deals", title = "Number of Startup Deals in 2021 (per Investor's Origin Country)") +
   theme_bw()
-```
 
-### Categorizing Investors as Locals and Foreigners
+## Alternative way to demonstrate geographic variation of investments into startups
 
-```{r, warning=FALSE}
-# Categorizing investors as foreign and local
-# Type of investors (local/foreign) as two subgroups is obtained and used for monthly investment deals.
-local_foreign <- startup_country %>% 
-  group_by(Announcement_Date) %>% 
-  summarize(local = sum(new_value[country_name == "Turkey"], na.rm = TRUE), foreign = sum(new_value[country_name != "Turkey"], na.rm = TRUE))
+world_map <- map_data("world")
+world_map <- subset(world_map, region != "Antarctica")
 
-local_foreign %>% 
-  pivot_longer(cols = c(local, foreign),names_to = "type", values_to = "deal_value") %>% 
-  ggplot(aes(x = type, y = deal_value)) + 
-  geom_col(stat="identity", fill="#69b3a2") +  
-  scale_y_continuous(labels = comma_format(big.mark = ".",
-                                           decimal.mark = ",")) +
-  labs(x = "Investor Type", y = "Total Value of Deals", title = "Domestic vs. Foreign Investment") +
-  theme_bw()
+# World heat map plot
+ggplot(startup_country_graph) +
+  geom_map(
+    dat = world_map, map = world_map, aes(map_id = region),
+    fill = "white", color = "#7f7f7f", size = 0.25
+  ) +
+  geom_map(map = world_map, aes(map_id = country_name, fill = country_total/1e6), size = 0.25) +
+  scale_fill_gradient(low = "#56B1F7", high = "#132B43", name = "Investments\n(Million USD)") +
+  expand_limits(x = world_map$long, y = world_map$lat) + labs(title = "Geographic Distribution of Startup Investments in 2021")
 ```
 

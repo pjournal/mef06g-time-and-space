@@ -199,8 +199,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#determining-top-5-sectors-in-terms-of-total-value-of-investments" id="toc-determining-top-5-sectors-in-terms-of-total-value-of-investments" class="nav-link" data-scroll-target="#determining-top-5-sectors-in-terms-of-total-value-of-investments"><span class="toc-section-number">1.1.2</span>  Determining top 5 sectors in terms of total value of investments</a></li>
   <li><a href="#visualising-monthly-sectoral-investments-to-startups-in-2021" id="toc-visualising-monthly-sectoral-investments-to-startups-in-2021" class="nav-link" data-scroll-target="#visualising-monthly-sectoral-investments-to-startups-in-2021"><span class="toc-section-number">1.1.3</span>  Visualising monthly sectoral investments to startups in 2021</a></li>
   <li><a href="#distribution-of-investments-across-target-companies." id="toc-distribution-of-investments-across-target-companies." class="nav-link" data-scroll-target="#distribution-of-investments-across-target-companies."><span class="toc-section-number">1.1.4</span>  Distribution of investments across target companies.</a></li>
-  <li><a href="#analysing-country-profile-of-investors" id="toc-analysing-country-profile-of-investors" class="nav-link" data-scroll-target="#analysing-country-profile-of-investors"><span class="toc-section-number">1.1.5</span>  Analysing Country Profile of Investors</a></li>
-  <li><a href="#categorizing-investors-as-locals-and-foreigners" id="toc-categorizing-investors-as-locals-and-foreigners" class="nav-link" data-scroll-target="#categorizing-investors-as-locals-and-foreigners"><span class="toc-section-number">1.1.6</span>  Categorizing Investors as Locals and Foreigners</a></li>
+  <li><a href="#categorizing-investors-as-locals-and-foreigners" id="toc-categorizing-investors-as-locals-and-foreigners" class="nav-link" data-scroll-target="#categorizing-investors-as-locals-and-foreigners"><span class="toc-section-number">1.1.5</span>  Categorizing Investors as Locals and Foreigners</a></li>
+  <li><a href="#analysing-country-profile-of-investors" id="toc-analysing-country-profile-of-investors" class="nav-link" data-scroll-target="#analysing-country-profile-of-investors"><span class="toc-section-number">1.1.6</span>  Analysing Country Profile of Investors</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -242,7 +242,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridis)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="key-takeaways" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="key-takeaways"><span class="header-section-number">1.1</span> Key Takeaways</h2>
@@ -250,7 +251,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Top 5 sectors that are invested most in terms of total value are <strong>Ecommerce enabler, Delivery and Logistics, Gaming, SaaS and Fintech</strong> respectively.</p></li>
 <li><p>Most of the investment deals are sealed during period from <strong>June 2021 to August 2021</strong></p></li>
 <li><p>Regarding the distribution of investments made to the target companies, first 4 startups, namely <strong>Trendyol, Getir, Hepsiburada and Dream Games</strong>, attracted a total of 3.4 billion USD approximately and accounted for <strong>89.2% of all investments made in 2021</strong>.</p></li>
-<li><p>The share of local investors, with a total investment value of 273 million USD, is limited and majority of the investments are made by foreign investors with a total value of 3.5 billion USD.</p></li>
+<li><p>The share of <strong>local investors</strong>, with a total investment value of <strong>273 million USD</strong>, is limited and majority of the investments are made by <strong>foreign investors</strong> with a total value of <strong>3.5 billion USD</strong>.</p></li>
 <li><p>Most of the investors by far the most are from <strong>Turkey</strong> in terms of <em>number of deals</em>, where as <strong>United States, UAE and Qatar</strong> are leading countries of investors in terms of <em>value</em> invested in startups.</p></li>
 </ul>
 <section id="data-preparation" class="level3" data-number="1.1.1">
@@ -439,15 +440,15 @@ the `.groups` argument.</code></pre>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group_company =</span> <span class="fu">factor</span>(group_company, group_company)) <span class="sc">%&gt;%</span> </span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> group_company, <span class="at">y =</span> group_percent)) <span class="sc">+</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#69b3a2"</span>) <span class="sc">+</span> </span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Target Company"</span>, <span class="at">y =</span> <span class="st">"Percentage (%)"</span>, <span class="at">title =</span> <span class="st">"Concentration of Investments among Startups in 2021"</span>) <span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Target Company"</span>, <span class="at">y =</span> <span class="st">"Percentage (%)"</span>, <span class="at">title =</span> <span class="st">"Distribution of Startup Investments among Target Companies in 2021"</span>) <span class="sc">+</span></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="assignment1_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="analysing-country-profile-of-investors" class="level3" data-number="1.1.5">
-<h3 data-number="1.1.5" class="anchored" data-anchor-id="analysing-country-profile-of-investors"><span class="header-section-number">1.1.5</span> Analysing Country Profile of Investors</h3>
+<section id="categorizing-investors-as-locals-and-foreigners" class="level3" data-number="1.1.5">
+<h3 data-number="1.1.5" class="anchored" data-anchor-id="categorizing-investors-as-locals-and-foreigners"><span class="header-section-number">1.1.5</span> Categorizing Investors as Locals and Foreigners</h3>
 <p>Equal partnership in investments is assumed if number of investors is higher than one in a particular deal.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate Unique id for each transaction and calculate number of investors as a new column "count"</span></span>
@@ -466,11 +467,46 @@ the `.groups` argument.</code></pre>
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country_name =</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">"</span><span class="sc">\r\n</span><span class="st">"</span>, <span class="at">replacement =</span> <span class="st">""</span>, <span class="at">x =</span> .<span class="sc">$</span><span class="st">`</span><span class="at">Investor's_Origin</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country_name <span class="sc">!=</span> <span class="st">"NA"</span>)</span>
 <span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>startup_country_graph <span class="ot">&lt;-</span> startup_country <span class="sc">%&gt;%</span>   </span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country_name) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">country_total =</span> <span class="fu">sum</span>(new_value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">country_number =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(country_total)) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Categorizing investors as foreign and local</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Type of investors (local/foreign) as two subgroups is obtained and used for monthly investment deals.</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>local_foreign <span class="ot">&lt;-</span> startup_country <span class="sc">%&gt;%</span> </span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Announcement_Date) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">local =</span> <span class="fu">sum</span>(new_value[country_name <span class="sc">==</span> <span class="st">"Turkey"</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">foreign =</span> <span class="fu">sum</span>(new_value[country_name <span class="sc">!=</span> <span class="st">"Turkey"</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>local_foreign <span class="sc">%&gt;%</span> </span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(local, foreign),<span class="at">names_to =</span> <span class="st">"type"</span>, <span class="at">values_to =</span> <span class="st">"deal_value"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(type) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Sum =</span> <span class="fu">sum</span>(deal_value)) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  type            Sum
+  &lt;chr&gt;         &lt;dbl&gt;
+1 foreign 3470365902.
+2 local    273386559.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>local_foreign <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(local, foreign),<span class="at">names_to =</span> <span class="st">"type"</span>, <span class="at">values_to =</span> <span class="st">"deal_value"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> type, <span class="at">y =</span> deal_value)) <span class="sc">+</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">fill=</span><span class="st">"#69b3a2"</span>) <span class="sc">+</span>  </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">comma_format</span>(<span class="at">big.mark =</span> <span class="st">"."</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">decimal.mark =</span> <span class="st">","</span>)) <span class="sc">+</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Investor Type"</span>, <span class="at">y =</span> <span class="st">"Total Value of Deals"</span>, <span class="at">title =</span> <span class="st">"Domestic vs. Foreign Investment"</span>) <span class="sc">+</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="assignment1_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="analysing-country-profile-of-investors" class="level3" data-number="1.1.6">
+<h3 data-number="1.1.6" class="anchored" data-anchor-id="analysing-country-profile-of-investors"><span class="header-section-number">1.1.6</span> Analysing Country Profile of Investors</h3>
+<p>Although number of deals accomplished by local investors is higher than foreigners, total value of transactions completed by foreign investors is 12 times higher than locals.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>startup_country_graph <span class="ot">&lt;-</span> startup_country <span class="sc">%&gt;%</span>   </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country_name) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">country_total =</span> <span class="fu">sum</span>(new_value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">country_number =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(country_total)) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 22 × 3
    country_name country_total country_number
@@ -487,54 +523,51 @@ the `.groups` argument.</code></pre>
 10 Germany           7635684.              4
 # … with 12 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Graph investment deals and number of transactions of highest 10 countries in 2021</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>startup_country_graph <span class="sc">%&gt;%</span> </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(country_total) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Country=</span><span class="fu">factor</span>(country_name, country_name)) <span class="sc">%&gt;%</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">wt =</span> country_total) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Country, <span class="at">y =</span> country_total)) <span class="sc">+</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill=</span><span class="st">"#69b3a2"</span>) <span class="sc">+</span> </span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span>  </span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">comma_format</span>(<span class="at">big.mark =</span> <span class="st">"."</span>,</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">decimal.mark =</span> <span class="st">","</span>)) <span class="sc">+</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Total Value of Deals"</span>, <span class="at">title =</span> <span class="st">"Value of Startup Deals in 2021 (per Investor's Origin Country)"</span>) <span class="sc">+</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="assignment1_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>startup_country_graph <span class="sc">%&gt;%</span> </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(country_number) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Country=</span><span class="fu">factor</span>(country_name, country_name)) <span class="sc">%&gt;%</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">wt =</span> country_number) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Country, <span class="at">y =</span> country_number)) <span class="sc">+</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">fill=</span><span class="st">"#69b3a2"</span>) <span class="sc">+</span> </span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Number of Deals"</span>, <span class="at">title =</span> <span class="st">"Number of Startup Deals in 2021 (per Investor's Origin Country"</span>) <span class="sc">+</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="assignment1_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</section>
-<section id="categorizing-investors-as-locals-and-foreigners" class="level3" data-number="1.1.6">
-<h3 data-number="1.1.6" class="anchored" data-anchor-id="categorizing-investors-as-locals-and-foreigners"><span class="header-section-number">1.1.6</span> Categorizing Investors as Locals and Foreigners</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Categorizing investors as foreign and local</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Type of investors (local/foreign) as two subgroups is obtained and used for monthly investment deals.</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>local_foreign <span class="ot">&lt;-</span> startup_country <span class="sc">%&gt;%</span> </span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Announcement_Date) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">local =</span> <span class="fu">sum</span>(new_value[country_name <span class="sc">==</span> <span class="st">"Turkey"</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">foreign =</span> <span class="fu">sum</span>(new_value[country_name <span class="sc">!=</span> <span class="st">"Turkey"</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>local_foreign <span class="sc">%&gt;%</span> </span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(local, foreign),<span class="at">names_to =</span> <span class="st">"type"</span>, <span class="at">values_to =</span> <span class="st">"deal_value"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> type, <span class="at">y =</span> deal_value)) <span class="sc">+</span> </span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">fill=</span><span class="st">"#69b3a2"</span>) <span class="sc">+</span>  </span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">comma_format</span>(<span class="at">big.mark =</span> <span class="st">"."</span>,</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">decimal.mark =</span> <span class="st">","</span>)) <span class="sc">+</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Investor Type"</span>, <span class="at">y =</span> <span class="st">"Total Value of Deals"</span>, <span class="at">title =</span> <span class="st">"Domestic vs. Foreign Investment"</span>) <span class="sc">+</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>startup_country_graph<span class="sc">$</span>country_name[startup_country_graph<span class="sc">$</span>country_name <span class="sc">==</span> <span class="st">"UAE"</span>] <span class="ot">=</span> <span class="st">"United Arab Emirates"</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Graph investment deals and number of transactions of highest 10 countries in 2021</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>startup_country_graph <span class="sc">%&gt;%</span> </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(country_total) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Country=</span><span class="fu">factor</span>(country_name, country_name)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">wt =</span> country_total) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Country, <span class="at">y =</span> country_total)) <span class="sc">+</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill=</span><span class="st">"#69b3a2"</span>) <span class="sc">+</span> </span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span>  </span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">comma_format</span>(<span class="at">big.mark =</span> <span class="st">"."</span>,</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">decimal.mark =</span> <span class="st">","</span>)) <span class="sc">+</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Total Value of Deals"</span>, <span class="at">title =</span> <span class="st">"Value of Startup Deals in 2021 (per Investor's Origin Country)"</span>) <span class="sc">+</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="assignment1_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>startup_country_graph <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(country_number) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Country=</span><span class="fu">factor</span>(country_name, country_name)) <span class="sc">%&gt;%</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">wt =</span> country_number) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Country, <span class="at">y =</span> country_number)) <span class="sc">+</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">fill=</span><span class="st">"#69b3a2"</span>) <span class="sc">+</span> </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Number of Deals"</span>, <span class="at">title =</span> <span class="st">"Number of Startup Deals in 2021 (per Investor's Origin Country)"</span>) <span class="sc">+</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="assignment1_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Alternative way to demonstrate geographic variation of investments into startups</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>world_map <span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">"world"</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>world_map <span class="ot">&lt;-</span> <span class="fu">subset</span>(world_map, region <span class="sc">!=</span> <span class="st">"Antarctica"</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># World heat map plot</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(startup_country_graph) <span class="sc">+</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_map</span>(</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">dat =</span> world_map, <span class="at">map =</span> world_map, <span class="fu">aes</span>(<span class="at">map_id =</span> region),</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">color =</span> <span class="st">"#7f7f7f"</span>, <span class="at">size =</span> <span class="fl">0.25</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_map</span>(<span class="at">map =</span> world_map, <span class="fu">aes</span>(<span class="at">map_id =</span> country_name, <span class="at">fill =</span> country_total<span class="sc">/</span><span class="fl">1e6</span>), <span class="at">size =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#56B1F7"</span>, <span class="at">high =</span> <span class="st">"#132B43"</span>, <span class="at">name =</span> <span class="st">"Investments</span><span class="sc">\n</span><span class="st">(Million USD)"</span>) <span class="sc">+</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> world_map<span class="sc">$</span>long, <span class="at">y =</span> world_map<span class="sc">$</span>lat) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Geographic Distribution of Startup Investments in 2021"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="assignment1_files/figure-html/unnamed-chunk-6-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 
