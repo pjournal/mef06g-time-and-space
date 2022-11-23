@@ -12,7 +12,7 @@ Balance sheet, Income statement and other information for Real Sector in sectora
 library(readxl)
 library(dplyr)
 library(tidyr)
-
+library(knitr)
 ```
 
 ```{r Main Data, message=FALSE, warning=FALSE}
@@ -22,7 +22,7 @@ sector_info <- read_excel("docs/Project_Data_TURKSTAT/Sector_info.xlsx")
 
 saveRDS(sector_info, "docs/Project_Data/sector_grouping.rds")
 
-sector_info %>% head()
+kable(sector_info)
 
 # Read Excel Data for company info regarding number of employees for different company sizes.
 company_info <- 
