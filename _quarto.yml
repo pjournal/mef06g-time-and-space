@@ -8,7 +8,7 @@ book:
   chapters:
     - index.qmd
     - assignment1.qmd
-    - data_preparation_turkstat.qmd
+    - dataprepturkstat.qmd
   page-footer: 
     center: "[MEF BDA 503](https://mef-bda503.github.io)" 
   sharing: [twitter, facebook]
