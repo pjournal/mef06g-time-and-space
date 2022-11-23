@@ -1,11 +1,10 @@
 # Introduction {.unnumbered}
 
 <!-- DO NOT TOUCH THIS PART EXCEPT FILLING YOUR OR YOUR GROUP's NAME -->
-![](https://scitechdaily.com/images/Time-Space-Cosmos-Concept.jpg?ezimgfmt=ng%3Awebp%2Fngcb2%2Frs%3Adevice%2Frscb2-1){fig-align="center" width="390"} 
+
+![](https://scitechdaily.com/images/Time-Space-Cosmos-Concept.jpg?ezimgfmt=ng%253Awebp%252Fngcb2%252Frs%253Adevice%252Frscb2-1){fig-align="center" width="390"}
 
 [Image Source](https://scitechdaily.com/does-time-exist-how-do-we-know/)
-
-
 
 This progress journal covers Time and Space's work during their term at [BDA 503 Fall 2022](https://mef-bda503.github.io/fall22/).
 
@@ -13,12 +12,16 @@ Each section is an assignment or an individual work.
 
 <!-- IF THIS IS A GROUP UNCOMMENT BELOW -->
 
-<!-- # Group Members
+## Group Members in alphabetical order is given below:
 
-+ [Member 1](Member 1's Progress Journal URL with https://)  
-+ [Member 2](Member 2's Progress Journal URL with https://)
-+ [Member 3](Member 3's Progress Journal URL with https://)
+-   [Gülhan Demirel Dilek](https://pjournal.github.io/mef06-glhndmrl/)
+-   [Orhun Doğan](https://pjournal.github.io/mef06-OrhunDo/)
+-   [Yener Alboğa](https://pjournal.github.io/mef06-yeneralboga/)
+-   [Yiğit Onay](https://pjournal.github.io/mef06-yigitonay/)
+-   [Zeynep Yağmur Güner](https://pjournal.github.io/mef06-gunerzy/)
 
-# Group Project Details
+## Group Project Details
 
-Our group project is [PROJECT NAME]. [SHORT DESCRIPTION] -->
+Our group project is about exploration of financial status of real sector companies and their connection with macro indicators.
+
+Shortly, our study aims to present a description of financial status of real sector companies based on their financial tables and their status of employment (labor cost, gender distribution), international trade (competitive advantage, export/import potential), growth dynamics and cost structures (producer prices).
