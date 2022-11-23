@@ -8,7 +8,7 @@ This progress journal covers Time and Space's work during their term at [BDA 503
 
 Each section is an assignment or an individual work.
 
-## Group Members in alphabetical order is given below:
+## Group Members
 
 -   [Gülhan Demirel Dilek](https://pjournal.github.io/mef06-glhndmrl/)
 -   [Orhun Doğan](https://pjournal.github.io/mef06-OrhunDo/)
