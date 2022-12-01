@@ -9,6 +9,7 @@ book:
     - index.qmd
     - assignment1.qmd
     - dataprepturkstat.qmd
+    - eda.qmd
   page-footer: 
     center: "[MEF BDA 503](https://mef-bda503.github.io)" 
   sharing: [twitter, facebook]
