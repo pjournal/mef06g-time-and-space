@@ -1,0 +1,439 @@
+---
+title: "Group Project EDA"
+editor: visual
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+## Introduction
+
+### Load Necessary Packages for EDA
+
+```{r library, message=FALSE, warning=FALSE}
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(readxl)
+library(ggridges)
+library(scales)
+library(gt)
+library(rmarkdown)
+library(quarto)
+library(knitr)
+library(data.table)
+```
+
+### Load Necessary Datasets for EDA
+
+```{r datasets, message=FALSE, warning=FALSE}
+
+bs <- readRDS("docs/Project_Data/balance_sheet.rds")
+i_s <- readRDS("docs/Project_Data/income_statement.rds")
+trade_df <- readRDS("docs/Project_Data/trade.rds")
+price_df <- readRDS("docs/Project_Data/input_cost.rds")
+gdp_df <- readRDS("docs/Project_Data/gdp.rds")
+
+```
+
+### Few Data Manipulation Steps to Prepare Data for Final Stage
+
+```{r data_preparation, message=FALSE, warning=FALSE}
+
+bs$accounts <- bs$accounts %>% gsub("\\s+", "_", .)
+
+bs_df <- bs %>% 
+  filter(accounts %in% c("I-Current_assets", 
+                         "III-Short-term_liabilities", 
+                         "IV-Long-term_liabilities", 
+                         "Total_assets", 
+                         "V-Own_funds")) %>%
+  pivot_wider(names_from = accounts, values_from = value)
+
+i_s$accounts <- i_s$accounts %>% gsub("\\s+", "_", .)
+
+net_income <- i_s %>% 
+  filter(accounts == "Net_profit_or_loss_for_the_financial_year") %>% 
+  pivot_wider(names_from = accounts, values_from = value) %>% 
+  pull(Net_profit_or_loss_for_the_financial_year)
+  
+bs_df <- bs_df %>% mutate(net_income_is = net_income)
+
+
+```
+
+## Calculation of Financial Indicators
+
+```{r Financial_Indicators, message=FALSE, warning=FALSE}
+
+bs_df_new <- bs_df %>% 
+  mutate(current_ratio = bs_df$"I-Current_assets" / bs_df$"III-Short-term_liabilities", 
+         leverage = bs_df$"III-Short-term_liabilities" / bs_df$"Total_assets",
+         return_on_equity = bs_df$"net_income_is" / bs_df$"V-Own_funds",
+         return_on_assets = bs_df$"net_income_is" / bs_df$"Total_assets") %>% 
+  select(c(sector_code:year),c(current_ratio:return_on_assets))
+
+bs_df_new <- bs_df_new %>% 
+  pivot_longer(cols = c("current_ratio", "leverage", "return_on_equity", "return_on_assets"), 
+               names_to = "Indicator", 
+               values_to = "Value")
+
+```
+
+## Economy Wide Financial Indicators
+
+```{r economy, message=FALSE, warning=FALSE}
+
+#Calculation and plot of weighted average financial indicators
+bs_df_economy <- bs_df %>% 
+  mutate(current_ratio = bs_df$"I-Current_assets" / bs_df$"III-Short-term_liabilities", 
+         leverage = bs_df$"III-Short-term_liabilities" / bs_df$"Total_assets",
+         return_on_equity = bs_df$"net_income_is" / bs_df$"V-Own_funds",
+         return_on_assets = bs_df$"net_income_is" / bs_df$"Total_assets") %>% 
+  select(c(sector_code:year),c(current_ratio:return_on_assets), Total_assets)
+
+
+bs_df_economy_graph <- bs_df_economy %>% 
+  group_by(year) %>% 
+  summarize(liq_yearly = weighted.mean(current_ratio, Total_assets),
+            lev_yearly = weighted.mean(leverage, Total_assets),
+            pro_yearly = weighted.mean(return_on_assets, Total_assets))
+
+bs_df_economy_graph %>% 
+  pivot_longer(-year, names_to = "indicator_yearly", values_to = "value") %>% 
+  ggplot(aes(x = year, y = value)) +
+  geom_line() +
+  facet_wrap(~indicator_yearly, scales = "free")
+
+#Calculation and plot of standard deviation of financial indicators
+bs_df_economy %>% 
+  group_by(year) %>% 
+  summarize(liq_yearly_std = sd(current_ratio),
+            lev_yearly_std = sd(leverage),
+            pro_yearly_std = sd(return_on_assets)) %>% 
+  pivot_longer(-year, names_to = "std_yearly", values_to = "value") %>% 
+  ggplot(aes(x = year, y = value)) +
+  geom_line() +
+  facet_wrap(~std_yearly, scales = "free")
+
+```
+
+## Table of financial indicators for the economy from 2009 to 2021
+
+```{r table_fi}
+kable(bs_df_economy_graph)
+```
+
+## Time Series of Financial Indicators for each sector
+
+```{r time_series_fi}
+
+ggplot(data = bs_df_new[bs_df_new$Indicator == "current_ratio",], aes(x = year, y = Value)) +
+  geom_line() +
+  labs(title = "Liquidity Indicator of Real Sector Companies from 2009 to 2021", x = "Year") +
+  facet_wrap(~sector_name, scales = "free") +
+  theme(panel.grid = element_blank())
+
+
+ggplot(data = bs_df_new[bs_df_new$Indicator == "leverage",], aes(x = year, y = Value)) +
+  geom_line() +
+  labs(title = "Leverage Indicator of Real Sector Companies from 2009 to 2021", x = "Year") +
+  facet_wrap(~sector_name, scales = "free") +
+  theme(panel.grid = element_blank())    
+
+
+ggplot(data = bs_df_new[bs_df_new$Indicator == "return_on_assets",], aes(x = year, y = Value)) +
+  geom_line() +
+  labs(title = "Profitability (ROA) Indicator of Real Sector Companies from 2009 to 2021", x = "Year") +
+  facet_wrap(~sector_name, scales = "free") +
+  theme(panel.grid = element_blank())
+
+
+```
+
+## Scatter Plots of financial Indicators
+
+```{r scatter_fi}
+
+bs_df_new %>% 
+  pivot_wider(names_from = "Indicator", values_from = "Value") %>% 
+  ggplot(aes(x = leverage, y = current_ratio, color = sector_name)) +
+  geom_point() + 
+  geom_smooth(method='lm', formula= y~x, se = FALSE)
+
+bs_df_new %>% 
+  pivot_wider(names_from = "Indicator", values_from = "Value") %>% 
+  ggplot(aes(x = current_ratio, y = return_on_assets, color = sector_name)) +
+  geom_point() + 
+  geom_smooth(method='lm', formula= y~x, se = FALSE)
+
+bs_df_new %>% 
+  pivot_wider(names_from = "Indicator", values_from = "Value") %>% 
+  ggplot(aes(x = leverage, y = return_on_assets, color = sector_name)) +
+  geom_point() + 
+  geom_smooth(method='lm', formula= y~x, se = FALSE)
+
+```
+
+## 2009 - 2019 Period Average of Financial Indicators
+```{r average_fi}
+bs_df_average <-  bs_df_new %>% 
+  pivot_wider(names_from = Indicator, values_from = Value) %>% 
+  filter(year %in% 2009:2019) %>% 
+  group_by(sector_name) %>% 
+  summarise(liq_ave = mean(current_ratio), lev_ave = mean(leverage), pro_ave = mean(return_on_assets))
+
+bs_df_new %>% 
+  pivot_wider(names_from = Indicator, values_from = Value) %>% 
+  filter(year %in% 2020:2021) %>% 
+  select(c(sector_name, year, current_ratio)) %>% 
+  pivot_wider(names_from = year, values_from = current_ratio) %>% 
+  left_join(bs_df_average[,c("sector_name", "liq_ave")], by = "sector_name") %>% 
+  rename("2009_2019_average" = "liq_ave") %>% 
+  pivot_longer(-sector_name, names_to = "period") %>% 
+  ggplot(aes(x = sector_name, y = value, fill = factor(period))) +
+  geom_col(position = "dodge2")
+```
+
+## Density Plots of Financial Indicators
+
+```{r}
+# Liquidity
+bs_df_new %>% pivot_wider(names_from = Indicator, values_from = Value) %>% 
+  select(year, current_ratio) %>% 
+  arrange(year) %>% 
+  ggplot(aes(x = current_ratio, y = factor(year), fill = stat(quantile))) +
+  stat_density_ridges(quantile_lines = FALSE,
+                      calc_ecdf = TRUE,
+                      geom = "density_ridges_gradient", rel_min_height = 0.005) +
+  scale_fill_brewer(name = "")
+
+# Leverage
+bs_df_new %>% pivot_wider(names_from = Indicator, values_from = Value) %>% 
+  select(year, leverage) %>% 
+  arrange(year) %>% 
+  ggplot(aes(x = leverage, y = factor(year), fill = stat(quantile))) +
+  stat_density_ridges(quantile_lines = FALSE,
+                      calc_ecdf = TRUE,
+                      geom = "density_ridges_gradient", rel_min_height = 0.005) +
+  scale_fill_brewer(name = "")
+
+# Profitability
+bs_df_new %>% pivot_wider(names_from = Indicator, values_from = Value) %>% 
+  select(year, return_on_assets) %>% 
+  arrange(year) %>% 
+  ggplot(aes(x = return_on_assets, y = factor(year), fill = stat(quantile))) +
+  stat_density_ridges(quantile_lines = FALSE,
+                      calc_ecdf = TRUE,
+                      geom = "density_ridges_gradient", rel_min_height = 0.005) +
+  scale_fill_brewer(name = "")
+
+```
+
+
+
+## Financial Fragility Index from 2009 to 2021
+
+```{r}
+
+bs_df_ffi <- bs_df_new %>% 
+  pivot_wider(names_from = "Indicator", values_from = "Value") %>% 
+  group_by(year) %>% 
+  mutate(liq_rank = percent_rank(current_ratio*-1), 
+         lev_rank = percent_rank(leverage), 
+         profit_rank = percent_rank(return_on_assets*-1)) %>% 
+  mutate(fin_fra_index = (liq_rank + lev_rank + profit_rank)/3) %>% 
+  select(-c(current_ratio:return_on_assets))
+
+bs_df_ffi %>% 
+  select(c(sector_name, year, fin_fra_index)) %>% 
+  pivot_longer(-c(sector_name, year), names_to = "index", values_to = "value") %>% 
+  ggplot(aes(x = year, y = value, color = sector_name)) +
+  geom_line() + 
+  facet_wrap(~sector_name, scales = "free")
+
+```
+## Heatmap for 2021
+
+```{r fi_heatmap}
+bs_df_economy %>% 
+  filter(year == 2021) %>% 
+  select(sector_name, current_ratio, leverage, return_on_assets) %>% 
+  mutate(ffi = bs_df_ffi %>% select(year, sector_name, fin_fra_index) %>% filter(year == 2021) %>% pull(fin_fra_index)) %>% 
+  arrange(desc(ffi)) %>% 
+  gt() %>% 
+  data_color(columns = current_ratio, 
+             colors = col_numeric(palette = c("red", "white", "green"), 
+                                  domain = c(min(current_ratio), max(current_ratio)))) %>% 
+  data_color(columns = leverage, 
+             colors = col_numeric(palette = c("green", "white", "red"), 
+                                  domain = c(min(leverage), max(leverage)))) %>% 
+  data_color(columns = return_on_assets, 
+             colors = col_numeric(palette = c("red", "white", "green"), 
+                                  domain = c(min(return_on_assets), max(return_on_assets)))) %>% 
+  data_color(columns = ffi, 
+             colors = col_numeric(palette = c("green", "white", "red"), 
+                                  domain = c(min(ffi), max(ffi))))
+```
+
+
+## International Trade
+
+```{r}
+trade_df_new <- 
+  trade_df %>% 
+  mutate(net_export = (export - import)/1e6) %>% 
+  filter(year != 2022) %>% 
+  select(sector_name, year, net_export)
+
+df_fin <- bs_df_new %>% pivot_wider(names_from = Indicator, values_from = Value)
+
+
+trade_df_new %>% 
+  ggplot(aes(x = year, y = net_export))+
+  geom_line() +
+  facet_wrap(~sector_name, scales = "free")
+  
+
+trade_df_new %>% 
+  group_by(sector_name) %>% 
+  summarize(mean = mean(net_export)) %>% 
+  arrange(mean)
+
+trade_df_new %>% 
+  filter(sector_name %in% c("Agriculture", "Manufacturing", "Mining", "Water_Supply")) %>% 
+  inner_join(df_fin %>% select(-sector_code, -group), by = c("sector_name", "year")) %>% 
+  ggplot(aes(x = net_export, y = return_on_assets))+
+  geom_point() + 
+  geom_smooth(method='lm', formula= y~x, se = FALSE) + 
+  facet_wrap(~sector_name, scales = "free")
+
+trade_df_new %>% 
+  filter(sector_name %in% c("Agriculture", "Manufacturing", "Mining", "Water_Supply")) %>% 
+  inner_join(df_fin %>% select(-sector_code, -group), by = c("sector_name", "year")) %>% 
+  inner_join(bs_df_ffi %>% select(sector_name, year, fin_fra_index), by = c("sector_name","year")) %>% 
+  ggplot(aes(x = net_export, y = fin_fra_index))+
+  geom_point() + 
+  geom_smooth(method='lm', formula= y~x) + 
+  facet_wrap(~sector_name, scales = "free")
+```
+
+## Tradable vs Non-Tradable Sectors 
+
+```{r trade_split}
+
+tradables <- c("Agriculture", "Manufacturing", "Mining", "Water_Supply")
+df_fin
+df_fin %>% 
+  select(-sector_code, -group) %>% 
+  inner_join(bs_df_ffi %>% select(sector_name, year, fin_fra_index), 
+             by = c("sector_name","year")) %>% 
+  mutate(trade_group = ifelse(sector_name %in% tradables, "tradable", "non_tradable")) %>% 
+  group_by(year, trade_group) %>% 
+  summarize(financial_fragility_index = mean(fin_fra_index)) %>% 
+  ggplot(aes(year, financial_fragility_index, color = trade_group)) + 
+  geom_line()
+
+```
+
+## Producer Price Inflation
+
+```{r ppi}
+
+pct_change <- function(x){(x / lag(x, 12) -1)*100}
+
+price_df <- price_df %>% filter(date >= as.Date("2017-01-01") & date < as.Date("2022-01-01")) %>% 
+  select(-sector_code, -group) %>% 
+  pivot_wider(names_from = sector_name, values_from = index)
+
+price_change_df <- cbind(date = price_df$date, sapply(price_df[,2 : 11], pct_change) %>% as_tibble())
+  
+year_end_inf <- price_change_df %>% 
+  filter(!is.na(Mining) & month(date) == 1) %>% 
+  pivot_longer(-date, names_to = "sector_name", values_to = "inflation") 
+
+year_end_inf$date <- year(year_end_inf$date)
+
+year_end_inf <- rename(year_end_inf, "year" = "date")
+
+#Average Inflation for the period 2018-2021
+year_end_inf %>% 
+  group_by(sector_name) %>% 
+  summarize(average_inflation = mean(inflation)) %>% 
+  arrange(desc(average_inflation))
+
+```
+
+## Financial Indicators with Inflation data
+
+```{r fi-ppi}
+
+inner_join(bs_df_new %>% 
+  select(-sector_code, -group) %>% 
+  pivot_wider(names_from = Indicator, values_from = Value) %>% 
+  filter(year >= 2018), year_end_inf, by = c("sector_name", "year")) %>%
+  filter(inflation < 50) %>% # Omit outlier observation
+  ggplot(aes(x = inflation, y = return_on_assets)) + 
+  geom_point() + 
+  geom_smooth(method='lm', formula= y~x, se = FALSE)
+
+```
+
+## Growth Dynamics
+
+```{r growth}
+
+gdp_df$pct_change <- (gdp_df$gdp_index / lag(gdp_df$gdp_index, 1) - 1) * 100
+
+gdp_df <- gdp_df %>% filter(!is.na(pct_change) & year >= 2009)
+
+# Real GDP Growth Summary Table 
+
+gdp_df_tb <- gdp_df
+
+setDT(gdp_df)
+gdp_df[, as.list(summary(pct_change)), by = sector]
+
+
+gdp_df_tb$sector <- gdp_df_tb %>% 
+  select(-gdp_index) %>% .$sector %>% gsub("-.*", "", .)
+
+
+bs_df_new <- bs_df_new %>% pivot_wider(names_from = Indicator, values_from = Value) %>% 
+  left_join(bs_df_ffi %>% select(sector_code, year, fin_fra_index), by = c("sector_code", "year")) %>% 
+  pivot_longer(-c(sector_code : year), names_to = "Indicator", values_to = "Value")
+
+fin_ind_group <- bs_df_new %>% 
+  select(sector_code, year, Indicator, Value) %>% 
+  mutate(group = case_when(sector_code == "A" ~ "A", 
+            sector_code %in% c("B", "C", "D", "E") ~ "BCDE", 
+            sector_code == "F" ~ "F",
+            sector_code %in% c("G", "H", "I") ~ "GHI",
+            sector_code == "J" ~ "J",
+            sector_code == "L" ~ "L",
+            sector_code %in% c("M", "N") ~ "MN",
+            TRUE ~ "other")) %>% 
+  filter(group != "other") %>% 
+  left_join(bs_df %>% select(sector_code, year, Total_assets), Total_assets, by = c("sector_code", "year")) %>%
+  select(-sector_code) %>% 
+  group_by(group, year, Indicator) %>% 
+  summarise(value = weighted.mean(Value, Total_assets)) %>% pivot_wider(names_from = Indicator, values_from = value)
+
+header <- c("A", "BCDE", "F", "GHI", "J", "L", "MN")
+names <- c("Agriculture", "Industry", "Construction", "Services", "Information", "Real Estate", "Other Services")
+growth_info <- data.frame(header, names)
+
+growth_df <- left_join(fin_ind_group, gdp_df_tb %>% select(-gdp_index),by = c("group" = "sector", "year"))
+growth_df <- growth_df %>% 
+  left_join(growth_info, by = c("group" = "header"))
+
+growth_df %>% 
+  ggplot(aes(lag(pct_change,1), fin_fra_index)) +
+  geom_point() + 
+  facet_wrap(~names,  scales = "free") + 
+  geom_smooth(method='lm', formula= y~x, se = FALSE)
+  
+```
+
