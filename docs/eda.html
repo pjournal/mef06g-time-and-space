@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Group Project EDA</title>
+<title>Time and Space Progress Journal - 3&nbsp; Group Project EDA</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -86,29 +86,155 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
-<script src="eda_files/libs/clipboard/clipboard.min.js"></script>
-<script src="eda_files/libs/quarto-html/quarto.js"></script>
-<script src="eda_files/libs/quarto-html/popper.min.js"></script>
-<script src="eda_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="eda_files/libs/quarto-html/anchor.min.js"></script>
-<link href="eda_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="eda_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="eda_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="eda_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="eda_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./dataprepturkstat.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
 
 
 </head>
 
-<body class="fullcontent">
+<body class="nav-sidebar floating">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Group Project EDA</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Time and Space Progress Journal</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/pjournal/gh-pages-quarto-template" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="" title="Share" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+            <i class="bi bi-bi-twitter pe-1"></i>
+          Twitter
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+            <i class="bi bi-bi-facebook pe-1"></i>
+          Facebook
+          </a>
+        </li>
+    </ul>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Introduction</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./assignment1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Assignment 1</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dataprepturkstat.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Preparation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eda.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Group Project EDA</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="toc-section-number">3.1</span>  Introduction</a>
+  <ul class="collapse">
+  <li><a href="#load-necessary-packages-for-eda" id="toc-load-necessary-packages-for-eda" class="nav-link" data-scroll-target="#load-necessary-packages-for-eda"><span class="toc-section-number">3.1.1</span>  Load Necessary Packages for EDA</a></li>
+  <li><a href="#load-necessary-datasets-for-eda" id="toc-load-necessary-datasets-for-eda" class="nav-link" data-scroll-target="#load-necessary-datasets-for-eda"><span class="toc-section-number">3.1.2</span>  Load Necessary Datasets for EDA</a></li>
+  <li><a href="#few-data-manipulation-steps-to-prepare-data-for-final-stage" id="toc-few-data-manipulation-steps-to-prepare-data-for-final-stage" class="nav-link" data-scroll-target="#few-data-manipulation-steps-to-prepare-data-for-final-stage"><span class="toc-section-number">3.1.3</span>  Few Data Manipulation Steps to Prepare Data for Final Stage</a></li>
+  </ul></li>
+  <li><a href="#financial-indicators" id="toc-financial-indicators" class="nav-link" data-scroll-target="#financial-indicators"><span class="toc-section-number">3.2</span>  Financial Indicators</a>
+  <ul class="collapse">
+  <li><a href="#economy-wide-financial-indicators" id="toc-economy-wide-financial-indicators" class="nav-link" data-scroll-target="#economy-wide-financial-indicators"><span class="toc-section-number">3.2.1</span>  Economy Wide Financial Indicators</a></li>
+  <li><a href="#table-of-financial-indicators-for-the-economy-from-2009-to-2021" id="toc-table-of-financial-indicators-for-the-economy-from-2009-to-2021" class="nav-link" data-scroll-target="#table-of-financial-indicators-for-the-economy-from-2009-to-2021"><span class="toc-section-number">3.2.2</span>  Table of financial indicators for the economy from 2009 to 2021</a></li>
+  <li><a href="#time-series-of-financial-indicators-for-each-sector" id="toc-time-series-of-financial-indicators-for-each-sector" class="nav-link" data-scroll-target="#time-series-of-financial-indicators-for-each-sector"><span class="toc-section-number">3.2.3</span>  Time Series of Financial Indicators for each sector</a></li>
+  <li><a href="#scatter-plots-of-financial-indicators" id="toc-scatter-plots-of-financial-indicators" class="nav-link" data-scroll-target="#scatter-plots-of-financial-indicators"><span class="toc-section-number">3.2.4</span>  Scatter Plots of financial Indicators</a></li>
+  <li><a href="#period-average-of-financial-indicators" id="toc-period-average-of-financial-indicators" class="nav-link" data-scroll-target="#period-average-of-financial-indicators"><span class="toc-section-number">3.2.5</span>  2009 - 2019 Period Average of Financial Indicators</a></li>
+  <li><a href="#density-plots-of-financial-indicators" id="toc-density-plots-of-financial-indicators" class="nav-link" data-scroll-target="#density-plots-of-financial-indicators"><span class="toc-section-number">3.2.6</span>  Density Plots of Financial Indicators</a></li>
+  </ul></li>
+  <li><a href="#financial-fragility-index" id="toc-financial-fragility-index" class="nav-link" data-scroll-target="#financial-fragility-index"><span class="toc-section-number">3.3</span>  Financial Fragility Index</a>
+  <ul class="collapse">
+  <li><a href="#heatmap-for-2021" id="toc-heatmap-for-2021" class="nav-link" data-scroll-target="#heatmap-for-2021"><span class="toc-section-number">3.3.1</span>  Heatmap for 2021</a></li>
+  <li><a href="#international-trade" id="toc-international-trade" class="nav-link" data-scroll-target="#international-trade"><span class="toc-section-number">3.3.2</span>  International Trade</a></li>
+  <li><a href="#tradable-vs-non-tradable-sectors" id="toc-tradable-vs-non-tradable-sectors" class="nav-link" data-scroll-target="#tradable-vs-non-tradable-sectors"><span class="toc-section-number">3.3.3</span>  Tradable vs Non-Tradable Sectors</a></li>
+  <li><a href="#producer-price-inflation" id="toc-producer-price-inflation" class="nav-link" data-scroll-target="#producer-price-inflation"><span class="toc-section-number">3.3.4</span>  Producer Price Inflation</a></li>
+  <li><a href="#financial-indicators-with-inflation-data" id="toc-financial-indicators-with-inflation-data" class="nav-link" data-scroll-target="#financial-indicators-with-inflation-data"><span class="toc-section-number">3.3.5</span>  Financial Indicators with Inflation data</a></li>
+  <li><a href="#growth-dynamics" id="toc-growth-dynamics" class="nav-link" data-scroll-target="#growth-dynamics"><span class="toc-section-number">3.3.6</span>  Growth Dynamics</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Group Project EDA</h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Group Project EDA</span></h1>
 </div>
 
 
@@ -123,10 +249,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<section id="load-necessary-packages-for-eda" class="level3">
-<h3 class="anchored" data-anchor-id="load-necessary-packages-for-eda">Load Necessary Packages for EDA</h3>
+<section id="introduction" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">3.1</span> Introduction</h2>
+<section id="load-necessary-packages-for-eda" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="load-necessary-packages-for-eda"><span class="header-section-number">3.1.1</span> Load Necessary Packages for EDA</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
@@ -142,8 +268,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="load-necessary-datasets-for-eda" class="level3">
-<h3 class="anchored" data-anchor-id="load-necessary-datasets-for-eda">Load Necessary Datasets for EDA</h3>
+<section id="load-necessary-datasets-for-eda" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="load-necessary-datasets-for-eda"><span class="header-section-number">3.1.2</span> Load Necessary Datasets for EDA</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>bs <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"docs/Project_Data/balance_sheet.rds"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>i_s <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"docs/Project_Data/income_statement.rds"</span>)</span>
@@ -152,8 +278,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>gdp_df <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"docs/Project_Data/gdp.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="few-data-manipulation-steps-to-prepare-data-for-final-stage" class="level3">
-<h3 class="anchored" data-anchor-id="few-data-manipulation-steps-to-prepare-data-for-final-stage">Few Data Manipulation Steps to Prepare Data for Final Stage</h3>
+<section id="few-data-manipulation-steps-to-prepare-data-for-final-stage" class="level3" data-number="3.1.3">
+<h3 data-number="3.1.3" class="anchored" data-anchor-id="few-data-manipulation-steps-to-prepare-data-for-final-stage"><span class="header-section-number">3.1.3</span> Few Data Manipulation Steps to Prepare Data for Final Stage</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bs<span class="sc">$</span>accounts <span class="ot">&lt;-</span> bs<span class="sc">$</span>accounts <span class="sc">%&gt;%</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">"_"</span>, .)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -176,8 +302,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </section>
 </section>
-<section id="calculation-of-financial-indicators" class="level2">
-<h2 class="anchored" data-anchor-id="calculation-of-financial-indicators">Calculation of Financial Indicators</h2>
+<section id="financial-indicators" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="financial-indicators"><span class="header-section-number">3.2</span> Financial Indicators</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bs_df_new <span class="ot">&lt;-</span> bs_df <span class="sc">%&gt;%</span> </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">current_ratio =</span> bs_df<span class="sc">$</span><span class="st">"I-Current_assets"</span> <span class="sc">/</span> bs_df<span class="sc">$</span><span class="st">"III-Short-term_liabilities"</span>, </span>
@@ -191,9 +317,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Indicator"</span>, </span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Value"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="economy-wide-financial-indicators" class="level2">
-<h2 class="anchored" data-anchor-id="economy-wide-financial-indicators">Economy Wide Financial Indicators</h2>
+<section id="economy-wide-financial-indicators" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="economy-wide-financial-indicators"><span class="header-section-number">3.2.1</span> Economy Wide Financial Indicators</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculation and plot of weighted average financial indicators</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>bs_df_economy <span class="ot">&lt;-</span> bs_df <span class="sc">%&gt;%</span> </span>
@@ -233,8 +358,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="table-of-financial-indicators-for-the-economy-from-2009-to-2021" class="level2">
-<h2 class="anchored" data-anchor-id="table-of-financial-indicators-for-the-economy-from-2009-to-2021">Table of financial indicators for the economy from 2009 to 2021</h2>
+<section id="table-of-financial-indicators-for-the-economy-from-2009-to-2021" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="table-of-financial-indicators-for-the-economy-from-2009-to-2021"><span class="header-section-number">3.2.2</span> Table of financial indicators for the economy from 2009 to 2021</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(bs_df_economy_graph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -331,8 +456,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="time-series-of-financial-indicators-for-each-sector" class="level2">
-<h2 class="anchored" data-anchor-id="time-series-of-financial-indicators-for-each-sector">Time Series of Financial Indicators for each sector</h2>
+<section id="time-series-of-financial-indicators-for-each-sector" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="time-series-of-financial-indicators-for-each-sector"><span class="header-section-number">3.2.3</span> Time Series of Financial Indicators for each sector</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> bs_df_new[bs_df_new<span class="sc">$</span>Indicator <span class="sc">==</span> <span class="st">"current_ratio"</span>,], <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> Value)) <span class="sc">+</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
@@ -360,8 +485,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="scatter-plots-of-financial-indicators" class="level2">
-<h2 class="anchored" data-anchor-id="scatter-plots-of-financial-indicators">Scatter Plots of financial Indicators</h2>
+<section id="scatter-plots-of-financial-indicators" class="level3" data-number="3.2.4">
+<h3 data-number="3.2.4" class="anchored" data-anchor-id="scatter-plots-of-financial-indicators"><span class="header-section-number">3.2.4</span> Scatter Plots of financial Indicators</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>bs_df_new <span class="sc">%&gt;%</span> </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"Indicator"</span>, <span class="at">values_from =</span> <span class="st">"Value"</span>) <span class="sc">%&gt;%</span> </span>
@@ -389,8 +514,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="period-average-of-financial-indicators" class="level2">
-<h2 class="anchored" data-anchor-id="period-average-of-financial-indicators">2009 - 2019 Period Average of Financial Indicators</h2>
+<section id="period-average-of-financial-indicators" class="level3" data-number="3.2.5">
+<h3 data-number="3.2.5" class="anchored" data-anchor-id="period-average-of-financial-indicators"><span class="header-section-number">3.2.5</span> 2009 - 2019 Period Average of Financial Indicators</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>bs_df_average <span class="ot">&lt;-</span>  bs_df_new <span class="sc">%&gt;%</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> Value) <span class="sc">%&gt;%</span> </span>
@@ -413,8 +538,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="density-plots-of-financial-indicators" class="level2">
-<h2 class="anchored" data-anchor-id="density-plots-of-financial-indicators">Density Plots of Financial Indicators</h2>
+<section id="density-plots-of-financial-indicators" class="level3" data-number="3.2.6">
+<h3 data-number="3.2.6" class="anchored" data-anchor-id="density-plots-of-financial-indicators"><span class="header-section-number">3.2.6</span> Density Plots of Financial Indicators</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Liquidity</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>bs_df_new <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> Value) <span class="sc">%&gt;%</span> </span>
@@ -454,8 +579,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="financial-fragility-index-from-2009-to-2021" class="level2">
-<h2 class="anchored" data-anchor-id="financial-fragility-index-from-2009-to-2021">Financial Fragility Index from 2009 to 2021</h2>
+</section>
+<section id="financial-fragility-index" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="financial-fragility-index"><span class="header-section-number">3.3</span> Financial Fragility Index</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>bs_df_ffi <span class="ot">&lt;-</span> bs_df_new <span class="sc">%&gt;%</span> </span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"Indicator"</span>, <span class="at">values_from =</span> <span class="st">"Value"</span>) <span class="sc">%&gt;%</span> </span>
@@ -476,9 +602,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="eda_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</section>
-<section id="heatmap-for-2021" class="level2">
-<h2 class="anchored" data-anchor-id="heatmap-for-2021">Heatmap for 2021</h2>
+<section id="heatmap-for-2021" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="heatmap-for-2021"><span class="header-section-number">3.3.1</span> Heatmap for 2021</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>bs_df_economy <span class="sc">%&gt;%</span> </span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2021</span>) <span class="sc">%&gt;%</span> </span>
@@ -500,12 +625,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(ffi), <span class="fu">max</span>(ffi))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="oyaznjvrbo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="sotbpwkxnr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#oyaznjvrbo) .gt_table {
+:where(#sotbpwkxnr) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -530,7 +655,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-:where(#oyaznjvrbo) .gt_heading {
+:where(#sotbpwkxnr) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -542,12 +667,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#oyaznjvrbo) .gt_caption {
+:where(#sotbpwkxnr) .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-:where(#oyaznjvrbo) .gt_title {
+:where(#sotbpwkxnr) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -559,7 +684,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-:where(#oyaznjvrbo) .gt_subtitle {
+:where(#sotbpwkxnr) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -571,13 +696,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-:where(#oyaznjvrbo) .gt_bottom_border {
+:where(#sotbpwkxnr) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#oyaznjvrbo) .gt_col_headings {
+:where(#sotbpwkxnr) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -592,7 +717,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#oyaznjvrbo) .gt_col_heading {
+:where(#sotbpwkxnr) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -612,7 +737,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#oyaznjvrbo) .gt_column_spanner_outer {
+:where(#sotbpwkxnr) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -624,15 +749,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-:where(#oyaznjvrbo) .gt_column_spanner_outer:first-child {
+:where(#sotbpwkxnr) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#oyaznjvrbo) .gt_column_spanner_outer:last-child {
+:where(#sotbpwkxnr) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#oyaznjvrbo) .gt_column_spanner {
+:where(#sotbpwkxnr) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -644,7 +769,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-:where(#oyaznjvrbo) .gt_group_heading {
+:where(#sotbpwkxnr) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -670,7 +795,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   text-align: left;
 }
 
-:where(#oyaznjvrbo) .gt_empty_group_heading {
+:where(#sotbpwkxnr) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -685,15 +810,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#oyaznjvrbo) .gt_from_md > :first-child {
+:where(#sotbpwkxnr) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#oyaznjvrbo) .gt_from_md > :last-child {
+:where(#sotbpwkxnr) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#oyaznjvrbo) .gt_row {
+:where(#sotbpwkxnr) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -712,7 +837,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#oyaznjvrbo) .gt_stub {
+:where(#sotbpwkxnr) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -725,7 +850,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#oyaznjvrbo) .gt_stub_row_group {
+:where(#sotbpwkxnr) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -739,11 +864,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-:where(#oyaznjvrbo) .gt_row_group_first td {
+:where(#sotbpwkxnr) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#oyaznjvrbo) .gt_summary_row {
+:where(#sotbpwkxnr) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -753,16 +878,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#oyaznjvrbo) .gt_first_summary_row {
+:where(#sotbpwkxnr) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#oyaznjvrbo) .gt_first_summary_row.thick {
+:where(#sotbpwkxnr) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#oyaznjvrbo) .gt_last_summary_row {
+:where(#sotbpwkxnr) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -772,7 +897,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#oyaznjvrbo) .gt_grand_summary_row {
+:where(#sotbpwkxnr) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -782,7 +907,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#oyaznjvrbo) .gt_first_grand_summary_row {
+:where(#sotbpwkxnr) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -792,11 +917,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-:where(#oyaznjvrbo) .gt_striped {
+:where(#sotbpwkxnr) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#oyaznjvrbo) .gt_table_body {
+:where(#sotbpwkxnr) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -805,7 +930,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#oyaznjvrbo) .gt_footnotes {
+:where(#sotbpwkxnr) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -819,7 +944,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#oyaznjvrbo) .gt_footnote {
+:where(#sotbpwkxnr) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -828,7 +953,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#oyaznjvrbo) .gt_sourcenotes {
+:where(#sotbpwkxnr) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -842,7 +967,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#oyaznjvrbo) .gt_sourcenote {
+:where(#sotbpwkxnr) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -850,64 +975,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#oyaznjvrbo) .gt_left {
+:where(#sotbpwkxnr) .gt_left {
   text-align: left;
 }
 
-:where(#oyaznjvrbo) .gt_center {
+:where(#sotbpwkxnr) .gt_center {
   text-align: center;
 }
 
-:where(#oyaznjvrbo) .gt_right {
+:where(#sotbpwkxnr) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#oyaznjvrbo) .gt_font_normal {
+:where(#sotbpwkxnr) .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#oyaznjvrbo) .gt_font_bold {
+:where(#sotbpwkxnr) .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#oyaznjvrbo) .gt_font_italic {
+:where(#sotbpwkxnr) .gt_font_italic {
   font-style: italic;
 }
 
-:where(#oyaznjvrbo) .gt_super {
+:where(#sotbpwkxnr) .gt_super {
   font-size: 65%;
 }
 
-:where(#oyaznjvrbo) .gt_footnote_marks {
+:where(#sotbpwkxnr) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#oyaznjvrbo) .gt_asterisk {
+:where(#sotbpwkxnr) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#oyaznjvrbo) .gt_indent_1 {
+:where(#sotbpwkxnr) .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#oyaznjvrbo) .gt_indent_2 {
+:where(#sotbpwkxnr) .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#oyaznjvrbo) .gt_indent_3 {
+:where(#sotbpwkxnr) .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#oyaznjvrbo) .gt_indent_4 {
+:where(#sotbpwkxnr) .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#oyaznjvrbo) .gt_indent_5 {
+:where(#sotbpwkxnr) .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1016,8 +1141,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="international-trade" class="level2">
-<h2 class="anchored" data-anchor-id="international-trade">International Trade</h2>
+<section id="international-trade" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="international-trade"><span class="header-section-number">3.3.2</span> International Trade</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>trade_df_new <span class="ot">&lt;-</span> </span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  trade_df <span class="sc">%&gt;%</span> </span>
@@ -1076,8 +1201,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="tradable-vs-non-tradable-sectors" class="level2">
-<h2 class="anchored" data-anchor-id="tradable-vs-non-tradable-sectors">Tradable vs Non-Tradable Sectors</h2>
+<section id="tradable-vs-non-tradable-sectors" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="tradable-vs-non-tradable-sectors"><span class="header-section-number">3.3.3</span> Tradable vs Non-Tradable Sectors</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>tradables <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Agriculture"</span>, <span class="st">"Manufacturing"</span>, <span class="st">"Mining"</span>, <span class="st">"Water_Supply"</span>)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>df_fin</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1112,8 +1237,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="producer-price-inflation" class="level2">
-<h2 class="anchored" data-anchor-id="producer-price-inflation">Producer Price Inflation</h2>
+<section id="producer-price-inflation" class="level3" data-number="3.3.4">
+<h3 data-number="3.3.4" class="anchored" data-anchor-id="producer-price-inflation"><span class="header-section-number">3.3.4</span> Producer Price Inflation</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>pct_change <span class="ot">&lt;-</span> <span class="cf">function</span>(x){(x <span class="sc">/</span> <span class="fu">lag</span>(x, <span class="dv">12</span>) <span class="sc">-</span><span class="dv">1</span>)<span class="sc">*</span><span class="dv">100</span>}</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1153,8 +1278,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="financial-indicators-with-inflation-data" class="level2">
-<h2 class="anchored" data-anchor-id="financial-indicators-with-inflation-data">Financial Indicators with Inflation data</h2>
+<section id="financial-indicators-with-inflation-data" class="level3" data-number="3.3.5">
+<h3 data-number="3.3.5" class="anchored" data-anchor-id="financial-indicators-with-inflation-data"><span class="header-section-number">3.3.5</span> Financial Indicators with Inflation data</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inner_join</span>(bs_df_new <span class="sc">%&gt;%</span> </span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>sector_code, <span class="sc">-</span>group) <span class="sc">%&gt;%</span> </span>
@@ -1169,8 +1294,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="growth-dynamics" class="level2">
-<h2 class="anchored" data-anchor-id="growth-dynamics">Growth Dynamics</h2>
+<section id="growth-dynamics" class="level3" data-number="3.3.6">
+<h3 data-number="3.3.6" class="anchored" data-anchor-id="growth-dynamics"><span class="header-section-number">3.3.6</span> Growth Dynamics</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>gdp_df<span class="sc">$</span>pct_change <span class="ot">&lt;-</span> (gdp_df<span class="sc">$</span>gdp_index <span class="sc">/</span> <span class="fu">lag</span>(gdp_df<span class="sc">$</span>gdp_index, <span class="dv">1</span>) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="dv">100</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1251,10 +1376,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="eda_files/figure-html/growth-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+
+
+</section>
 </section>
 
-</main>
-<!-- /main column -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1388,7 +1515,21 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./dataprepturkstat.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Preparation</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center"><a href="https://mef-bda503.github.io">MEF BDA 503</a></div>
+  </div>
+</footer>
 
 
 
