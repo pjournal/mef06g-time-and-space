@@ -213,7 +213,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#economy-wide-financial-indicators" id="toc-economy-wide-financial-indicators" class="nav-link" data-scroll-target="#economy-wide-financial-indicators"><span class="toc-section-number">3.2.1</span>  Economy Wide Financial Indicators</a></li>
   <li><a href="#table-of-financial-indicators-for-the-economy-from-2009-to-2021" id="toc-table-of-financial-indicators-for-the-economy-from-2009-to-2021" class="nav-link" data-scroll-target="#table-of-financial-indicators-for-the-economy-from-2009-to-2021"><span class="toc-section-number">3.2.2</span>  Table of financial indicators for the economy from 2009 to 2021</a></li>
   <li><a href="#time-series-of-financial-indicators-for-each-sector" id="toc-time-series-of-financial-indicators-for-each-sector" class="nav-link" data-scroll-target="#time-series-of-financial-indicators-for-each-sector"><span class="toc-section-number">3.2.3</span>  Time Series of Financial Indicators for each sector</a></li>
-  <li><a href="#scatter-plots-of-financial-indicators" id="toc-scatter-plots-of-financial-indicators" class="nav-link" data-scroll-target="#scatter-plots-of-financial-indicators"><span class="toc-section-number">3.2.4</span>  Scatter Plots of financial Indicators</a></li>
+  <li><a href="#scatter-plots-of-financial-indicators" id="toc-scatter-plots-of-financial-indicators" class="nav-link" data-scroll-target="#scatter-plots-of-financial-indicators"><span class="toc-section-number">3.2.4</span>  Scatter Plots of Financial Indicators</a></li>
   <li><a href="#period-average-of-financial-indicators" id="toc-period-average-of-financial-indicators" class="nav-link" data-scroll-target="#period-average-of-financial-indicators"><span class="toc-section-number">3.2.5</span>  2009 - 2019 Period Average of Financial Indicators</a></li>
   <li><a href="#density-plots-of-financial-indicators" id="toc-density-plots-of-financial-indicators" class="nav-link" data-scroll-target="#density-plots-of-financial-indicators"><span class="toc-section-number">3.2.6</span>  Density Plots of Financial Indicators</a></li>
   </ul></li>
@@ -361,95 +361,98 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="table-of-financial-indicators-for-the-economy-from-2009-to-2021" class="level3" data-number="3.2.2">
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="table-of-financial-indicators-for-the-economy-from-2009-to-2021"><span class="header-section-number">3.2.2</span> Table of financial indicators for the economy from 2009 to 2021</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(bs_df_economy_graph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(bs_df_economy_graph) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Year"</span>, <span class="st">"Liquidity"</span>, <span class="st">"Leverage"</span>, <span class="st">"Profitability"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>bs_df_economy_graph[,<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(bs_df_economy_graph[,<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>], </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">FUN =</span> <span class="cf">function</span>(x) <span class="fu">round</span>(x<span class="sc">*</span><span class="dv">100</span>, <span class="dv">2</span>))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(bs_df_economy_graph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <thead>
 <tr class="header">
-<th style="text-align: right;">year</th>
-<th style="text-align: right;">liq_yearly</th>
-<th style="text-align: right;">lev_yearly</th>
-<th style="text-align: right;">pro_yearly</th>
+<th style="text-align: right;">Year</th>
+<th style="text-align: right;">Liquidity</th>
+<th style="text-align: right;">Leverage</th>
+<th style="text-align: right;">Profitability</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">2009</td>
-<td style="text-align: right;">1.327746</td>
-<td style="text-align: right;">0.4123277</td>
-<td style="text-align: right;">0.0297599</td>
+<td style="text-align: right;">132.77</td>
+<td style="text-align: right;">41.23</td>
+<td style="text-align: right;">2.98</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2010</td>
-<td style="text-align: right;">1.349660</td>
-<td style="text-align: right;">0.4130602</td>
-<td style="text-align: right;">0.0316230</td>
+<td style="text-align: right;">134.97</td>
+<td style="text-align: right;">41.31</td>
+<td style="text-align: right;">3.16</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">2011</td>
-<td style="text-align: right;">1.307404</td>
-<td style="text-align: right;">0.4259681</td>
-<td style="text-align: right;">0.0106499</td>
+<td style="text-align: right;">130.74</td>
+<td style="text-align: right;">42.60</td>
+<td style="text-align: right;">1.06</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2012</td>
-<td style="text-align: right;">1.307036</td>
-<td style="text-align: right;">0.4272080</td>
-<td style="text-align: right;">0.0316770</td>
+<td style="text-align: right;">130.70</td>
+<td style="text-align: right;">42.72</td>
+<td style="text-align: right;">3.17</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">2013</td>
-<td style="text-align: right;">1.286650</td>
-<td style="text-align: right;">0.4353433</td>
-<td style="text-align: right;">0.0173518</td>
+<td style="text-align: right;">128.67</td>
+<td style="text-align: right;">43.53</td>
+<td style="text-align: right;">1.74</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2014</td>
-<td style="text-align: right;">1.274723</td>
-<td style="text-align: right;">0.4369900</td>
-<td style="text-align: right;">0.0214444</td>
+<td style="text-align: right;">127.47</td>
+<td style="text-align: right;">43.70</td>
+<td style="text-align: right;">2.14</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">2015</td>
-<td style="text-align: right;">1.248119</td>
-<td style="text-align: right;">0.4415440</td>
-<td style="text-align: right;">0.0194942</td>
+<td style="text-align: right;">124.81</td>
+<td style="text-align: right;">44.15</td>
+<td style="text-align: right;">1.95</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2016</td>
-<td style="text-align: right;">1.231432</td>
-<td style="text-align: right;">0.4451709</td>
-<td style="text-align: right;">0.0122500</td>
+<td style="text-align: right;">123.14</td>
+<td style="text-align: right;">44.52</td>
+<td style="text-align: right;">1.23</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">2017</td>
-<td style="text-align: right;">1.236499</td>
-<td style="text-align: right;">0.4523106</td>
-<td style="text-align: right;">0.0256170</td>
+<td style="text-align: right;">123.65</td>
+<td style="text-align: right;">45.23</td>
+<td style="text-align: right;">2.56</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2018</td>
-<td style="text-align: right;">1.227019</td>
-<td style="text-align: right;">0.4619555</td>
-<td style="text-align: right;">0.0108466</td>
+<td style="text-align: right;">122.70</td>
+<td style="text-align: right;">46.20</td>
+<td style="text-align: right;">1.08</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">2019</td>
-<td style="text-align: right;">1.240280</td>
-<td style="text-align: right;">0.4604966</td>
-<td style="text-align: right;">0.0286920</td>
+<td style="text-align: right;">124.03</td>
+<td style="text-align: right;">46.05</td>
+<td style="text-align: right;">2.87</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2020</td>
-<td style="text-align: right;">1.274118</td>
-<td style="text-align: right;">0.4652337</td>
-<td style="text-align: right;">0.0209025</td>
+<td style="text-align: right;">127.41</td>
+<td style="text-align: right;">46.52</td>
+<td style="text-align: right;">2.09</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">2021</td>
-<td style="text-align: right;">1.284465</td>
-<td style="text-align: right;">0.4844731</td>
-<td style="text-align: right;">0.0183236</td>
+<td style="text-align: right;">128.45</td>
+<td style="text-align: right;">48.45</td>
+<td style="text-align: right;">1.83</td>
 </tr>
 </tbody>
 </table>
@@ -486,13 +489,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </section>
 <section id="scatter-plots-of-financial-indicators" class="level3" data-number="3.2.4">
-<h3 data-number="3.2.4" class="anchored" data-anchor-id="scatter-plots-of-financial-indicators"><span class="header-section-number">3.2.4</span> Scatter Plots of financial Indicators</h3>
+<h3 data-number="3.2.4" class="anchored" data-anchor-id="scatter-plots-of-financial-indicators"><span class="header-section-number">3.2.4</span> Scatter Plots of Financial Indicators</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>bs_df_new <span class="sc">%&gt;%</span> </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"Indicator"</span>, <span class="at">values_from =</span> <span class="st">"Value"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> leverage, <span class="at">y =</span> current_ratio, <span class="at">color =</span> sector_name)) <span class="sc">+</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">formula=</span> y<span class="sc">~</span>x, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">formula=</span> y<span class="sc">~</span>x, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Liquidity vs Leverage"</span>, <span class="at">y =</span> <span class="st">"Liquidity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="eda_files/figure-html/scatter_fi-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -500,7 +504,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"Indicator"</span>, <span class="at">values_from =</span> <span class="st">"Value"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> current_ratio, <span class="at">y =</span> return_on_assets, <span class="at">color =</span> sector_name)) <span class="sc">+</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">formula=</span> y<span class="sc">~</span>x, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">formula=</span> y<span class="sc">~</span>x, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Profitability vs Liquidity"</span>, <span class="at">y =</span> <span class="st">"Profitability"</span>, <span class="at">x =</span> <span class="st">"Liquidity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="eda_files/figure-html/scatter_fi-2.png" class="img-fluid" width="672"></p>
 </div>
@@ -508,7 +513,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"Indicator"</span>, <span class="at">values_from =</span> <span class="st">"Value"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> leverage, <span class="at">y =</span> return_on_assets, <span class="at">color =</span> sector_name)) <span class="sc">+</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">formula=</span> y<span class="sc">~</span>x, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">formula=</span> y<span class="sc">~</span>x, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Profitability vs Leverage"</span>, <span class="at">y =</span> <span class="st">"Profitability"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="eda_files/figure-html/scatter_fi-3.png" class="img-fluid" width="672"></p>
 </div>
@@ -532,7 +538,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"2009_2019_average"</span> <span class="ot">=</span> <span class="st">"liq_ave"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>sector_name, <span class="at">names_to =</span> <span class="st">"period"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sector_name, <span class="at">y =</span> value, <span class="at">fill =</span> <span class="fu">factor</span>(period))) <span class="sc">+</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge2"</span>)<span class="sc">+</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Sectors"</span>, <span class="at">x =</span> <span class="st">"Current Ratio"</span>, <span class="at">title =</span> <span class="st">"Liquidity Indicator"</span>, <span class="at">fill =</span> <span class="st">"Years"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="eda_files/figure-html/average_fi-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -595,9 +603,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>bs_df_ffi <span class="sc">%&gt;%</span> </span>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">c</span>(sector_name, year, fin_fra_index)) <span class="sc">%&gt;%</span> </span>
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">c</span>(sector_name, year), <span class="at">names_to =</span> <span class="st">"index"</span>, <span class="at">values_to =</span> <span class="st">"value"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> value, <span class="at">color =</span> sector_name)) <span class="sc">+</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> value)) <span class="sc">+</span></span>
 <span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sector_name, <span class="at">scales =</span> <span class="st">"free"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sector_name, <span class="at">scales =</span> <span class="st">"free"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="eda_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -631,12 +639,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(heatmap_df[,<span class="dv">5</span>]), <span class="fu">max</span>(heatmap_df[,<span class="dv">5</span>]))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="cihbwaruby" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="rhiajeoeet" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#cihbwaruby) .gt_table {
+:where(#rhiajeoeet) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -661,7 +669,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-:where(#cihbwaruby) .gt_heading {
+:where(#rhiajeoeet) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -673,12 +681,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#cihbwaruby) .gt_caption {
+:where(#rhiajeoeet) .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-:where(#cihbwaruby) .gt_title {
+:where(#rhiajeoeet) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -690,7 +698,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-:where(#cihbwaruby) .gt_subtitle {
+:where(#rhiajeoeet) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -702,13 +710,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-:where(#cihbwaruby) .gt_bottom_border {
+:where(#rhiajeoeet) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#cihbwaruby) .gt_col_headings {
+:where(#rhiajeoeet) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -723,7 +731,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#cihbwaruby) .gt_col_heading {
+:where(#rhiajeoeet) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -743,7 +751,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#cihbwaruby) .gt_column_spanner_outer {
+:where(#rhiajeoeet) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -755,15 +763,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-:where(#cihbwaruby) .gt_column_spanner_outer:first-child {
+:where(#rhiajeoeet) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#cihbwaruby) .gt_column_spanner_outer:last-child {
+:where(#rhiajeoeet) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#cihbwaruby) .gt_column_spanner {
+:where(#rhiajeoeet) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -775,7 +783,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-:where(#cihbwaruby) .gt_group_heading {
+:where(#rhiajeoeet) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -801,7 +809,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   text-align: left;
 }
 
-:where(#cihbwaruby) .gt_empty_group_heading {
+:where(#rhiajeoeet) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -816,15 +824,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#cihbwaruby) .gt_from_md > :first-child {
+:where(#rhiajeoeet) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#cihbwaruby) .gt_from_md > :last-child {
+:where(#rhiajeoeet) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#cihbwaruby) .gt_row {
+:where(#rhiajeoeet) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -843,7 +851,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#cihbwaruby) .gt_stub {
+:where(#rhiajeoeet) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -856,7 +864,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#cihbwaruby) .gt_stub_row_group {
+:where(#rhiajeoeet) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -870,11 +878,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-:where(#cihbwaruby) .gt_row_group_first td {
+:where(#rhiajeoeet) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#cihbwaruby) .gt_summary_row {
+:where(#rhiajeoeet) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -884,16 +892,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#cihbwaruby) .gt_first_summary_row {
+:where(#rhiajeoeet) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#cihbwaruby) .gt_first_summary_row.thick {
+:where(#rhiajeoeet) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#cihbwaruby) .gt_last_summary_row {
+:where(#rhiajeoeet) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -903,7 +911,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#cihbwaruby) .gt_grand_summary_row {
+:where(#rhiajeoeet) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -913,7 +921,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#cihbwaruby) .gt_first_grand_summary_row {
+:where(#rhiajeoeet) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -923,11 +931,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-:where(#cihbwaruby) .gt_striped {
+:where(#rhiajeoeet) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#cihbwaruby) .gt_table_body {
+:where(#rhiajeoeet) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -936,7 +944,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#cihbwaruby) .gt_footnotes {
+:where(#rhiajeoeet) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -950,7 +958,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#cihbwaruby) .gt_footnote {
+:where(#rhiajeoeet) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -959,7 +967,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#cihbwaruby) .gt_sourcenotes {
+:where(#rhiajeoeet) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -973,7 +981,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#cihbwaruby) .gt_sourcenote {
+:where(#rhiajeoeet) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -981,64 +989,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#cihbwaruby) .gt_left {
+:where(#rhiajeoeet) .gt_left {
   text-align: left;
 }
 
-:where(#cihbwaruby) .gt_center {
+:where(#rhiajeoeet) .gt_center {
   text-align: center;
 }
 
-:where(#cihbwaruby) .gt_right {
+:where(#rhiajeoeet) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#cihbwaruby) .gt_font_normal {
+:where(#rhiajeoeet) .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#cihbwaruby) .gt_font_bold {
+:where(#rhiajeoeet) .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#cihbwaruby) .gt_font_italic {
+:where(#rhiajeoeet) .gt_font_italic {
   font-style: italic;
 }
 
-:where(#cihbwaruby) .gt_super {
+:where(#rhiajeoeet) .gt_super {
   font-size: 65%;
 }
 
-:where(#cihbwaruby) .gt_footnote_marks {
+:where(#rhiajeoeet) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#cihbwaruby) .gt_asterisk {
+:where(#rhiajeoeet) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#cihbwaruby) .gt_indent_1 {
+:where(#rhiajeoeet) .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#cihbwaruby) .gt_indent_2 {
+:where(#rhiajeoeet) .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#cihbwaruby) .gt_indent_3 {
+:where(#rhiajeoeet) .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#cihbwaruby) .gt_indent_4 {
+:where(#rhiajeoeet) .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#cihbwaruby) .gt_indent_5 {
+:where(#rhiajeoeet) .gt_indent_5 {
   text-indent: 25px;
 }
 </style>

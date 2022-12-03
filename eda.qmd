@@ -123,6 +123,10 @@ bs_df_economy %>%
 ### Table of financial indicators for the economy from 2009 to 2021
 
 ```{r table_fi}
+
+colnames(bs_df_economy_graph) <- c("Year", "Liquidity", "Leverage", "Profitability")
+bs_df_economy_graph[,2:4] <- lapply(bs_df_economy_graph[,2:4], 
+                                    FUN = function(x) round(x*100, 2))
 kable(bs_df_economy_graph)
 ```
 
@@ -153,7 +157,7 @@ ggplot(data = bs_df_new[bs_df_new$Indicator == "return_on_assets",], aes(x = yea
 
 ```
 
-### Scatter Plots of financial Indicators
+### Scatter Plots of Financial Indicators
 
 ```{r scatter_fi}
 
@@ -161,19 +165,22 @@ bs_df_new %>%
   pivot_wider(names_from = "Indicator", values_from = "Value") %>% 
   ggplot(aes(x = leverage, y = current_ratio, color = sector_name)) +
   geom_point() + 
-  geom_smooth(method='lm', formula= y~x, se = FALSE)
+  geom_smooth(method='lm', formula= y~x, se = FALSE) +
+  labs(title = "Liquidity vs Leverage", y = "Liquidity")
 
 bs_df_new %>% 
   pivot_wider(names_from = "Indicator", values_from = "Value") %>% 
   ggplot(aes(x = current_ratio, y = return_on_assets, color = sector_name)) +
   geom_point() + 
-  geom_smooth(method='lm', formula= y~x, se = FALSE)
+  geom_smooth(method='lm', formula= y~x, se = FALSE) +
+  labs(title = "Profitability vs Liquidity", y = "Profitability", x = "Liquidity")
 
 bs_df_new %>% 
   pivot_wider(names_from = "Indicator", values_from = "Value") %>% 
   ggplot(aes(x = leverage, y = return_on_assets, color = sector_name)) +
   geom_point() + 
-  geom_smooth(method='lm', formula= y~x, se = FALSE)
+  geom_smooth(method='lm', formula= y~x, se = FALSE) + 
+  labs(title = "Profitability vs Leverage", y = "Profitability")
 
 ```
 
@@ -194,7 +201,9 @@ bs_df_new %>%
   rename("2009_2019_average" = "liq_ave") %>% 
   pivot_longer(-sector_name, names_to = "period") %>% 
   ggplot(aes(x = sector_name, y = value, fill = factor(period))) +
-  geom_col(position = "dodge2")
+  geom_col(position = "dodge2")+
+  coord_flip() +
+  labs(y = "Sectors", x = "Current Ratio", title = "Liquidity Indicator", fill = "Years")
 ```
 
 ### Density Plots of Financial Indicators
@@ -250,9 +259,9 @@ bs_df_ffi <- bs_df_new %>%
 bs_df_ffi %>% 
   select(c(sector_name, year, fin_fra_index)) %>% 
   pivot_longer(-c(sector_name, year), names_to = "index", values_to = "value") %>% 
-  ggplot(aes(x = year, y = value, color = sector_name)) +
+  ggplot(aes(x = year, y = value)) +
   geom_line() + 
-  facet_wrap(~sector_name, scales = "free")
+  facet_wrap(~sector_name, scales = "free") 
 
 ```
 ### Heatmap for 2021
