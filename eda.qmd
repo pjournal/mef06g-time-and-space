@@ -258,24 +258,30 @@ bs_df_ffi %>%
 ### Heatmap for 2021
 
 ```{r fi_heatmap}
-bs_df_economy %>% 
+heatmap_df <- bs_df_economy %>% 
   filter(year == 2021) %>% 
   select(sector_name, current_ratio, leverage, return_on_assets) %>% 
   mutate(ffi = bs_df_ffi %>% select(year, sector_name, fin_fra_index) %>% filter(year == 2021) %>% pull(fin_fra_index)) %>% 
-  arrange(desc(ffi)) %>% 
+  arrange(desc(ffi)) 
+
+colnames(heatmap_df) <- c("Sectors", "Liquidity", "Leverage", "Profitability", "Financial Fragility Index")
+
+heatmap_df[,2:5] <- lapply(heatmap_df[,2:5], FUN = function(x) round(x*100, 2))
+
+heatmap_df %>% 
   gt() %>% 
-  data_color(columns = current_ratio, 
+  data_color(columns = 'Liquidity', 
              colors = col_numeric(palette = c("red", "white", "green"), 
-                                  domain = c(min(current_ratio), max(current_ratio)))) %>% 
-  data_color(columns = leverage, 
+                                  domain = c(min(heatmap_df[,2]), max(heatmap_df[,2])))) %>% 
+  data_color(columns = 'Leverage', 
              colors = col_numeric(palette = c("green", "white", "red"), 
-                                  domain = c(min(leverage), max(leverage)))) %>% 
-  data_color(columns = return_on_assets, 
+                                  domain = c(min(heatmap_df[,3]), max(heatmap_df[,3])))) %>% 
+  data_color(columns = 'Profitability', 
              colors = col_numeric(palette = c("red", "white", "green"), 
-                                  domain = c(min(return_on_assets), max(return_on_assets)))) %>% 
-  data_color(columns = ffi, 
+                                  domain = c(min(heatmap_df[,4]), max(heatmap_df[,4])))) %>% 
+  data_color(columns = 'Financial Fragility Index', 
              colors = col_numeric(palette = c("green", "white", "red"), 
-                                  domain = c(min(ffi), max(ffi))))
+                                  domain = c(min(heatmap_df[,5]), max(heatmap_df[,5]))))
 ```
 
 
@@ -340,6 +346,14 @@ df_fin %>%
 
 ### Producer Price Inflation
 
+For each sector, average increases in producer prices (aka input costs) is calculated and given in the table below.
+
+Table shows average increases in input costs of sectors in Turkey from 2017 to 2021.
+
++ Top 3 sectors with highest average price increases are **Electricity-Gas**, **Manufacturing** and **Transportation** with average price increases %23.4, %20.2 and %19.5 consecutively.
+
++ Information sector is the one experiencing the lowest inrease in its inputs.
+
 ```{r ppi}
 
 pct_change <- function(x){(x / lag(x, 12) -1)*100}
@@ -359,11 +373,14 @@ year_end_inf$date <- year(year_end_inf$date)
 year_end_inf <- rename(year_end_inf, "year" = "date")
 
 #Average Inflation for the period 2018-2021
-year_end_inf %>% 
+table_inflation <- year_end_inf %>% 
   group_by(sector_name) %>% 
-  summarize(average_inflation = mean(inflation)) %>% 
+  summarize(average_inflation = round(mean(inflation),2)) %>% 
   arrange(desc(average_inflation))
 
+colnames(table_inflation) <- c("Sector Name", "Inflation (%, YoY)")
+
+kable(table_inflation, caption = "Average Increases in Input Costs")
 ```
 
 ### Financial Indicators with Inflation data

@@ -605,32 +605,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="heatmap-for-2021" class="level3" data-number="3.3.1">
 <h3 data-number="3.3.1" class="anchored" data-anchor-id="heatmap-for-2021"><span class="header-section-number">3.3.1</span> Heatmap for 2021</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>bs_df_economy <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>heatmap_df <span class="ot">&lt;-</span> bs_df_economy <span class="sc">%&gt;%</span> </span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2021</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sector_name, current_ratio, leverage, return_on_assets) <span class="sc">%&gt;%</span> </span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ffi =</span> bs_df_ffi <span class="sc">%&gt;%</span> <span class="fu">select</span>(year, sector_name, fin_fra_index) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2021</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(fin_fra_index)) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(ffi)) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(<span class="at">columns =</span> current_ratio, </span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">colors =</span> <span class="fu">col_numeric</span>(<span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"white"</span>, <span class="st">"green"</span>), </span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(current_ratio), <span class="fu">max</span>(current_ratio)))) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(<span class="at">columns =</span> leverage, </span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">colors =</span> <span class="fu">col_numeric</span>(<span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"green"</span>, <span class="st">"white"</span>, <span class="st">"red"</span>), </span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(leverage), <span class="fu">max</span>(leverage)))) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(<span class="at">columns =</span> return_on_assets, </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(ffi)) </span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(heatmap_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Sectors"</span>, <span class="st">"Liquidity"</span>, <span class="st">"Leverage"</span>, <span class="st">"Profitability"</span>, <span class="st">"Financial Fragility Index"</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>heatmap_df[,<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(heatmap_df[,<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">FUN =</span> <span class="cf">function</span>(x) <span class="fu">round</span>(x<span class="sc">*</span><span class="dv">100</span>, <span class="dv">2</span>))</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>heatmap_df <span class="sc">%&gt;%</span> </span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(<span class="at">columns =</span> <span class="st">'Liquidity'</span>, </span>
 <span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">colors =</span> <span class="fu">col_numeric</span>(<span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"white"</span>, <span class="st">"green"</span>), </span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(return_on_assets), <span class="fu">max</span>(return_on_assets)))) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(<span class="at">columns =</span> ffi, </span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(heatmap_df[,<span class="dv">2</span>]), <span class="fu">max</span>(heatmap_df[,<span class="dv">2</span>])))) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(<span class="at">columns =</span> <span class="st">'Leverage'</span>, </span>
 <span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">colors =</span> <span class="fu">col_numeric</span>(<span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"green"</span>, <span class="st">"white"</span>, <span class="st">"red"</span>), </span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(ffi), <span class="fu">max</span>(ffi))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(heatmap_df[,<span class="dv">3</span>]), <span class="fu">max</span>(heatmap_df[,<span class="dv">3</span>])))) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(<span class="at">columns =</span> <span class="st">'Profitability'</span>, </span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">colors =</span> <span class="fu">col_numeric</span>(<span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"white"</span>, <span class="st">"green"</span>), </span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(heatmap_df[,<span class="dv">4</span>]), <span class="fu">max</span>(heatmap_df[,<span class="dv">4</span>])))) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(<span class="at">columns =</span> <span class="st">'Financial Fragility Index'</span>, </span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>             <span class="at">colors =</span> <span class="fu">col_numeric</span>(<span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"green"</span>, <span class="st">"white"</span>, <span class="st">"red"</span>), </span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(heatmap_df[,<span class="dv">5</span>]), <span class="fu">max</span>(heatmap_df[,<span class="dv">5</span>]))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="sotbpwkxnr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="cihbwaruby" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#sotbpwkxnr) .gt_table {
+:where(#cihbwaruby) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -655,7 +661,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-:where(#sotbpwkxnr) .gt_heading {
+:where(#cihbwaruby) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -667,12 +673,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#sotbpwkxnr) .gt_caption {
+:where(#cihbwaruby) .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-:where(#sotbpwkxnr) .gt_title {
+:where(#cihbwaruby) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -684,7 +690,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-:where(#sotbpwkxnr) .gt_subtitle {
+:where(#cihbwaruby) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -696,13 +702,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-:where(#sotbpwkxnr) .gt_bottom_border {
+:where(#cihbwaruby) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#sotbpwkxnr) .gt_col_headings {
+:where(#cihbwaruby) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -717,7 +723,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#sotbpwkxnr) .gt_col_heading {
+:where(#cihbwaruby) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -737,7 +743,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#sotbpwkxnr) .gt_column_spanner_outer {
+:where(#cihbwaruby) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -749,15 +755,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-:where(#sotbpwkxnr) .gt_column_spanner_outer:first-child {
+:where(#cihbwaruby) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#sotbpwkxnr) .gt_column_spanner_outer:last-child {
+:where(#cihbwaruby) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#sotbpwkxnr) .gt_column_spanner {
+:where(#cihbwaruby) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -769,7 +775,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-:where(#sotbpwkxnr) .gt_group_heading {
+:where(#cihbwaruby) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -795,7 +801,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   text-align: left;
 }
 
-:where(#sotbpwkxnr) .gt_empty_group_heading {
+:where(#cihbwaruby) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -810,15 +816,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#sotbpwkxnr) .gt_from_md > :first-child {
+:where(#cihbwaruby) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#sotbpwkxnr) .gt_from_md > :last-child {
+:where(#cihbwaruby) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#sotbpwkxnr) .gt_row {
+:where(#cihbwaruby) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -837,7 +843,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#sotbpwkxnr) .gt_stub {
+:where(#cihbwaruby) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -850,7 +856,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#sotbpwkxnr) .gt_stub_row_group {
+:where(#cihbwaruby) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -864,11 +870,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-:where(#sotbpwkxnr) .gt_row_group_first td {
+:where(#cihbwaruby) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#sotbpwkxnr) .gt_summary_row {
+:where(#cihbwaruby) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -878,16 +884,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#sotbpwkxnr) .gt_first_summary_row {
+:where(#cihbwaruby) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#sotbpwkxnr) .gt_first_summary_row.thick {
+:where(#cihbwaruby) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#sotbpwkxnr) .gt_last_summary_row {
+:where(#cihbwaruby) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -897,7 +903,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#sotbpwkxnr) .gt_grand_summary_row {
+:where(#cihbwaruby) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -907,7 +913,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#sotbpwkxnr) .gt_first_grand_summary_row {
+:where(#cihbwaruby) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -917,11 +923,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-:where(#sotbpwkxnr) .gt_striped {
+:where(#cihbwaruby) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#sotbpwkxnr) .gt_table_body {
+:where(#cihbwaruby) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -930,7 +936,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#sotbpwkxnr) .gt_footnotes {
+:where(#cihbwaruby) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -944,7 +950,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#sotbpwkxnr) .gt_footnote {
+:where(#cihbwaruby) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -953,7 +959,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#sotbpwkxnr) .gt_sourcenotes {
+:where(#cihbwaruby) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -967,7 +973,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#sotbpwkxnr) .gt_sourcenote {
+:where(#cihbwaruby) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -975,64 +981,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#sotbpwkxnr) .gt_left {
+:where(#cihbwaruby) .gt_left {
   text-align: left;
 }
 
-:where(#sotbpwkxnr) .gt_center {
+:where(#cihbwaruby) .gt_center {
   text-align: center;
 }
 
-:where(#sotbpwkxnr) .gt_right {
+:where(#cihbwaruby) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#sotbpwkxnr) .gt_font_normal {
+:where(#cihbwaruby) .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#sotbpwkxnr) .gt_font_bold {
+:where(#cihbwaruby) .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#sotbpwkxnr) .gt_font_italic {
+:where(#cihbwaruby) .gt_font_italic {
   font-style: italic;
 }
 
-:where(#sotbpwkxnr) .gt_super {
+:where(#cihbwaruby) .gt_super {
   font-size: 65%;
 }
 
-:where(#sotbpwkxnr) .gt_footnote_marks {
+:where(#cihbwaruby) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#sotbpwkxnr) .gt_asterisk {
+:where(#cihbwaruby) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#sotbpwkxnr) .gt_indent_1 {
+:where(#cihbwaruby) .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#sotbpwkxnr) .gt_indent_2 {
+:where(#cihbwaruby) .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#sotbpwkxnr) .gt_indent_3 {
+:where(#cihbwaruby) .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#sotbpwkxnr) .gt_indent_4 {
+:where(#cihbwaruby) .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#sotbpwkxnr) .gt_indent_5 {
+:where(#cihbwaruby) .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1040,99 +1046,99 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   
   <thead class="gt_col_headings">
     <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="sector_name">sector_name</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="current_ratio">current_ratio</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="leverage">leverage</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="return_on_assets">return_on_assets</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ffi">ffi</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Sectors">Sectors</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Liquidity">Liquidity</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Leverage">Leverage</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Profitability">Profitability</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Financial Fragility Index">Financial Fragility Index</th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
-    <tr><td headers="sector_name" class="gt_row gt_left">Education</td>
-<td headers="current_ratio" class="gt_row gt_right" style="background-color: #FF0000; color: #FFFFFF;">0.8513287</td>
-<td headers="leverage" class="gt_row gt_right" style="background-color: #FF6A48; color: #FFFFFF;">0.6270500</td>
-<td headers="return_on_assets" class="gt_row gt_right" style="background-color: #E7FFDD; color: #000000;">0.026728970</td>
-<td headers="ffi" class="gt_row gt_right" style="background-color: #FF0000; color: #FFFFFF;">0.7500000</td></tr>
-    <tr><td headers="sector_name" class="gt_row gt_left">Entertainment</td>
-<td headers="current_ratio" class="gt_row gt_right" style="background-color: #FF7655; color: #FFFFFF;">0.9786535</td>
-<td headers="leverage" class="gt_row gt_right" style="background-color: #FFBDA8; color: #000000;">0.5481090</td>
-<td headers="return_on_assets" class="gt_row gt_right" style="background-color: #FF9E81; color: #000000;">-0.071409315</td>
-<td headers="ffi" class="gt_row gt_right" style="background-color: #FF2C15; color: #FFFFFF;">0.7291667</td></tr>
-    <tr><td headers="sector_name" class="gt_row gt_left">Other_Services</td>
-<td headers="current_ratio" class="gt_row gt_right" style="background-color: #FF8C6C; color: #000000;">1.0194223</td>
-<td headers="leverage" class="gt_row gt_right" style="background-color: #FF0000; color: #FFFFFF;">0.6783172</td>
-<td headers="return_on_assets" class="gt_row gt_right" style="background-color: #FAFFF8; color: #000000;">0.007324524</td>
-<td headers="ffi" class="gt_row gt_right" style="background-color: #FF2C15; color: #FFFFFF;">0.7291667</td></tr>
-    <tr><td headers="sector_name" class="gt_row gt_left">Accomodation_Food</td>
-<td headers="current_ratio" class="gt_row gt_right" style="background-color: #FF5A39; color: #FFFFFF;">0.9309089</td>
-<td headers="leverage" class="gt_row gt_right" style="background-color: #E8FFDF; color: #000000;">0.4488115</td>
-<td headers="return_on_assets" class="gt_row gt_right" style="background-color: #FF8B6B; color: #000000;">-0.084739127</td>
-<td headers="ffi" class="gt_row gt_right" style="background-color: #FF4124; color: #FFFFFF;">0.7083333</td></tr>
-    <tr><td headers="sector_name" class="gt_row gt_left">Real_Estate</td>
-<td headers="current_ratio" class="gt_row gt_right" style="background-color: #FF3D21; color: #FFFFFF;">0.8910129</td>
-<td headers="leverage" class="gt_row gt_right" style="background-color: #6BFF53; color: #000000;">0.3187830</td>
-<td headers="return_on_assets" class="gt_row gt_right" style="background-color: #FF0000; color: #FFFFFF;">-0.144458612</td>
-<td headers="ffi" class="gt_row gt_right" style="background-color: #FF6140; color: #FFFFFF;">0.6666667</td></tr>
-    <tr><td headers="sector_name" class="gt_row gt_left">Administrative_Activities</td>
-<td headers="current_ratio" class="gt_row gt_right" style="background-color: #FF9577; color: #000000;">1.0378954</td>
-<td headers="leverage" class="gt_row gt_right" style="background-color: #FFAA90; color: #000000;">0.5677059</td>
-<td headers="return_on_assets" class="gt_row gt_right" style="background-color: #F5FFF1; color: #000000;">0.012475174</td>
-<td headers="ffi" class="gt_row gt_right" style="background-color: #FF7B5A; color: #000000;">0.6250000</td></tr>
-    <tr><td headers="sector_name" class="gt_row gt_left">Electricity_Gas</td>
-<td headers="current_ratio" class="gt_row gt_right" style="background-color: #FF6544; color: #FFFFFF;">0.9493975</td>
-<td headers="leverage" class="gt_row gt_right" style="background-color: #8CFF73; color: #000000;">0.3451653</td>
-<td headers="return_on_assets" class="gt_row gt_right" style="background-color: #FF8969; color: #000000;">-0.086109962</td>
-<td headers="ffi" class="gt_row gt_right" style="background-color: #FF8767; color: #000000;">0.6041667</td></tr>
-    <tr><td headers="sector_name" class="gt_row gt_left">Transportation</td>
-<td headers="current_ratio" class="gt_row gt_right" style="background-color: #FF9E81; color: #000000;">1.0557122</td>
-<td headers="leverage" class="gt_row gt_right" style="background-color: #B0FF99; color: #000000;">0.3804782</td>
-<td headers="return_on_assets" class="gt_row gt_right" style="background-color: #FF7654; color: #FFFFFF;">-0.099015657</td>
-<td headers="ffi" class="gt_row gt_right" style="background-color: #FF9374; color: #000000;">0.5833333</td></tr>
-    <tr><td headers="sector_name" class="gt_row gt_left">Construction</td>
-<td headers="current_ratio" class="gt_row gt_right" style="background-color: #F6FFF2; color: #000000;">1.2866029</td>
-<td headers="leverage" class="gt_row gt_right" style="background-color: #FFCFBE; color: #000000;">0.5305977</td>
-<td headers="return_on_assets" class="gt_row gt_right" style="background-color: #FFF7F4; color: #000000;">-0.003961424</td>
-<td headers="ffi" class="gt_row gt_right" style="background-color: #FFB49C; color: #000000;">0.5208333</td></tr>
-    <tr><td headers="sector_name" class="gt_row gt_left">Professional_Activities</td>
-<td headers="current_ratio" class="gt_row gt_right" style="background-color: #FF6C4A; color: #FFFFFF;">0.9604684</td>
-<td headers="leverage" class="gt_row gt_right" style="background-color: #96FF7D; color: #000000;">0.3539636</td>
-<td headers="return_on_assets" class="gt_row gt_right" style="background-color: #FFF9F6; color: #000000;">-0.002791127</td>
-<td headers="ffi" class="gt_row gt_right" style="background-color: #FFB49C; color: #000000;">0.5208333</td></tr>
-    <tr><td headers="sector_name" class="gt_row gt_left">Water_Supply</td>
-<td headers="current_ratio" class="gt_row gt_right" style="background-color: #FFE4DA; color: #000000;">1.2021110</td>
-<td headers="leverage" class="gt_row gt_right" style="background-color: #FFC5B2; color: #000000;">0.5403685</td>
-<td headers="return_on_assets" class="gt_row gt_right" style="background-color: #E9FFE0; color: #000000;">0.024515339</td>
-<td headers="ffi" class="gt_row gt_right" style="background-color: #FFCAB8; color: #000000;">0.4791667</td></tr>
-    <tr><td headers="sector_name" class="gt_row gt_left">Agriculture</td>
-<td headers="current_ratio" class="gt_row gt_right" style="background-color: #FFF2EE; color: #000000;">1.2327000</td>
-<td headers="leverage" class="gt_row gt_right" style="background-color: #FFDDD0; color: #000000;">0.5161319</td>
-<td headers="return_on_assets" class="gt_row gt_right" style="background-color: #EBFFE3; color: #000000;">0.022578811</td>
-<td headers="ffi" class="gt_row gt_right" style="background-color: #FFDFD4; color: #000000;">0.4375000</td></tr>
-    <tr><td headers="sector_name" class="gt_row gt_left">Wholesale_Retail_Trade</td>
-<td headers="current_ratio" class="gt_row gt_right" style="background-color: #EBFFE3; color: #000000;">1.3176530</td>
-<td headers="leverage" class="gt_row gt_right" style="background-color: #FF6F4D; color: #FFFFFF;">0.6230487</td>
-<td headers="return_on_assets" class="gt_row gt_right" style="background-color: #DFFFD3; color: #000000;">0.034639654</td>
-<td headers="ffi" class="gt_row gt_right" style="background-color: #FFDFD4; color: #000000;">0.4375000</td></tr>
-    <tr><td headers="sector_name" class="gt_row gt_left">Health</td>
-<td headers="current_ratio" class="gt_row gt_right" style="background-color: #FFD3C4; color: #000000;">1.1662958</td>
-<td headers="leverage" class="gt_row gt_right" style="background-color: #C7FFB5; color: #000000;">0.4070348</td>
-<td headers="return_on_assets" class="gt_row gt_right" style="background-color: #D6FFC8; color: #000000;">0.042653461</td>
-<td headers="ffi" class="gt_row gt_right" style="background-color: #EFFFE9; color: #000000;">0.3333333</td></tr>
-    <tr><td headers="sector_name" class="gt_row gt_left">Manufacturing</td>
-<td headers="current_ratio" class="gt_row gt_right" style="background-color: #A5FF8D; color: #000000;">1.4898436</td>
-<td headers="leverage" class="gt_row gt_right" style="background-color: #FFFFFE; color: #000000;">0.4800610</td>
-<td headers="return_on_assets" class="gt_row gt_right" style="background-color: #B0FF99; color: #000000;">0.076245217</td>
-<td headers="ffi" class="gt_row gt_right" style="background-color: #C4FFB1; color: #000000;">0.2291667</td></tr>
-    <tr><td headers="sector_name" class="gt_row gt_left">Information</td>
-<td headers="current_ratio" class="gt_row gt_right" style="background-color: #77FF5E; color: #000000;">1.5752021</td>
-<td headers="leverage" class="gt_row gt_right" style="background-color: #A1FF89; color: #000000;">0.3648144</td>
-<td headers="return_on_assets" class="gt_row gt_right" style="background-color: #B6FFA1; color: #000000;">0.070989567</td>
-<td headers="ffi" class="gt_row gt_right" style="background-color: #9CFF83; color: #000000;">0.1458333</td></tr>
-    <tr><td headers="sector_name" class="gt_row gt_left">Mining</td>
-<td headers="current_ratio" class="gt_row gt_right" style="background-color: #00FF00; color: #000000;">1.6678189</td>
-<td headers="leverage" class="gt_row gt_right" style="background-color: #00FF00; color: #000000;">0.2828182</td>
-<td headers="return_on_assets" class="gt_row gt_right" style="background-color: #00FF00; color: #000000;">0.148600945</td>
-<td headers="ffi" class="gt_row gt_right" style="background-color: #00FF00; color: #000000;">0.0000000</td></tr>
+    <tr><td headers="Sectors" class="gt_row gt_left">Education</td>
+<td headers="Liquidity" class="gt_row gt_right" style="background-color: #FF0000; color: #FFFFFF;">85.13</td>
+<td headers="Leverage" class="gt_row gt_right" style="background-color: #FF6A48; color: #FFFFFF;">62.71</td>
+<td headers="Profitability" class="gt_row gt_right" style="background-color: #E7FFDD; color: #000000;">2.67</td>
+<td headers="Financial Fragility Index" class="gt_row gt_right" style="background-color: #FF0000; color: #FFFFFF;">75.00</td></tr>
+    <tr><td headers="Sectors" class="gt_row gt_left">Entertainment</td>
+<td headers="Liquidity" class="gt_row gt_right" style="background-color: #FF7655; color: #FFFFFF;">97.87</td>
+<td headers="Leverage" class="gt_row gt_right" style="background-color: #FFBDA8; color: #000000;">54.81</td>
+<td headers="Profitability" class="gt_row gt_right" style="background-color: #FF9E81; color: #000000;">-7.14</td>
+<td headers="Financial Fragility Index" class="gt_row gt_right" style="background-color: #FF2C15; color: #FFFFFF;">72.92</td></tr>
+    <tr><td headers="Sectors" class="gt_row gt_left">Other_Services</td>
+<td headers="Liquidity" class="gt_row gt_right" style="background-color: #FF8C6C; color: #000000;">101.94</td>
+<td headers="Leverage" class="gt_row gt_right" style="background-color: #FF0000; color: #FFFFFF;">67.83</td>
+<td headers="Profitability" class="gt_row gt_right" style="background-color: #FAFFF8; color: #000000;">0.73</td>
+<td headers="Financial Fragility Index" class="gt_row gt_right" style="background-color: #FF2C15; color: #FFFFFF;">72.92</td></tr>
+    <tr><td headers="Sectors" class="gt_row gt_left">Accomodation_Food</td>
+<td headers="Liquidity" class="gt_row gt_right" style="background-color: #FF5A39; color: #FFFFFF;">93.09</td>
+<td headers="Leverage" class="gt_row gt_right" style="background-color: #E8FFDF; color: #000000;">44.88</td>
+<td headers="Profitability" class="gt_row gt_right" style="background-color: #FF8B6B; color: #000000;">-8.47</td>
+<td headers="Financial Fragility Index" class="gt_row gt_right" style="background-color: #FF4124; color: #FFFFFF;">70.83</td></tr>
+    <tr><td headers="Sectors" class="gt_row gt_left">Real_Estate</td>
+<td headers="Liquidity" class="gt_row gt_right" style="background-color: #FF3D21; color: #FFFFFF;">89.10</td>
+<td headers="Leverage" class="gt_row gt_right" style="background-color: #6BFF53; color: #000000;">31.88</td>
+<td headers="Profitability" class="gt_row gt_right" style="background-color: #FF0000; color: #FFFFFF;">-14.45</td>
+<td headers="Financial Fragility Index" class="gt_row gt_right" style="background-color: #FF6140; color: #FFFFFF;">66.67</td></tr>
+    <tr><td headers="Sectors" class="gt_row gt_left">Administrative_Activities</td>
+<td headers="Liquidity" class="gt_row gt_right" style="background-color: #FF9577; color: #000000;">103.79</td>
+<td headers="Leverage" class="gt_row gt_right" style="background-color: #FFAA90; color: #000000;">56.77</td>
+<td headers="Profitability" class="gt_row gt_right" style="background-color: #F5FFF1; color: #000000;">1.25</td>
+<td headers="Financial Fragility Index" class="gt_row gt_right" style="background-color: #FF7B5A; color: #000000;">62.50</td></tr>
+    <tr><td headers="Sectors" class="gt_row gt_left">Electricity_Gas</td>
+<td headers="Liquidity" class="gt_row gt_right" style="background-color: #FF6544; color: #FFFFFF;">94.94</td>
+<td headers="Leverage" class="gt_row gt_right" style="background-color: #8CFF73; color: #000000;">34.52</td>
+<td headers="Profitability" class="gt_row gt_right" style="background-color: #FF8969; color: #000000;">-8.61</td>
+<td headers="Financial Fragility Index" class="gt_row gt_right" style="background-color: #FF8767; color: #000000;">60.42</td></tr>
+    <tr><td headers="Sectors" class="gt_row gt_left">Transportation</td>
+<td headers="Liquidity" class="gt_row gt_right" style="background-color: #FF9E81; color: #000000;">105.57</td>
+<td headers="Leverage" class="gt_row gt_right" style="background-color: #B0FF99; color: #000000;">38.05</td>
+<td headers="Profitability" class="gt_row gt_right" style="background-color: #FF7654; color: #FFFFFF;">-9.90</td>
+<td headers="Financial Fragility Index" class="gt_row gt_right" style="background-color: #FF9374; color: #000000;">58.33</td></tr>
+    <tr><td headers="Sectors" class="gt_row gt_left">Construction</td>
+<td headers="Liquidity" class="gt_row gt_right" style="background-color: #F6FFF2; color: #000000;">128.66</td>
+<td headers="Leverage" class="gt_row gt_right" style="background-color: #FFCFBE; color: #000000;">53.06</td>
+<td headers="Profitability" class="gt_row gt_right" style="background-color: #FFF7F4; color: #000000;">-0.40</td>
+<td headers="Financial Fragility Index" class="gt_row gt_right" style="background-color: #FFB49C; color: #000000;">52.08</td></tr>
+    <tr><td headers="Sectors" class="gt_row gt_left">Professional_Activities</td>
+<td headers="Liquidity" class="gt_row gt_right" style="background-color: #FF6C4A; color: #FFFFFF;">96.05</td>
+<td headers="Leverage" class="gt_row gt_right" style="background-color: #96FF7D; color: #000000;">35.40</td>
+<td headers="Profitability" class="gt_row gt_right" style="background-color: #FFF9F6; color: #000000;">-0.28</td>
+<td headers="Financial Fragility Index" class="gt_row gt_right" style="background-color: #FFB49C; color: #000000;">52.08</td></tr>
+    <tr><td headers="Sectors" class="gt_row gt_left">Water_Supply</td>
+<td headers="Liquidity" class="gt_row gt_right" style="background-color: #FFE4DA; color: #000000;">120.21</td>
+<td headers="Leverage" class="gt_row gt_right" style="background-color: #FFC5B2; color: #000000;">54.04</td>
+<td headers="Profitability" class="gt_row gt_right" style="background-color: #E9FFE0; color: #000000;">2.45</td>
+<td headers="Financial Fragility Index" class="gt_row gt_right" style="background-color: #FFCAB8; color: #000000;">47.92</td></tr>
+    <tr><td headers="Sectors" class="gt_row gt_left">Agriculture</td>
+<td headers="Liquidity" class="gt_row gt_right" style="background-color: #FFF2EE; color: #000000;">123.27</td>
+<td headers="Leverage" class="gt_row gt_right" style="background-color: #FFDDD0; color: #000000;">51.61</td>
+<td headers="Profitability" class="gt_row gt_right" style="background-color: #EBFFE3; color: #000000;">2.26</td>
+<td headers="Financial Fragility Index" class="gt_row gt_right" style="background-color: #FFDFD4; color: #000000;">43.75</td></tr>
+    <tr><td headers="Sectors" class="gt_row gt_left">Wholesale_Retail_Trade</td>
+<td headers="Liquidity" class="gt_row gt_right" style="background-color: #EBFFE3; color: #000000;">131.77</td>
+<td headers="Leverage" class="gt_row gt_right" style="background-color: #FF6F4D; color: #FFFFFF;">62.30</td>
+<td headers="Profitability" class="gt_row gt_right" style="background-color: #DFFFD3; color: #000000;">3.46</td>
+<td headers="Financial Fragility Index" class="gt_row gt_right" style="background-color: #FFDFD4; color: #000000;">43.75</td></tr>
+    <tr><td headers="Sectors" class="gt_row gt_left">Health</td>
+<td headers="Liquidity" class="gt_row gt_right" style="background-color: #FFD3C4; color: #000000;">116.63</td>
+<td headers="Leverage" class="gt_row gt_right" style="background-color: #C7FFB5; color: #000000;">40.70</td>
+<td headers="Profitability" class="gt_row gt_right" style="background-color: #D6FFC8; color: #000000;">4.27</td>
+<td headers="Financial Fragility Index" class="gt_row gt_right" style="background-color: #EFFFE9; color: #000000;">33.33</td></tr>
+    <tr><td headers="Sectors" class="gt_row gt_left">Manufacturing</td>
+<td headers="Liquidity" class="gt_row gt_right" style="background-color: #A5FF8D; color: #000000;">148.98</td>
+<td headers="Leverage" class="gt_row gt_right" style="background-color: #FFFFFF; color: #000000;">48.01</td>
+<td headers="Profitability" class="gt_row gt_right" style="background-color: #B0FF99; color: #000000;">7.62</td>
+<td headers="Financial Fragility Index" class="gt_row gt_right" style="background-color: #C4FFB1; color: #000000;">22.92</td></tr>
+    <tr><td headers="Sectors" class="gt_row gt_left">Information</td>
+<td headers="Liquidity" class="gt_row gt_right" style="background-color: #77FF5E; color: #000000;">157.52</td>
+<td headers="Leverage" class="gt_row gt_right" style="background-color: #A1FF89; color: #000000;">36.48</td>
+<td headers="Profitability" class="gt_row gt_right" style="background-color: #B6FFA1; color: #000000;">7.10</td>
+<td headers="Financial Fragility Index" class="gt_row gt_right" style="background-color: #9CFF83; color: #000000;">14.58</td></tr>
+    <tr><td headers="Sectors" class="gt_row gt_left">Mining</td>
+<td headers="Liquidity" class="gt_row gt_right" style="background-color: #00FF00; color: #000000;">166.78</td>
+<td headers="Leverage" class="gt_row gt_right" style="background-color: #00FF00; color: #000000;">28.28</td>
+<td headers="Profitability" class="gt_row gt_right" style="background-color: #00FF00; color: #000000;">14.86</td>
+<td headers="Financial Fragility Index" class="gt_row gt_right" style="background-color: #00FF00; color: #000000;">0.00</td></tr>
   </tbody>
   
   
@@ -1239,6 +1245,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="producer-price-inflation" class="level3" data-number="3.3.4">
 <h3 data-number="3.3.4" class="anchored" data-anchor-id="producer-price-inflation"><span class="header-section-number">3.3.4</span> Producer Price Inflation</h3>
+<p>For each sector, average increases in producer prices (aka input costs) is calculated and given in the table below.</p>
+<p>Table shows average increases in input costs of sectors in Turkey from 2017 to 2021.</p>
+<ul>
+<li><p>Top 3 sectors with highest average price increases are <strong>Electricity-Gas</strong>, <strong>Manufacturing</strong> and <strong>Transportation</strong> with average price increases %23.4, %20.2 and %19.5 consecutively.</p></li>
+<li><p>Information sector is the one experiencing the lowest inrease in its inputs.</p></li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>pct_change <span class="ot">&lt;-</span> <span class="cf">function</span>(x){(x <span class="sc">/</span> <span class="fu">lag</span>(x, <span class="dv">12</span>) <span class="sc">-</span><span class="dv">1</span>)<span class="sc">*</span><span class="dv">100</span>}</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1257,38 +1269,80 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>year_end_inf <span class="ot">&lt;-</span> <span class="fu">rename</span>(year_end_inf, <span class="st">"year"</span> <span class="ot">=</span> <span class="st">"date"</span>)</span>
 <span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="co">#Average Inflation for the period 2018-2021</span></span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>year_end_inf <span class="sc">%&gt;%</span> </span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>table_inflation <span class="ot">&lt;-</span> year_end_inf <span class="sc">%&gt;%</span> </span>
 <span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sector_name) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">average_inflation =</span> <span class="fu">mean</span>(inflation)) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average_inflation))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 2
-   sector_name               average_inflation
-   &lt;chr&gt;                                 &lt;dbl&gt;
- 1 Electricity_Gas                       23.4 
- 2 Manufacturing                         20.2 
- 3 Transportation                        19.5 
- 4 Administrative_Activities             17.9 
- 5 Accomodation_Food                     17.3 
- 6 Mining                                17.0 
- 7 Professional_Activities               14.4 
- 8 Real_Estate                           11.5 
- 9 Water_Supply                           9.76
-10 Information                            3.70</code></pre>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">average_inflation =</span> <span class="fu">round</span>(<span class="fu">mean</span>(inflation),<span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average_inflation))</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(table_inflation) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Sector Name"</span>, <span class="st">"Inflation (%, YoY)"</span>)</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(table_inflation, <span class="at">caption =</span> <span class="st">"Average Increases in Input Costs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<caption>Average Increases in Input Costs</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Sector Name</th>
+<th style="text-align: right;">Inflation (%, YoY)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Electricity_Gas</td>
+<td style="text-align: right;">23.44</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Manufacturing</td>
+<td style="text-align: right;">20.15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Transportation</td>
+<td style="text-align: right;">19.49</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Administrative_Activities</td>
+<td style="text-align: right;">17.89</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Accomodation_Food</td>
+<td style="text-align: right;">17.28</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mining</td>
+<td style="text-align: right;">17.04</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Professional_Activities</td>
+<td style="text-align: right;">14.38</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Real_Estate</td>
+<td style="text-align: right;">11.53</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Water_Supply</td>
+<td style="text-align: right;">9.76</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Information</td>
+<td style="text-align: right;">3.70</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </section>
 <section id="financial-indicators-with-inflation-data" class="level3" data-number="3.3.5">
 <h3 data-number="3.3.5" class="anchored" data-anchor-id="financial-indicators-with-inflation-data"><span class="header-section-number">3.3.5</span> Financial Indicators with Inflation data</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inner_join</span>(bs_df_new <span class="sc">%&gt;%</span> </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>sector_code, <span class="sc">-</span>group) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> Value) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">2018</span>), year_end_inf, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sector_name"</span>, <span class="st">"year"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(inflation <span class="sc">&lt;</span> <span class="dv">50</span>) <span class="sc">%&gt;%</span> <span class="co"># Omit outlier observation</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> inflation, <span class="at">y =</span> return_on_assets)) <span class="sc">+</span> </span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">formula=</span> y<span class="sc">~</span>x, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inner_join</span>(bs_df_new <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>sector_code, <span class="sc">-</span>group) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> Value) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">2018</span>), year_end_inf, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sector_name"</span>, <span class="st">"year"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(inflation <span class="sc">&lt;</span> <span class="dv">50</span>) <span class="sc">%&gt;%</span> <span class="co"># Omit outlier observation</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> inflation, <span class="at">y =</span> return_on_assets)) <span class="sc">+</span> </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">formula=</span> y<span class="sc">~</span>x, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="eda_files/figure-html/fi-ppi-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1297,16 +1351,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="growth-dynamics" class="level3" data-number="3.3.6">
 <h3 data-number="3.3.6" class="anchored" data-anchor-id="growth-dynamics"><span class="header-section-number">3.3.6</span> Growth Dynamics</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>gdp_df<span class="sc">$</span>pct_change <span class="ot">&lt;-</span> (gdp_df<span class="sc">$</span>gdp_index <span class="sc">/</span> <span class="fu">lag</span>(gdp_df<span class="sc">$</span>gdp_index, <span class="dv">1</span>) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>gdp_df <span class="ot">&lt;-</span> gdp_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(pct_change) <span class="sc">&amp;</span> year <span class="sc">&gt;=</span> <span class="dv">2009</span>)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Real GDP Growth Summary Table </span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>gdp_df_tb <span class="ot">&lt;-</span> gdp_df</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="fu">setDT</span>(gdp_df)</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>gdp_df[, <span class="fu">as.list</span>(<span class="fu">summary</span>(pct_change)), by <span class="ot">=</span> sector]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>gdp_df<span class="sc">$</span>pct_change <span class="ot">&lt;-</span> (gdp_df<span class="sc">$</span>gdp_index <span class="sc">/</span> <span class="fu">lag</span>(gdp_df<span class="sc">$</span>gdp_index, <span class="dv">1</span>) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>gdp_df <span class="ot">&lt;-</span> gdp_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(pct_change) <span class="sc">&amp;</span> year <span class="sc">&gt;=</span> <span class="dv">2009</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Real GDP Growth Summary Table </span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>gdp_df_tb <span class="ot">&lt;-</span> gdp_df</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="fu">setDT</span>(gdp_df)</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>gdp_df[, <span class="fu">as.list</span>(<span class="fu">summary</span>(pct_change)), by <span class="ot">=</span> sector]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                                                            sector
  1:                                                                          Total
@@ -1335,43 +1389,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 11:   1.2629144  2.9946977 4.645327 4.531002  5.360318 10.147852
 12:  -0.3814016  4.2987391 5.805904 7.307440  8.562325 24.807844</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>gdp_df_tb<span class="sc">$</span>sector <span class="ot">&lt;-</span> gdp_df_tb <span class="sc">%&gt;%</span> </span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>gdp_index) <span class="sc">%&gt;%</span> .<span class="sc">$</span>sector <span class="sc">%&gt;%</span> <span class="fu">gsub</span>(<span class="st">"-.*"</span>, <span class="st">""</span>, .)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>bs_df_new <span class="ot">&lt;-</span> bs_df_new <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> Value) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(bs_df_ffi <span class="sc">%&gt;%</span> <span class="fu">select</span>(sector_code, year, fin_fra_index), <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sector_code"</span>, <span class="st">"year"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">c</span>(sector_code <span class="sc">:</span> year), <span class="at">names_to =</span> <span class="st">"Indicator"</span>, <span class="at">values_to =</span> <span class="st">"Value"</span>)</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>fin_ind_group <span class="ot">&lt;-</span> bs_df_new <span class="sc">%&gt;%</span> </span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sector_code, year, Indicator, Value) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">case_when</span>(sector_code <span class="sc">==</span> <span class="st">"A"</span> <span class="sc">~</span> <span class="st">"A"</span>, </span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>) <span class="sc">~</span> <span class="st">"BCDE"</span>, </span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">==</span> <span class="st">"F"</span> <span class="sc">~</span> <span class="st">"F"</span>,</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"G"</span>, <span class="st">"H"</span>, <span class="st">"I"</span>) <span class="sc">~</span> <span class="st">"GHI"</span>,</span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">==</span> <span class="st">"J"</span> <span class="sc">~</span> <span class="st">"J"</span>,</span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">==</span> <span class="st">"L"</span> <span class="sc">~</span> <span class="st">"L"</span>,</span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"M"</span>, <span class="st">"N"</span>) <span class="sc">~</span> <span class="st">"MN"</span>,</span>
-<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>            <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"other"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(group <span class="sc">!=</span> <span class="st">"other"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(bs_df <span class="sc">%&gt;%</span> <span class="fu">select</span>(sector_code, year, Total_assets), Total_assets, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sector_code"</span>, <span class="st">"year"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>sector_code) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group, year, Indicator) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">value =</span> <span class="fu">weighted.mean</span>(Value, Total_assets)) <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> value)</span>
-<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>header <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"BCDE"</span>, <span class="st">"F"</span>, <span class="st">"GHI"</span>, <span class="st">"J"</span>, <span class="st">"L"</span>, <span class="st">"MN"</span>)</span>
-<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Agriculture"</span>, <span class="st">"Industry"</span>, <span class="st">"Construction"</span>, <span class="st">"Services"</span>, <span class="st">"Information"</span>, <span class="st">"Real Estate"</span>, <span class="st">"Other Services"</span>)</span>
-<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>growth_info <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(header, names)</span>
-<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>growth_df <span class="ot">&lt;-</span> <span class="fu">left_join</span>(fin_ind_group, gdp_df_tb <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>gdp_index),<span class="at">by =</span> <span class="fu">c</span>(<span class="st">"group"</span> <span class="ot">=</span> <span class="st">"sector"</span>, <span class="st">"year"</span>))</span>
-<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>growth_df <span class="ot">&lt;-</span> growth_df <span class="sc">%&gt;%</span> </span>
-<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(growth_info, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"group"</span> <span class="ot">=</span> <span class="st">"header"</span>))</span>
-<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a>growth_df <span class="sc">%&gt;%</span> </span>
-<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">lag</span>(pct_change,<span class="dv">1</span>), fin_fra_index)) <span class="sc">+</span></span>
-<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>names,  <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span> </span>
-<span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">formula=</span> y<span class="sc">~</span>x, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>gdp_df_tb<span class="sc">$</span>sector <span class="ot">&lt;-</span> gdp_df_tb <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>gdp_index) <span class="sc">%&gt;%</span> .<span class="sc">$</span>sector <span class="sc">%&gt;%</span> <span class="fu">gsub</span>(<span class="st">"-.*"</span>, <span class="st">""</span>, .)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>bs_df_new <span class="ot">&lt;-</span> bs_df_new <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> Value) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(bs_df_ffi <span class="sc">%&gt;%</span> <span class="fu">select</span>(sector_code, year, fin_fra_index), <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sector_code"</span>, <span class="st">"year"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">c</span>(sector_code <span class="sc">:</span> year), <span class="at">names_to =</span> <span class="st">"Indicator"</span>, <span class="at">values_to =</span> <span class="st">"Value"</span>)</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>fin_ind_group <span class="ot">&lt;-</span> bs_df_new <span class="sc">%&gt;%</span> </span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sector_code, year, Indicator, Value) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">case_when</span>(sector_code <span class="sc">==</span> <span class="st">"A"</span> <span class="sc">~</span> <span class="st">"A"</span>, </span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>) <span class="sc">~</span> <span class="st">"BCDE"</span>, </span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">==</span> <span class="st">"F"</span> <span class="sc">~</span> <span class="st">"F"</span>,</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"G"</span>, <span class="st">"H"</span>, <span class="st">"I"</span>) <span class="sc">~</span> <span class="st">"GHI"</span>,</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">==</span> <span class="st">"J"</span> <span class="sc">~</span> <span class="st">"J"</span>,</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">==</span> <span class="st">"L"</span> <span class="sc">~</span> <span class="st">"L"</span>,</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"M"</span>, <span class="st">"N"</span>) <span class="sc">~</span> <span class="st">"MN"</span>,</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>            <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"other"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(group <span class="sc">!=</span> <span class="st">"other"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(bs_df <span class="sc">%&gt;%</span> <span class="fu">select</span>(sector_code, year, Total_assets), Total_assets, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sector_code"</span>, <span class="st">"year"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>sector_code) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group, year, Indicator) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">value =</span> <span class="fu">weighted.mean</span>(Value, Total_assets)) <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> value)</span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>header <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"BCDE"</span>, <span class="st">"F"</span>, <span class="st">"GHI"</span>, <span class="st">"J"</span>, <span class="st">"L"</span>, <span class="st">"MN"</span>)</span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Agriculture"</span>, <span class="st">"Industry"</span>, <span class="st">"Construction"</span>, <span class="st">"Services"</span>, <span class="st">"Information"</span>, <span class="st">"Real Estate"</span>, <span class="st">"Other Services"</span>)</span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>growth_info <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(header, names)</span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>growth_df <span class="ot">&lt;-</span> <span class="fu">left_join</span>(fin_ind_group, gdp_df_tb <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>gdp_index),<span class="at">by =</span> <span class="fu">c</span>(<span class="st">"group"</span> <span class="ot">=</span> <span class="st">"sector"</span>, <span class="st">"year"</span>))</span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>growth_df <span class="ot">&lt;-</span> growth_df <span class="sc">%&gt;%</span> </span>
+<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(growth_info, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"group"</span> <span class="ot">=</span> <span class="st">"header"</span>))</span>
+<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a>growth_df <span class="sc">%&gt;%</span> </span>
+<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">lag</span>(pct_change,<span class="dv">1</span>), fin_fra_index)) <span class="sc">+</span></span>
+<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>names,  <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span> </span>
+<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">formula=</span> y<span class="sc">~</span>x, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="eda_files/figure-html/growth-1.png" class="img-fluid" width="672"></p>
 </div>

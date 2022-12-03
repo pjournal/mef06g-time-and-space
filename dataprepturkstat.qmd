@@ -309,6 +309,7 @@ gdp %>% head()
 ```
 
 ### **International Trade Data**: Terms of Trade, Export and Import
+
 ```{r Trade, message = FALSE, warning=FALSE}
 # Read Terms of Trade Data
 tot <- 
