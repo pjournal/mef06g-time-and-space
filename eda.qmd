@@ -24,6 +24,8 @@ library(rmarkdown)
 library(quarto)
 library(knitr)
 library(data.table)
+library(ggthemes)
+library(viridis)
 ```
 
 ### Load Necessary Datasets for EDA
@@ -82,7 +84,7 @@ bs_df_new <- bs_df_new %>%
 
 ```
 
-### Economy Wide Financial Indicators
+### Basic Financial Indicators of Turkish Economy
 
 ```{r economy, message=FALSE, warning=FALSE}
 
@@ -185,7 +187,10 @@ bs_df_new %>%
 ```
 
 ### 2009 - 2019 Period Average of Financial Indicators
-```{r average_fi}
+
+Liquidity Indicator
+
+```{r liq_ave}
 bs_df_average <-  bs_df_new %>% 
   pivot_wider(names_from = Indicator, values_from = Value) %>% 
   filter(year %in% 2009:2019) %>% 
@@ -203,7 +208,41 @@ bs_df_new %>%
   ggplot(aes(x = sector_name, y = value, fill = factor(period))) +
   geom_col(position = "dodge2")+
   coord_flip() +
-  labs(y = "Sectors", x = "Current Ratio", title = "Liquidity Indicator", fill = "Years")
+  labs(y = "Sectors", x = "Current Ratio", title = "Liquidity Indicator", fill = "Years") 
+```
+
+Leverage Indicator
+
+```{r lev_ave}
+bs_df_new %>% 
+  pivot_wider(names_from = Indicator, values_from = Value) %>% 
+  filter(year %in% 2020:2021) %>% 
+  select(c(sector_name, year, leverage)) %>% 
+  pivot_wider(names_from = year, values_from = leverage) %>% 
+  left_join(bs_df_average[,c("sector_name", "lev_ave")], by = "sector_name") %>% 
+  rename("2009_2019_average" = "lev_ave") %>% 
+  pivot_longer(-sector_name, names_to = "period") %>% 
+  ggplot(aes(x = sector_name, y = value, fill = factor(period))) +
+  geom_col(position = "dodge2")+
+  coord_flip() +
+  labs(y = "Leverage", x = "Sectors", title = "Leverage Indicator", fill = "Years") 
+```
+
+Profitability Indicator
+
+```{r pro_ave}
+bs_df_new %>% 
+  pivot_wider(names_from = Indicator, values_from = Value) %>% 
+  filter(year %in% 2020:2021) %>% 
+  select(c(sector_name, year, return_on_assets)) %>% 
+  pivot_wider(names_from = year, values_from = return_on_assets) %>% 
+  left_join(bs_df_average[,c("sector_name", "pro_ave")], by = "sector_name") %>% 
+  rename("2009_2019_average" = "pro_ave") %>% 
+  pivot_longer(-sector_name, names_to = "period") %>% 
+  ggplot(aes(x = sector_name, y = value, fill = factor(period))) +
+  geom_col(position = "dodge2")+
+  coord_flip() +
+  labs(y = "Profitability", x = "Sectors", title = "Return on Assets", fill = "Years") 
 ```
 
 ### Density Plots of Financial Indicators
@@ -217,7 +256,8 @@ bs_df_new %>% pivot_wider(names_from = Indicator, values_from = Value) %>%
   stat_density_ridges(quantile_lines = FALSE,
                       calc_ecdf = TRUE,
                       geom = "density_ridges_gradient", rel_min_height = 0.005) +
-  scale_fill_brewer(name = "")
+  scale_fill_brewer(name = "") +
+  labs(y = "Year", x = "Liquidity")
 
 # Leverage
 bs_df_new %>% pivot_wider(names_from = Indicator, values_from = Value) %>% 
@@ -227,7 +267,8 @@ bs_df_new %>% pivot_wider(names_from = Indicator, values_from = Value) %>%
   stat_density_ridges(quantile_lines = FALSE,
                       calc_ecdf = TRUE,
                       geom = "density_ridges_gradient", rel_min_height = 0.005) +
-  scale_fill_brewer(name = "")
+  scale_fill_brewer(name = "") +
+  labs(y = "Year", x = "Leverage")
 
 # Profitability
 bs_df_new %>% pivot_wider(names_from = Indicator, values_from = Value) %>% 
@@ -237,7 +278,8 @@ bs_df_new %>% pivot_wider(names_from = Indicator, values_from = Value) %>%
   stat_density_ridges(quantile_lines = FALSE,
                       calc_ecdf = TRUE,
                       geom = "density_ridges_gradient", rel_min_height = 0.005) +
-  scale_fill_brewer(name = "")
+  scale_fill_brewer(name = "") + 
+  labs(y = "Year", x = "Return on Assets")
 
 ```
 
