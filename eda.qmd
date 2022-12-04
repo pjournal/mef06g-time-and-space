@@ -528,3 +528,64 @@ growth_df %>%
   geom_smooth(method='lm', formula= y~x, se = FALSE)
   
 ```
+
+## Sectoral Gender Distribution
+```{r}
+#Gender distribution in main sectors that are agriculture, construction, industry and services.
+emp_data <- readRDS("docs/Project_Data/employment.rds")
+
+tablo <- emp_data %>%
+  group_by(group, gender) %>%
+  arrange(sector_name) %>%
+  mutate("value") %>%
+  summarise(value=sum(number))
+
+tablo
+
+ggplot(tablo, aes(x=group, y=value, fill=gender)) +
+    geom_bar(stat='identity', position='dodge')
+
+
+
+```
+
+
+```{r}
+#Detailed gender distribution
+emp_data <- readRDS("docs/Project_Data/employment.rds")
+
+tablo_2 <- emp_data %>%
+  group_by(sector_name, gender) %>%
+  arrange(sector_name) %>%
+  mutate("value") %>%
+  summarise(value=sum(number))
+
+ggplot(tablo_2, aes(x=sector_name, y=value, fill=gender)) +
+    geom_bar(stat='identity', position='dodge') + 
+    theme(axis.text.x = element_text(angle=90, hjust=1))
+
+```
+
+
+```{r}
+#Percentage of the number of employees in the sectors
+emp_data <- readRDS("docs/Project_Data/employment.rds")
+
+tablo_3 <- emp_data %>%
+  group_by(sector_name) %>%
+  arrange(sector_name) %>%
+  mutate("value") %>%
+  summarise(value=sum(number))
+
+total = sum(tablo_3$value)
+
+tablo_4 <- tablo_3 %>%
+  group_by(sector_name) %>%
+  arrange(sector_name) %>%
+  mutate("percentage") %>%
+  summarise(percentage=100*value/total)
+
+tablo_4
+
+```
+
