@@ -210,7 +210,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   <li><a href="#financial-indicators" id="toc-financial-indicators" class="nav-link" data-scroll-target="#financial-indicators"><span class="toc-section-number">3.2</span>  Financial Indicators</a>
   <ul class="collapse">
-  <li><a href="#economy-wide-financial-indicators" id="toc-economy-wide-financial-indicators" class="nav-link" data-scroll-target="#economy-wide-financial-indicators"><span class="toc-section-number">3.2.1</span>  Economy Wide Financial Indicators</a></li>
+  <li><a href="#basic-financial-indicators-of-turkish-economy" id="toc-basic-financial-indicators-of-turkish-economy" class="nav-link" data-scroll-target="#basic-financial-indicators-of-turkish-economy"><span class="toc-section-number">3.2.1</span>  Basic Financial Indicators of Turkish Economy</a></li>
   <li><a href="#table-of-financial-indicators-for-the-economy-from-2009-to-2021" id="toc-table-of-financial-indicators-for-the-economy-from-2009-to-2021" class="nav-link" data-scroll-target="#table-of-financial-indicators-for-the-economy-from-2009-to-2021"><span class="toc-section-number">3.2.2</span>  Table of financial indicators for the economy from 2009 to 2021</a></li>
   <li><a href="#time-series-of-financial-indicators-for-each-sector" id="toc-time-series-of-financial-indicators-for-each-sector" class="nav-link" data-scroll-target="#time-series-of-financial-indicators-for-each-sector"><span class="toc-section-number">3.2.3</span>  Time Series of Financial Indicators for each sector</a></li>
   <li><a href="#scatter-plots-of-financial-indicators" id="toc-scatter-plots-of-financial-indicators" class="nav-link" data-scroll-target="#scatter-plots-of-financial-indicators"><span class="toc-section-number">3.2.4</span>  Scatter Plots of Financial Indicators</a></li>
@@ -265,7 +265,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rmarkdown)</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quarto)</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="load-necessary-datasets-for-eda" class="level3" data-number="3.1.2">
@@ -317,8 +319,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Indicator"</span>, </span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Value"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="economy-wide-financial-indicators" class="level3" data-number="3.2.1">
-<h3 data-number="3.2.1" class="anchored" data-anchor-id="economy-wide-financial-indicators"><span class="header-section-number">3.2.1</span> Economy Wide Financial Indicators</h3>
+<section id="basic-financial-indicators-of-turkish-economy" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="basic-financial-indicators-of-turkish-economy"><span class="header-section-number">3.2.1</span> Basic Financial Indicators of Turkish Economy</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculation and plot of weighted average financial indicators</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>bs_df_economy <span class="ot">&lt;-</span> bs_df <span class="sc">%&gt;%</span> </span>
@@ -522,6 +524,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="period-average-of-financial-indicators" class="level3" data-number="3.2.5">
 <h3 data-number="3.2.5" class="anchored" data-anchor-id="period-average-of-financial-indicators"><span class="header-section-number">3.2.5</span> 2009 - 2019 Period Average of Financial Indicators</h3>
+<p>Liquidity Indicator</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>bs_df_average <span class="ot">&lt;-</span>  bs_df_new <span class="sc">%&gt;%</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> Value) <span class="sc">%&gt;%</span> </span>
@@ -540,48 +543,87 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sector_name, <span class="at">y =</span> value, <span class="at">fill =</span> <span class="fu">factor</span>(period))) <span class="sc">+</span></span>
 <span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge2"</span>)<span class="sc">+</span></span>
 <span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Sectors"</span>, <span class="at">x =</span> <span class="st">"Current Ratio"</span>, <span class="at">title =</span> <span class="st">"Liquidity Indicator"</span>, <span class="at">fill =</span> <span class="st">"Years"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Sectors"</span>, <span class="at">x =</span> <span class="st">"Current Ratio"</span>, <span class="at">title =</span> <span class="st">"Liquidity Indicator"</span>, <span class="at">fill =</span> <span class="st">"Years"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="eda_files/figure-html/average_fi-1.png" class="img-fluid" width="672"></p>
+<p><img src="eda_files/figure-html/liq_ave-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Leverage Indicator</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>bs_df_new <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> Value) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="dv">2020</span><span class="sc">:</span><span class="dv">2021</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">c</span>(sector_name, year, leverage)) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> year, <span class="at">values_from =</span> leverage) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(bs_df_average[,<span class="fu">c</span>(<span class="st">"sector_name"</span>, <span class="st">"lev_ave"</span>)], <span class="at">by =</span> <span class="st">"sector_name"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"2009_2019_average"</span> <span class="ot">=</span> <span class="st">"lev_ave"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>sector_name, <span class="at">names_to =</span> <span class="st">"period"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sector_name, <span class="at">y =</span> value, <span class="at">fill =</span> <span class="fu">factor</span>(period))) <span class="sc">+</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge2"</span>)<span class="sc">+</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Leverage"</span>, <span class="at">x =</span> <span class="st">"Sectors"</span>, <span class="at">title =</span> <span class="st">"Leverage Indicator"</span>, <span class="at">fill =</span> <span class="st">"Years"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="eda_files/figure-html/lev_ave-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Profitability Indicator</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>bs_df_new <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> Value) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="dv">2020</span><span class="sc">:</span><span class="dv">2021</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">c</span>(sector_name, year, return_on_assets)) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> year, <span class="at">values_from =</span> return_on_assets) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(bs_df_average[,<span class="fu">c</span>(<span class="st">"sector_name"</span>, <span class="st">"pro_ave"</span>)], <span class="at">by =</span> <span class="st">"sector_name"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"2009_2019_average"</span> <span class="ot">=</span> <span class="st">"pro_ave"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>sector_name, <span class="at">names_to =</span> <span class="st">"period"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sector_name, <span class="at">y =</span> value, <span class="at">fill =</span> <span class="fu">factor</span>(period))) <span class="sc">+</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge2"</span>)<span class="sc">+</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Profitability"</span>, <span class="at">x =</span> <span class="st">"Sectors"</span>, <span class="at">title =</span> <span class="st">"Return on Assets"</span>, <span class="at">fill =</span> <span class="st">"Years"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="eda_files/figure-html/pro_ave-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
 <section id="density-plots-of-financial-indicators" class="level3" data-number="3.2.6">
 <h3 data-number="3.2.6" class="anchored" data-anchor-id="density-plots-of-financial-indicators"><span class="header-section-number">3.2.6</span> Density Plots of Financial Indicators</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Liquidity</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>bs_df_new <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> Value) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, current_ratio) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(year) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> current_ratio, <span class="at">y =</span> <span class="fu">factor</span>(year), <span class="at">fill =</span> <span class="fu">stat</span>(quantile))) <span class="sc">+</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_density_ridges</span>(<span class="at">quantile_lines =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">calc_ecdf =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">geom =</span> <span class="st">"density_ridges_gradient"</span>, <span class="at">rel_min_height =</span> <span class="fl">0.005</span>) <span class="sc">+</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">name =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Leverage</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>bs_df_new <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> Value) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, leverage) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(year) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> leverage, <span class="at">y =</span> <span class="fu">factor</span>(year), <span class="at">fill =</span> <span class="fu">stat</span>(quantile))) <span class="sc">+</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_density_ridges</span>(<span class="at">quantile_lines =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">calc_ecdf =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">geom =</span> <span class="st">"density_ridges_gradient"</span>, <span class="at">rel_min_height =</span> <span class="fl">0.005</span>) <span class="sc">+</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">name =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Profitability</span></span>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Liquidity</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>bs_df_new <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> Value) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, return_on_assets) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, current_ratio) <span class="sc">%&gt;%</span> </span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(year) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> return_on_assets, <span class="at">y =</span> <span class="fu">factor</span>(year), <span class="at">fill =</span> <span class="fu">stat</span>(quantile))) <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> current_ratio, <span class="at">y =</span> <span class="fu">factor</span>(year), <span class="at">fill =</span> <span class="fu">stat</span>(quantile))) <span class="sc">+</span></span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_density_ridges</span>(<span class="at">quantile_lines =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">calc_ecdf =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">geom =</span> <span class="st">"density_ridges_gradient"</span>, <span class="at">rel_min_height =</span> <span class="fl">0.005</span>) <span class="sc">+</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">name =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">name =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Year"</span>, <span class="at">x =</span> <span class="st">"Liquidity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="eda_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Leverage</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>bs_df_new <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> Value) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, leverage) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(year) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> leverage, <span class="at">y =</span> <span class="fu">factor</span>(year), <span class="at">fill =</span> <span class="fu">stat</span>(quantile))) <span class="sc">+</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_density_ridges</span>(<span class="at">quantile_lines =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">calc_ecdf =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">geom =</span> <span class="st">"density_ridges_gradient"</span>, <span class="at">rel_min_height =</span> <span class="fl">0.005</span>) <span class="sc">+</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">name =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Year"</span>, <span class="at">x =</span> <span class="st">"Leverage"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="eda_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Profitability</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>bs_df_new <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> Value) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, return_on_assets) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(year) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> return_on_assets, <span class="at">y =</span> <span class="fu">factor</span>(year), <span class="at">fill =</span> <span class="fu">stat</span>(quantile))) <span class="sc">+</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_density_ridges</span>(<span class="at">quantile_lines =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">calc_ecdf =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">geom =</span> <span class="st">"density_ridges_gradient"</span>, <span class="at">rel_min_height =</span> <span class="fl">0.005</span>) <span class="sc">+</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">name =</span> <span class="st">""</span>) <span class="sc">+</span> </span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Year"</span>, <span class="at">x =</span> <span class="st">"Return on Assets"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="eda_files/figure-html/unnamed-chunk-2-3.png" class="img-fluid" width="672"></p>
 </div>
@@ -591,21 +633,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="financial-fragility-index" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="financial-fragility-index"><span class="header-section-number">3.3</span> Financial Fragility Index</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>bs_df_ffi <span class="ot">&lt;-</span> bs_df_new <span class="sc">%&gt;%</span> </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"Indicator"</span>, <span class="at">values_from =</span> <span class="st">"Value"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">liq_rank =</span> <span class="fu">percent_rank</span>(current_ratio<span class="sc">*-</span><span class="dv">1</span>), </span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">lev_rank =</span> <span class="fu">percent_rank</span>(leverage), </span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">profit_rank =</span> <span class="fu">percent_rank</span>(return_on_assets<span class="sc">*-</span><span class="dv">1</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fin_fra_index =</span> (liq_rank <span class="sc">+</span> lev_rank <span class="sc">+</span> profit_rank)<span class="sc">/</span><span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(current_ratio<span class="sc">:</span>return_on_assets))</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>bs_df_ffi <span class="sc">%&gt;%</span> </span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">c</span>(sector_name, year, fin_fra_index)) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">c</span>(sector_name, year), <span class="at">names_to =</span> <span class="st">"index"</span>, <span class="at">values_to =</span> <span class="st">"value"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> value)) <span class="sc">+</span></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sector_name, <span class="at">scales =</span> <span class="st">"free"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>bs_df_ffi <span class="ot">&lt;-</span> bs_df_new <span class="sc">%&gt;%</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"Indicator"</span>, <span class="at">values_from =</span> <span class="st">"Value"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">liq_rank =</span> <span class="fu">percent_rank</span>(current_ratio<span class="sc">*-</span><span class="dv">1</span>), </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">lev_rank =</span> <span class="fu">percent_rank</span>(leverage), </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">profit_rank =</span> <span class="fu">percent_rank</span>(return_on_assets<span class="sc">*-</span><span class="dv">1</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fin_fra_index =</span> (liq_rank <span class="sc">+</span> lev_rank <span class="sc">+</span> profit_rank)<span class="sc">/</span><span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(current_ratio<span class="sc">:</span>return_on_assets))</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>bs_df_ffi <span class="sc">%&gt;%</span> </span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">c</span>(sector_name, year, fin_fra_index)) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">c</span>(sector_name, year), <span class="at">names_to =</span> <span class="st">"index"</span>, <span class="at">values_to =</span> <span class="st">"value"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sector_name, <span class="at">scales =</span> <span class="st">"free"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="eda_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -613,38 +655,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="heatmap-for-2021" class="level3" data-number="3.3.1">
 <h3 data-number="3.3.1" class="anchored" data-anchor-id="heatmap-for-2021"><span class="header-section-number">3.3.1</span> Heatmap for 2021</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>heatmap_df <span class="ot">&lt;-</span> bs_df_economy <span class="sc">%&gt;%</span> </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2021</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sector_name, current_ratio, leverage, return_on_assets) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ffi =</span> bs_df_ffi <span class="sc">%&gt;%</span> <span class="fu">select</span>(year, sector_name, fin_fra_index) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2021</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(fin_fra_index)) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(ffi)) </span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(heatmap_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Sectors"</span>, <span class="st">"Liquidity"</span>, <span class="st">"Leverage"</span>, <span class="st">"Profitability"</span>, <span class="st">"Financial Fragility Index"</span>)</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>heatmap_df[,<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(heatmap_df[,<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">FUN =</span> <span class="cf">function</span>(x) <span class="fu">round</span>(x<span class="sc">*</span><span class="dv">100</span>, <span class="dv">2</span>))</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>heatmap_df <span class="sc">%&gt;%</span> </span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(<span class="at">columns =</span> <span class="st">'Liquidity'</span>, </span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">colors =</span> <span class="fu">col_numeric</span>(<span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"white"</span>, <span class="st">"green"</span>), </span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(heatmap_df[,<span class="dv">2</span>]), <span class="fu">max</span>(heatmap_df[,<span class="dv">2</span>])))) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(<span class="at">columns =</span> <span class="st">'Leverage'</span>, </span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">colors =</span> <span class="fu">col_numeric</span>(<span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"green"</span>, <span class="st">"white"</span>, <span class="st">"red"</span>), </span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(heatmap_df[,<span class="dv">3</span>]), <span class="fu">max</span>(heatmap_df[,<span class="dv">3</span>])))) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(<span class="at">columns =</span> <span class="st">'Profitability'</span>, </span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">colors =</span> <span class="fu">col_numeric</span>(<span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"white"</span>, <span class="st">"green"</span>), </span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(heatmap_df[,<span class="dv">4</span>]), <span class="fu">max</span>(heatmap_df[,<span class="dv">4</span>])))) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(<span class="at">columns =</span> <span class="st">'Financial Fragility Index'</span>, </span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>             <span class="at">colors =</span> <span class="fu">col_numeric</span>(<span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"green"</span>, <span class="st">"white"</span>, <span class="st">"red"</span>), </span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(heatmap_df[,<span class="dv">5</span>]), <span class="fu">max</span>(heatmap_df[,<span class="dv">5</span>]))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>heatmap_df <span class="ot">&lt;-</span> bs_df_economy <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2021</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sector_name, current_ratio, leverage, return_on_assets) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ffi =</span> bs_df_ffi <span class="sc">%&gt;%</span> <span class="fu">select</span>(year, sector_name, fin_fra_index) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2021</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(fin_fra_index)) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(ffi)) </span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(heatmap_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Sectors"</span>, <span class="st">"Liquidity"</span>, <span class="st">"Leverage"</span>, <span class="st">"Profitability"</span>, <span class="st">"Financial Fragility Index"</span>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>heatmap_df[,<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(heatmap_df[,<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">FUN =</span> <span class="cf">function</span>(x) <span class="fu">round</span>(x<span class="sc">*</span><span class="dv">100</span>, <span class="dv">2</span>))</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>heatmap_df <span class="sc">%&gt;%</span> </span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(<span class="at">columns =</span> <span class="st">'Liquidity'</span>, </span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">colors =</span> <span class="fu">col_numeric</span>(<span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"white"</span>, <span class="st">"green"</span>), </span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(heatmap_df[,<span class="dv">2</span>]), <span class="fu">max</span>(heatmap_df[,<span class="dv">2</span>])))) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(<span class="at">columns =</span> <span class="st">'Leverage'</span>, </span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">colors =</span> <span class="fu">col_numeric</span>(<span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"green"</span>, <span class="st">"white"</span>, <span class="st">"red"</span>), </span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(heatmap_df[,<span class="dv">3</span>]), <span class="fu">max</span>(heatmap_df[,<span class="dv">3</span>])))) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(<span class="at">columns =</span> <span class="st">'Profitability'</span>, </span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">colors =</span> <span class="fu">col_numeric</span>(<span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"white"</span>, <span class="st">"green"</span>), </span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(heatmap_df[,<span class="dv">4</span>]), <span class="fu">max</span>(heatmap_df[,<span class="dv">4</span>])))) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data_color</span>(<span class="at">columns =</span> <span class="st">'Financial Fragility Index'</span>, </span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>             <span class="at">colors =</span> <span class="fu">col_numeric</span>(<span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"green"</span>, <span class="st">"white"</span>, <span class="st">"red"</span>), </span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(heatmap_df[,<span class="dv">5</span>]), <span class="fu">max</span>(heatmap_df[,<span class="dv">5</span>]))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="rhiajeoeet" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="kqgbbqpist" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#rhiajeoeet) .gt_table {
+:where(#kqgbbqpist) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -669,7 +711,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-:where(#rhiajeoeet) .gt_heading {
+:where(#kqgbbqpist) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -681,12 +723,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#rhiajeoeet) .gt_caption {
+:where(#kqgbbqpist) .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-:where(#rhiajeoeet) .gt_title {
+:where(#kqgbbqpist) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -698,7 +740,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-:where(#rhiajeoeet) .gt_subtitle {
+:where(#kqgbbqpist) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -710,13 +752,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-:where(#rhiajeoeet) .gt_bottom_border {
+:where(#kqgbbqpist) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#rhiajeoeet) .gt_col_headings {
+:where(#kqgbbqpist) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -731,7 +773,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#rhiajeoeet) .gt_col_heading {
+:where(#kqgbbqpist) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -751,7 +793,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#rhiajeoeet) .gt_column_spanner_outer {
+:where(#kqgbbqpist) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -763,15 +805,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-:where(#rhiajeoeet) .gt_column_spanner_outer:first-child {
+:where(#kqgbbqpist) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#rhiajeoeet) .gt_column_spanner_outer:last-child {
+:where(#kqgbbqpist) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#rhiajeoeet) .gt_column_spanner {
+:where(#kqgbbqpist) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -783,7 +825,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-:where(#rhiajeoeet) .gt_group_heading {
+:where(#kqgbbqpist) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -809,7 +851,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   text-align: left;
 }
 
-:where(#rhiajeoeet) .gt_empty_group_heading {
+:where(#kqgbbqpist) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -824,15 +866,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#rhiajeoeet) .gt_from_md > :first-child {
+:where(#kqgbbqpist) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#rhiajeoeet) .gt_from_md > :last-child {
+:where(#kqgbbqpist) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#rhiajeoeet) .gt_row {
+:where(#kqgbbqpist) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -851,7 +893,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#rhiajeoeet) .gt_stub {
+:where(#kqgbbqpist) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -864,7 +906,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#rhiajeoeet) .gt_stub_row_group {
+:where(#kqgbbqpist) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -878,11 +920,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-:where(#rhiajeoeet) .gt_row_group_first td {
+:where(#kqgbbqpist) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#rhiajeoeet) .gt_summary_row {
+:where(#kqgbbqpist) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -892,16 +934,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#rhiajeoeet) .gt_first_summary_row {
+:where(#kqgbbqpist) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#rhiajeoeet) .gt_first_summary_row.thick {
+:where(#kqgbbqpist) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#rhiajeoeet) .gt_last_summary_row {
+:where(#kqgbbqpist) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -911,7 +953,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#rhiajeoeet) .gt_grand_summary_row {
+:where(#kqgbbqpist) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -921,7 +963,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#rhiajeoeet) .gt_first_grand_summary_row {
+:where(#kqgbbqpist) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -931,11 +973,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-:where(#rhiajeoeet) .gt_striped {
+:where(#kqgbbqpist) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#rhiajeoeet) .gt_table_body {
+:where(#kqgbbqpist) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -944,7 +986,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#rhiajeoeet) .gt_footnotes {
+:where(#kqgbbqpist) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -958,7 +1000,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#rhiajeoeet) .gt_footnote {
+:where(#kqgbbqpist) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -967,7 +1009,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#rhiajeoeet) .gt_sourcenotes {
+:where(#kqgbbqpist) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -981,7 +1023,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#rhiajeoeet) .gt_sourcenote {
+:where(#kqgbbqpist) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -989,64 +1031,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#rhiajeoeet) .gt_left {
+:where(#kqgbbqpist) .gt_left {
   text-align: left;
 }
 
-:where(#rhiajeoeet) .gt_center {
+:where(#kqgbbqpist) .gt_center {
   text-align: center;
 }
 
-:where(#rhiajeoeet) .gt_right {
+:where(#kqgbbqpist) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#rhiajeoeet) .gt_font_normal {
+:where(#kqgbbqpist) .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#rhiajeoeet) .gt_font_bold {
+:where(#kqgbbqpist) .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#rhiajeoeet) .gt_font_italic {
+:where(#kqgbbqpist) .gt_font_italic {
   font-style: italic;
 }
 
-:where(#rhiajeoeet) .gt_super {
+:where(#kqgbbqpist) .gt_super {
   font-size: 65%;
 }
 
-:where(#rhiajeoeet) .gt_footnote_marks {
+:where(#kqgbbqpist) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#rhiajeoeet) .gt_asterisk {
+:where(#kqgbbqpist) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#rhiajeoeet) .gt_indent_1 {
+:where(#kqgbbqpist) .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#rhiajeoeet) .gt_indent_2 {
+:where(#kqgbbqpist) .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#rhiajeoeet) .gt_indent_3 {
+:where(#kqgbbqpist) .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#rhiajeoeet) .gt_indent_4 {
+:where(#kqgbbqpist) .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#rhiajeoeet) .gt_indent_5 {
+:where(#kqgbbqpist) .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1158,26 +1200,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="international-trade" class="level3" data-number="3.3.2">
 <h3 data-number="3.3.2" class="anchored" data-anchor-id="international-trade"><span class="header-section-number">3.3.2</span> International Trade</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>trade_df_new <span class="ot">&lt;-</span> </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  trade_df <span class="sc">%&gt;%</span> </span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">net_export =</span> (export <span class="sc">-</span> import)<span class="sc">/</span><span class="fl">1e6</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">!=</span> <span class="dv">2022</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sector_name, year, net_export)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>df_fin <span class="ot">&lt;-</span> bs_df_new <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> Value)</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>trade_df_new <span class="sc">%&gt;%</span> </span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> net_export))<span class="sc">+</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sector_name, <span class="at">scales =</span> <span class="st">"free"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>trade_df_new <span class="ot">&lt;-</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  trade_df <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">net_export =</span> (export <span class="sc">-</span> import)<span class="sc">/</span><span class="fl">1e6</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">!=</span> <span class="dv">2022</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sector_name, year, net_export)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>df_fin <span class="ot">&lt;-</span> bs_df_new <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> Value)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>trade_df_new <span class="sc">%&gt;%</span> </span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> net_export))<span class="sc">+</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sector_name, <span class="at">scales =</span> <span class="st">"free"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="eda_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>trade_df_new <span class="sc">%&gt;%</span> </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sector_name) <span class="sc">%&gt;%</span> </span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(net_export)) <span class="sc">%&gt;%</span> </span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>trade_df_new <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sector_name) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(net_export)) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 9 × 2
   sector_name                    mean
@@ -1192,24 +1234,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 8 Professional_Activities  -0.000443 
 9 Transportation           -0.0000268</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>trade_df_new <span class="sc">%&gt;%</span> </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sector_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Agriculture"</span>, <span class="st">"Manufacturing"</span>, <span class="st">"Mining"</span>, <span class="st">"Water_Supply"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(df_fin <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>sector_code, <span class="sc">-</span>group), <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sector_name"</span>, <span class="st">"year"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> net_export, <span class="at">y =</span> return_on_assets))<span class="sc">+</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">formula=</span> y<span class="sc">~</span>x, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sector_name, <span class="at">scales =</span> <span class="st">"free"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>trade_df_new <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sector_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Agriculture"</span>, <span class="st">"Manufacturing"</span>, <span class="st">"Mining"</span>, <span class="st">"Water_Supply"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(df_fin <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>sector_code, <span class="sc">-</span>group), <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sector_name"</span>, <span class="st">"year"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> net_export, <span class="at">y =</span> return_on_assets))<span class="sc">+</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">formula=</span> y<span class="sc">~</span>x, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sector_name, <span class="at">scales =</span> <span class="st">"free"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="eda_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>trade_df_new <span class="sc">%&gt;%</span> </span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sector_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Agriculture"</span>, <span class="st">"Manufacturing"</span>, <span class="st">"Mining"</span>, <span class="st">"Water_Supply"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(df_fin <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>sector_code, <span class="sc">-</span>group), <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sector_name"</span>, <span class="st">"year"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(bs_df_ffi <span class="sc">%&gt;%</span> <span class="fu">select</span>(sector_name, year, fin_fra_index), <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sector_name"</span>,<span class="st">"year"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> net_export, <span class="at">y =</span> fin_fra_index))<span class="sc">+</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">formula=</span> y<span class="sc">~</span>x) <span class="sc">+</span> </span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sector_name, <span class="at">scales =</span> <span class="st">"free"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>trade_df_new <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sector_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Agriculture"</span>, <span class="st">"Manufacturing"</span>, <span class="st">"Mining"</span>, <span class="st">"Water_Supply"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(df_fin <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>sector_code, <span class="sc">-</span>group), <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sector_name"</span>, <span class="st">"year"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(bs_df_ffi <span class="sc">%&gt;%</span> <span class="fu">select</span>(sector_name, year, fin_fra_index), <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sector_name"</span>,<span class="st">"year"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> net_export, <span class="at">y =</span> fin_fra_index))<span class="sc">+</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">formula=</span> y<span class="sc">~</span>x) <span class="sc">+</span> </span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>sector_name, <span class="at">scales =</span> <span class="st">"free"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="eda_files/figure-html/unnamed-chunk-4-3.png" class="img-fluid" width="672"></p>
 </div>
@@ -1218,8 +1260,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="tradable-vs-non-tradable-sectors" class="level3" data-number="3.3.3">
 <h3 data-number="3.3.3" class="anchored" data-anchor-id="tradable-vs-non-tradable-sectors"><span class="header-section-number">3.3.3</span> Tradable vs Non-Tradable Sectors</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>tradables <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Agriculture"</span>, <span class="st">"Manufacturing"</span>, <span class="st">"Mining"</span>, <span class="st">"Water_Supply"</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>df_fin</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>tradables <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Agriculture"</span>, <span class="st">"Manufacturing"</span>, <span class="st">"Mining"</span>, <span class="st">"Water_Supply"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>df_fin</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 221 × 8
    sector_code sector_name group        year current_r…¹ lever…² retur…³ retur…⁴
@@ -1237,15 +1279,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 # … with 211 more rows, and abbreviated variable names ¹​current_ratio,
 #   ²​leverage, ³​return_on_equity, ⁴​return_on_assets</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df_fin <span class="sc">%&gt;%</span> </span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>sector_code, <span class="sc">-</span>group) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(bs_df_ffi <span class="sc">%&gt;%</span> <span class="fu">select</span>(sector_name, year, fin_fra_index), </span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sector_name"</span>,<span class="st">"year"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">trade_group =</span> <span class="fu">ifelse</span>(sector_name <span class="sc">%in%</span> tradables, <span class="st">"tradable"</span>, <span class="st">"non_tradable"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, trade_group) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">financial_fragility_index =</span> <span class="fu">mean</span>(fin_fra_index)) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, financial_fragility_index, <span class="at">color =</span> trade_group)) <span class="sc">+</span> </span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df_fin <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>sector_code, <span class="sc">-</span>group) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(bs_df_ffi <span class="sc">%&gt;%</span> <span class="fu">select</span>(sector_name, year, fin_fra_index), </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sector_name"</span>,<span class="st">"year"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">trade_group =</span> <span class="fu">ifelse</span>(sector_name <span class="sc">%in%</span> tradables, <span class="st">"tradable"</span>, <span class="st">"non_tradable"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, trade_group) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">financial_fragility_index =</span> <span class="fu">mean</span>(fin_fra_index)) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, financial_fragility_index, <span class="at">color =</span> trade_group)) <span class="sc">+</span> </span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="eda_files/figure-html/trade_split-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1260,31 +1302,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Information sector is the one experiencing the lowest inrease in its inputs.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>pct_change <span class="ot">&lt;-</span> <span class="cf">function</span>(x){(x <span class="sc">/</span> <span class="fu">lag</span>(x, <span class="dv">12</span>) <span class="sc">-</span><span class="dv">1</span>)<span class="sc">*</span><span class="dv">100</span>}</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>price_df <span class="ot">&lt;-</span> price_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(date <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">"2017-01-01"</span>) <span class="sc">&amp;</span> date <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">"2022-01-01"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>sector_code, <span class="sc">-</span>group) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> sector_name, <span class="at">values_from =</span> index)</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>price_change_df <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">date =</span> price_df<span class="sc">$</span>date, <span class="fu">sapply</span>(price_df[,<span class="dv">2</span> <span class="sc">:</span> <span class="dv">11</span>], pct_change) <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>())</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>year_end_inf <span class="ot">&lt;-</span> price_change_df <span class="sc">%&gt;%</span> </span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Mining) <span class="sc">&amp;</span> <span class="fu">month</span>(date) <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>date, <span class="at">names_to =</span> <span class="st">"sector_name"</span>, <span class="at">values_to =</span> <span class="st">"inflation"</span>) </span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>year_end_inf<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">year</span>(year_end_inf<span class="sc">$</span>date)</span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>year_end_inf <span class="ot">&lt;-</span> <span class="fu">rename</span>(year_end_inf, <span class="st">"year"</span> <span class="ot">=</span> <span class="st">"date"</span>)</span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="co">#Average Inflation for the period 2018-2021</span></span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>table_inflation <span class="ot">&lt;-</span> year_end_inf <span class="sc">%&gt;%</span> </span>
-<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sector_name) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">average_inflation =</span> <span class="fu">round</span>(<span class="fu">mean</span>(inflation),<span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average_inflation))</span>
-<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(table_inflation) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Sector Name"</span>, <span class="st">"Inflation (%, YoY)"</span>)</span>
-<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(table_inflation, <span class="at">caption =</span> <span class="st">"Average Increases in Input Costs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>pct_change <span class="ot">&lt;-</span> <span class="cf">function</span>(x){(x <span class="sc">/</span> <span class="fu">lag</span>(x, <span class="dv">12</span>) <span class="sc">-</span><span class="dv">1</span>)<span class="sc">*</span><span class="dv">100</span>}</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>price_df <span class="ot">&lt;-</span> price_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(date <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">"2017-01-01"</span>) <span class="sc">&amp;</span> date <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">"2022-01-01"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>sector_code, <span class="sc">-</span>group) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> sector_name, <span class="at">values_from =</span> index)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>price_change_df <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">date =</span> price_df<span class="sc">$</span>date, <span class="fu">sapply</span>(price_df[,<span class="dv">2</span> <span class="sc">:</span> <span class="dv">11</span>], pct_change) <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>())</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>year_end_inf <span class="ot">&lt;-</span> price_change_df <span class="sc">%&gt;%</span> </span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Mining) <span class="sc">&amp;</span> <span class="fu">month</span>(date) <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>date, <span class="at">names_to =</span> <span class="st">"sector_name"</span>, <span class="at">values_to =</span> <span class="st">"inflation"</span>) </span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>year_end_inf<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">year</span>(year_end_inf<span class="sc">$</span>date)</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>year_end_inf <span class="ot">&lt;-</span> <span class="fu">rename</span>(year_end_inf, <span class="st">"year"</span> <span class="ot">=</span> <span class="st">"date"</span>)</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a><span class="co">#Average Inflation for the period 2018-2021</span></span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>table_inflation <span class="ot">&lt;-</span> year_end_inf <span class="sc">%&gt;%</span> </span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sector_name) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">average_inflation =</span> <span class="fu">round</span>(<span class="fu">mean</span>(inflation),<span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(average_inflation))</span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(table_inflation) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Sector Name"</span>, <span class="st">"Inflation (%, YoY)"</span>)</span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(table_inflation, <span class="at">caption =</span> <span class="st">"Average Increases in Input Costs"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>Average Increases in Input Costs</caption>
@@ -1343,14 +1385,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="financial-indicators-with-inflation-data" class="level3" data-number="3.3.5">
 <h3 data-number="3.3.5" class="anchored" data-anchor-id="financial-indicators-with-inflation-data"><span class="header-section-number">3.3.5</span> Financial Indicators with Inflation data</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inner_join</span>(bs_df_new <span class="sc">%&gt;%</span> </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>sector_code, <span class="sc">-</span>group) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> Value) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">2018</span>), year_end_inf, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sector_name"</span>, <span class="st">"year"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(inflation <span class="sc">&lt;</span> <span class="dv">50</span>) <span class="sc">%&gt;%</span> <span class="co"># Omit outlier observation</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> inflation, <span class="at">y =</span> return_on_assets)) <span class="sc">+</span> </span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">formula=</span> y<span class="sc">~</span>x, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inner_join</span>(bs_df_new <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>sector_code, <span class="sc">-</span>group) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> Value) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">2018</span>), year_end_inf, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sector_name"</span>, <span class="st">"year"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(inflation <span class="sc">&lt;</span> <span class="dv">50</span>) <span class="sc">%&gt;%</span> <span class="co"># Omit outlier observation</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> inflation, <span class="at">y =</span> return_on_assets)) <span class="sc">+</span> </span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">formula=</span> y<span class="sc">~</span>x, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="eda_files/figure-html/fi-ppi-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1359,16 +1401,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="growth-dynamics" class="level3" data-number="3.3.6">
 <h3 data-number="3.3.6" class="anchored" data-anchor-id="growth-dynamics"><span class="header-section-number">3.3.6</span> Growth Dynamics</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>gdp_df<span class="sc">$</span>pct_change <span class="ot">&lt;-</span> (gdp_df<span class="sc">$</span>gdp_index <span class="sc">/</span> <span class="fu">lag</span>(gdp_df<span class="sc">$</span>gdp_index, <span class="dv">1</span>) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>gdp_df <span class="ot">&lt;-</span> gdp_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(pct_change) <span class="sc">&amp;</span> year <span class="sc">&gt;=</span> <span class="dv">2009</span>)</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Real GDP Growth Summary Table </span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>gdp_df_tb <span class="ot">&lt;-</span> gdp_df</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="fu">setDT</span>(gdp_df)</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>gdp_df[, <span class="fu">as.list</span>(<span class="fu">summary</span>(pct_change)), by <span class="ot">=</span> sector]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>gdp_df<span class="sc">$</span>pct_change <span class="ot">&lt;-</span> (gdp_df<span class="sc">$</span>gdp_index <span class="sc">/</span> <span class="fu">lag</span>(gdp_df<span class="sc">$</span>gdp_index, <span class="dv">1</span>) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>gdp_df <span class="ot">&lt;-</span> gdp_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(pct_change) <span class="sc">&amp;</span> year <span class="sc">&gt;=</span> <span class="dv">2009</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Real GDP Growth Summary Table </span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>gdp_df_tb <span class="ot">&lt;-</span> gdp_df</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="fu">setDT</span>(gdp_df)</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>gdp_df[, <span class="fu">as.list</span>(<span class="fu">summary</span>(pct_change)), by <span class="ot">=</span> sector]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                                                            sector
  1:                                                                          Total
@@ -1397,43 +1439,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 11:   1.2629144  2.9946977 4.645327 4.531002  5.360318 10.147852
 12:  -0.3814016  4.2987391 5.805904 7.307440  8.562325 24.807844</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>gdp_df_tb<span class="sc">$</span>sector <span class="ot">&lt;-</span> gdp_df_tb <span class="sc">%&gt;%</span> </span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>gdp_index) <span class="sc">%&gt;%</span> .<span class="sc">$</span>sector <span class="sc">%&gt;%</span> <span class="fu">gsub</span>(<span class="st">"-.*"</span>, <span class="st">""</span>, .)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>bs_df_new <span class="ot">&lt;-</span> bs_df_new <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> Value) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(bs_df_ffi <span class="sc">%&gt;%</span> <span class="fu">select</span>(sector_code, year, fin_fra_index), <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sector_code"</span>, <span class="st">"year"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">c</span>(sector_code <span class="sc">:</span> year), <span class="at">names_to =</span> <span class="st">"Indicator"</span>, <span class="at">values_to =</span> <span class="st">"Value"</span>)</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>fin_ind_group <span class="ot">&lt;-</span> bs_df_new <span class="sc">%&gt;%</span> </span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sector_code, year, Indicator, Value) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">case_when</span>(sector_code <span class="sc">==</span> <span class="st">"A"</span> <span class="sc">~</span> <span class="st">"A"</span>, </span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>) <span class="sc">~</span> <span class="st">"BCDE"</span>, </span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">==</span> <span class="st">"F"</span> <span class="sc">~</span> <span class="st">"F"</span>,</span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"G"</span>, <span class="st">"H"</span>, <span class="st">"I"</span>) <span class="sc">~</span> <span class="st">"GHI"</span>,</span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">==</span> <span class="st">"J"</span> <span class="sc">~</span> <span class="st">"J"</span>,</span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">==</span> <span class="st">"L"</span> <span class="sc">~</span> <span class="st">"L"</span>,</span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"M"</span>, <span class="st">"N"</span>) <span class="sc">~</span> <span class="st">"MN"</span>,</span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>            <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"other"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(group <span class="sc">!=</span> <span class="st">"other"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(bs_df <span class="sc">%&gt;%</span> <span class="fu">select</span>(sector_code, year, Total_assets), Total_assets, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sector_code"</span>, <span class="st">"year"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>sector_code) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group, year, Indicator) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">value =</span> <span class="fu">weighted.mean</span>(Value, Total_assets)) <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> value)</span>
-<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>header <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"BCDE"</span>, <span class="st">"F"</span>, <span class="st">"GHI"</span>, <span class="st">"J"</span>, <span class="st">"L"</span>, <span class="st">"MN"</span>)</span>
-<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Agriculture"</span>, <span class="st">"Industry"</span>, <span class="st">"Construction"</span>, <span class="st">"Services"</span>, <span class="st">"Information"</span>, <span class="st">"Real Estate"</span>, <span class="st">"Other Services"</span>)</span>
-<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>growth_info <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(header, names)</span>
-<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>growth_df <span class="ot">&lt;-</span> <span class="fu">left_join</span>(fin_ind_group, gdp_df_tb <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>gdp_index),<span class="at">by =</span> <span class="fu">c</span>(<span class="st">"group"</span> <span class="ot">=</span> <span class="st">"sector"</span>, <span class="st">"year"</span>))</span>
-<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>growth_df <span class="ot">&lt;-</span> growth_df <span class="sc">%&gt;%</span> </span>
-<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(growth_info, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"group"</span> <span class="ot">=</span> <span class="st">"header"</span>))</span>
-<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a>growth_df <span class="sc">%&gt;%</span> </span>
-<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">lag</span>(pct_change,<span class="dv">1</span>), fin_fra_index)) <span class="sc">+</span></span>
-<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>names,  <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span> </span>
-<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">formula=</span> y<span class="sc">~</span>x, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>gdp_df_tb<span class="sc">$</span>sector <span class="ot">&lt;-</span> gdp_df_tb <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>gdp_index) <span class="sc">%&gt;%</span> .<span class="sc">$</span>sector <span class="sc">%&gt;%</span> <span class="fu">gsub</span>(<span class="st">"-.*"</span>, <span class="st">""</span>, .)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>bs_df_new <span class="ot">&lt;-</span> bs_df_new <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> Value) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(bs_df_ffi <span class="sc">%&gt;%</span> <span class="fu">select</span>(sector_code, year, fin_fra_index), <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sector_code"</span>, <span class="st">"year"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">c</span>(sector_code <span class="sc">:</span> year), <span class="at">names_to =</span> <span class="st">"Indicator"</span>, <span class="at">values_to =</span> <span class="st">"Value"</span>)</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>fin_ind_group <span class="ot">&lt;-</span> bs_df_new <span class="sc">%&gt;%</span> </span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sector_code, year, Indicator, Value) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">case_when</span>(sector_code <span class="sc">==</span> <span class="st">"A"</span> <span class="sc">~</span> <span class="st">"A"</span>, </span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>) <span class="sc">~</span> <span class="st">"BCDE"</span>, </span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">==</span> <span class="st">"F"</span> <span class="sc">~</span> <span class="st">"F"</span>,</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"G"</span>, <span class="st">"H"</span>, <span class="st">"I"</span>) <span class="sc">~</span> <span class="st">"GHI"</span>,</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">==</span> <span class="st">"J"</span> <span class="sc">~</span> <span class="st">"J"</span>,</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">==</span> <span class="st">"L"</span> <span class="sc">~</span> <span class="st">"L"</span>,</span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>            sector_code <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"M"</span>, <span class="st">"N"</span>) <span class="sc">~</span> <span class="st">"MN"</span>,</span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>            <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"other"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(group <span class="sc">!=</span> <span class="st">"other"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(bs_df <span class="sc">%&gt;%</span> <span class="fu">select</span>(sector_code, year, Total_assets), Total_assets, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"sector_code"</span>, <span class="st">"year"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>sector_code) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group, year, Indicator) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">value =</span> <span class="fu">weighted.mean</span>(Value, Total_assets)) <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Indicator, <span class="at">values_from =</span> value)</span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>header <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"BCDE"</span>, <span class="st">"F"</span>, <span class="st">"GHI"</span>, <span class="st">"J"</span>, <span class="st">"L"</span>, <span class="st">"MN"</span>)</span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Agriculture"</span>, <span class="st">"Industry"</span>, <span class="st">"Construction"</span>, <span class="st">"Services"</span>, <span class="st">"Information"</span>, <span class="st">"Real Estate"</span>, <span class="st">"Other Services"</span>)</span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>growth_info <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(header, names)</span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a>growth_df <span class="ot">&lt;-</span> <span class="fu">left_join</span>(fin_ind_group, gdp_df_tb <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>gdp_index),<span class="at">by =</span> <span class="fu">c</span>(<span class="st">"group"</span> <span class="ot">=</span> <span class="st">"sector"</span>, <span class="st">"year"</span>))</span>
+<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a>growth_df <span class="ot">&lt;-</span> growth_df <span class="sc">%&gt;%</span> </span>
+<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(growth_info, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"group"</span> <span class="ot">=</span> <span class="st">"header"</span>))</span>
+<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a>growth_df <span class="sc">%&gt;%</span> </span>
+<span id="cb34-34"><a href="#cb34-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">lag</span>(pct_change,<span class="dv">1</span>), fin_fra_index)) <span class="sc">+</span></span>
+<span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>names,  <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span> </span>
+<span id="cb34-37"><a href="#cb34-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">formula=</span> y<span class="sc">~</span>x, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="eda_files/figure-html/growth-1.png" class="img-fluid" width="672"></p>
 </div>
