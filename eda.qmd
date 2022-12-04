@@ -68,6 +68,18 @@ bs_df <- bs_df %>% mutate(net_income_is = net_income)
 
 ## Financial Indicators
 
+Liquidity:
+
+$Current\,Ratio = \frac{Current\,Assets}{Short\,Term\,Liabilities}$
+
+Leverage:
+
+$Leverage = \frac{Total\,Loans}{Total\,Assets}$
+
+Profitability:
+
+$Return\,on\,Assets = \frac{Net\,Profit}{Total\,Assets}$
+
 ```{r Financial_Indicators, message=FALSE, warning=FALSE}
 
 bs_df_new <- bs_df %>% 
@@ -99,26 +111,30 @@ bs_df_economy <- bs_df %>%
 
 bs_df_economy_graph <- bs_df_economy %>% 
   group_by(year) %>% 
-  summarize(liq_yearly = weighted.mean(current_ratio, Total_assets),
-            lev_yearly = weighted.mean(leverage, Total_assets),
-            pro_yearly = weighted.mean(return_on_assets, Total_assets))
+  summarize(Liquidity = weighted.mean(current_ratio, Total_assets) * 100,
+            Leverage = weighted.mean(leverage, Total_assets) * 100,
+            Profitability = weighted.mean(return_on_assets, Total_assets) * 100)
 
 bs_df_economy_graph %>% 
   pivot_longer(-year, names_to = "indicator_yearly", values_to = "value") %>% 
   ggplot(aes(x = year, y = value)) +
   geom_line() +
-  facet_wrap(~indicator_yearly, scales = "free")
+  facet_wrap(~indicator_yearly, scales = "free") +
+  theme_bw() +
+  labs(y = "Levels", title = "Weighted Average of Financial Indicators")
 
 #Calculation and plot of standard deviation of financial indicators
 bs_df_economy %>% 
   group_by(year) %>% 
-  summarize(liq_yearly_std = sd(current_ratio),
-            lev_yearly_std = sd(leverage),
-            pro_yearly_std = sd(return_on_assets)) %>% 
+  summarize(Liquidity = sd(current_ratio) * 10,
+            Leverage = sd(leverage) * 10,
+            Profitability = sd(return_on_assets) * 10) %>% 
   pivot_longer(-year, names_to = "std_yearly", values_to = "value") %>% 
   ggplot(aes(x = year, y = value)) +
   geom_line() +
-  facet_wrap(~std_yearly, scales = "free")
+  facet_wrap(~std_yearly, scales = "free") +
+  theme_bw()+
+  labs(y = "Levels", title = "Standard Deviation of Financial Indicators")
 
 ```
 
@@ -128,7 +144,7 @@ bs_df_economy %>%
 
 colnames(bs_df_economy_graph) <- c("Year", "Liquidity", "Leverage", "Profitability")
 bs_df_economy_graph[,2:4] <- lapply(bs_df_economy_graph[,2:4], 
-                                    FUN = function(x) round(x*100, 2))
+                                    FUN = function(x) round(x, 2))
 kable(bs_df_economy_graph)
 ```
 
@@ -140,21 +156,24 @@ ggplot(data = bs_df_new[bs_df_new$Indicator == "current_ratio",], aes(x = year, 
   geom_line() +
   labs(title = "Liquidity Indicator of Real Sector Companies from 2009 to 2021", x = "Year") +
   facet_wrap(~sector_name, scales = "free") +
-  theme(panel.grid = element_blank())
+  theme(panel.grid = element_blank()) +
+  theme_bw()
 
 
 ggplot(data = bs_df_new[bs_df_new$Indicator == "leverage",], aes(x = year, y = Value)) +
   geom_line() +
   labs(title = "Leverage Indicator of Real Sector Companies from 2009 to 2021", x = "Year") +
   facet_wrap(~sector_name, scales = "free") +
-  theme(panel.grid = element_blank())    
+  theme(panel.grid = element_blank()) +
+  theme_bw()
 
 
 ggplot(data = bs_df_new[bs_df_new$Indicator == "return_on_assets",], aes(x = year, y = Value)) +
   geom_line() +
   labs(title = "Profitability (ROA) Indicator of Real Sector Companies from 2009 to 2021", x = "Year") +
   facet_wrap(~sector_name, scales = "free") +
-  theme(panel.grid = element_blank())
+  theme(panel.grid = element_blank()) +
+  theme_bw()
 
 
 ```
@@ -168,21 +187,24 @@ bs_df_new %>%
   ggplot(aes(x = leverage, y = current_ratio, color = sector_name)) +
   geom_point() + 
   geom_smooth(method='lm', formula= y~x, se = FALSE) +
-  labs(title = "Liquidity vs Leverage", y = "Liquidity")
+  labs(title = "Liquidity vs Leverage", y = "Liquidity") +
+  theme_bw()
 
 bs_df_new %>% 
   pivot_wider(names_from = "Indicator", values_from = "Value") %>% 
   ggplot(aes(x = current_ratio, y = return_on_assets, color = sector_name)) +
   geom_point() + 
   geom_smooth(method='lm', formula= y~x, se = FALSE) +
-  labs(title = "Profitability vs Liquidity", y = "Profitability", x = "Liquidity")
+  labs(title = "Profitability vs Liquidity", y = "Profitability", x = "Liquidity") +
+  theme_bw()
 
 bs_df_new %>% 
   pivot_wider(names_from = "Indicator", values_from = "Value") %>% 
   ggplot(aes(x = leverage, y = return_on_assets, color = sector_name)) +
   geom_point() + 
   geom_smooth(method='lm', formula= y~x, se = FALSE) + 
-  labs(title = "Profitability vs Leverage", y = "Profitability")
+  labs(title = "Profitability vs Leverage", y = "Profitability") +
+  theme_bw()
 
 ```
 
@@ -208,7 +230,8 @@ bs_df_new %>%
   ggplot(aes(x = sector_name, y = value, fill = factor(period))) +
   geom_col(position = "dodge2")+
   coord_flip() +
-  labs(y = "Sectors", x = "Current Ratio", title = "Liquidity Indicator", fill = "Years") 
+  labs(y = "Current Ratio", x = "Sectors", title = "Liquidity Indicator", fill = "Years") +
+  theme_bw()
 ```
 
 Leverage Indicator
@@ -225,7 +248,7 @@ bs_df_new %>%
   ggplot(aes(x = sector_name, y = value, fill = factor(period))) +
   geom_col(position = "dodge2")+
   coord_flip() +
-  labs(y = "Leverage", x = "Sectors", title = "Leverage Indicator", fill = "Years") 
+  labs(y = "Leverage", x = "Sectors", title = "Leverage Indicator", fill = "Years") + theme_bw() 
 ```
 
 Profitability Indicator
@@ -242,7 +265,8 @@ bs_df_new %>%
   ggplot(aes(x = sector_name, y = value, fill = factor(period))) +
   geom_col(position = "dodge2")+
   coord_flip() +
-  labs(y = "Profitability", x = "Sectors", title = "Return on Assets", fill = "Years") 
+  labs(y = "Profitability", x = "Sectors", title = "Return on Assets", fill = "Years") +
+  theme_bw()
 ```
 
 ### Density Plots of Financial Indicators
@@ -283,8 +307,6 @@ bs_df_new %>% pivot_wider(names_from = Indicator, values_from = Value) %>%
 
 ```
 
-
-
 ## Financial Fragility Index
 
 ```{r}
@@ -303,9 +325,12 @@ bs_df_ffi %>%
   pivot_longer(-c(sector_name, year), names_to = "index", values_to = "value") %>% 
   ggplot(aes(x = year, y = value)) +
   geom_line() + 
-  facet_wrap(~sector_name, scales = "free") 
+  facet_wrap(~sector_name, scales = "free") + 
+  labs(y = "Financial Fragility Index") +
+  theme_bw()
 
 ```
+
 ### Heatmap for 2021
 
 ```{r fi_heatmap}
@@ -335,10 +360,9 @@ heatmap_df %>%
                                   domain = c(min(heatmap_df[,5]), max(heatmap_df[,5]))))
 ```
 
-
 ### International Trade
 
-```{r}
+```{r trade}
 trade_df_new <- 
   trade_df %>% 
   mutate(net_export = (export - import)/1e6) %>% 
@@ -356,8 +380,9 @@ trade_df_new %>%
 
 trade_df_new %>% 
   group_by(sector_name) %>% 
-  summarize(mean = mean(net_export)) %>% 
-  arrange(mean)
+  summarize(average = round(mean(net_export), 2)) %>% 
+  arrange(average) %>% 
+  kable(caption = "Average Net Exports")
 
 trade_df_new %>% 
   filter(sector_name %in% c("Agriculture", "Manufacturing", "Mining", "Water_Supply")) %>% 
@@ -369,24 +394,23 @@ trade_df_new %>%
 
 trade_df_new %>% 
   filter(sector_name %in% c("Agriculture", "Manufacturing", "Mining", "Water_Supply")) %>% 
-  inner_join(df_fin %>% select(-sector_code, -group), by = c("sector_name", "year")) %>% 
-  inner_join(bs_df_ffi %>% select(sector_name, year, fin_fra_index), by = c("sector_name","year")) %>% 
+  inner_join(df_fin %>% select(-sector_code, -group), by = c("sector_name", "year")) %>% inner_join(bs_df_ffi %>% select(sector_name, year, fin_fra_index), by = c("sector_name", "year")) %>% 
   ggplot(aes(x = net_export, y = fin_fra_index))+
   geom_point() + 
   geom_smooth(method='lm', formula= y~x) + 
   facet_wrap(~sector_name, scales = "free")
 ```
 
-### Tradable vs Non-Tradable Sectors 
+### Tradable vs Non-Tradable Sectors
 
 ```{r trade_split}
 
 tradables <- c("Agriculture", "Manufacturing", "Mining", "Water_Supply")
-df_fin
+
+df_fin <- df_fin %>% inner_join(bs_df_ffi %>% select(sector_name, year, fin_fra_index), by = c("sector_name", "year"))
+
 df_fin %>% 
   select(-sector_code, -group) %>% 
-  inner_join(bs_df_ffi %>% select(sector_name, year, fin_fra_index), 
-             by = c("sector_name","year")) %>% 
   mutate(trade_group = ifelse(sector_name %in% tradables, "tradable", "non_tradable")) %>% 
   group_by(year, trade_group) %>% 
   summarize(financial_fragility_index = mean(fin_fra_index)) %>% 
@@ -401,9 +425,9 @@ For each sector, average increases in producer prices (aka input costs) is calcu
 
 Table shows average increases in input costs of sectors in Turkey from 2017 to 2021.
 
-+ Top 3 sectors with highest average price increases are **Electricity-Gas**, **Manufacturing** and **Transportation** with average price increases %23.4, %20.2 and %19.5 consecutively.
+-   Top 3 sectors with highest average price increases are **Electricity-Gas**, **Manufacturing** and **Transportation** with average price increases %23.4, %20.2 and %19.5 consecutively.
 
-+ Information sector is the one experiencing the lowest inrease in its inputs.
+-   Information sector is the one experiencing the lowest inrease in its inputs.
 
 ```{r ppi}
 
@@ -504,4 +528,3 @@ growth_df %>%
   geom_smooth(method='lm', formula= y~x, se = FALSE)
   
 ```
-
