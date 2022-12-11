@@ -587,3 +587,46 @@ table_4 <- table_3 %>%
 table_4
 
 ```
+
+## Firm Size Comparison by Sector Groups
+
+```{r}
+#Firm size comparison in the sectors; agriculture, construction, industry and services.
+options(dplyr.summarise.inform = FALSE)
+sectorinf_data <- readRDS("docs/Project_Data/sector_information.rds")
+
+table_sectorinf <- sectorinf_data %>%
+  filter(number == 'Number_of_companies') %>%
+  filter(size != 'Total') %>%
+  group_by(group,size) %>%
+  mutate("num_of_companies") %>%
+  summarise(num_of_companies=sum(value)) %>%
+  arrange(group,desc(size))
+
+table_sectorinf
+
+table_sectorinf %>%
+  ggplot(aes(x=group,y=num_of_companies, fill=size)) + 
+  geom_bar(stat='identity', position='dodge') +
+  xlab("Number of companies") +
+  ylab("Sector group")
+```
+
+```{r}
+#Firm size comparison by sector names as a detailed version.
+table_sectordetail <- sectorinf_data %>%
+  filter(number == 'Number_of_companies') %>%
+  filter(size != 'Total') %>%
+  group_by(sector_name, size) %>%
+  mutate("num_of_companies") %>%
+  summarise(num_of_companies=sum(value)) %>%
+  arrange(sector_name,desc(size))
+
+table_sectordetail
+
+table_sectordetail %>%
+  ggplot(aes(y=sector_name,x=num_of_companies, fill=size)) + 
+  geom_bar(stat='identity', position='dodge') +
+  xlab("Number of companies") +
+  ylab("Detailed sector group")
+```
