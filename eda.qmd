@@ -1,6 +1,13 @@
 ---
 title: "Group Project EDA"
-editor: visual
+output:
+  html_document:
+      toc: true # table of content true
+      toc_depth: 3  # upto two depths of headings (specified by #, ## and ###)
+      number_sections: true  ## if you want number sections at each table header
+      theme: united  # many options for theme, this one is my favorite.
+      highlight: tango  # specifies the syntax highlighting style
+      code_folding: hide
 ---
 
 ```{r include=FALSE}
@@ -9,7 +16,18 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 
 ## Introduction
 
+In this report, an analysis of sectoral developments in Turkey for the period between 2009-2021 using various data sources from [TURKSTAT](https://www.tuik.gov.tr/Home/Index) is presented.
+Main theme is industry in our project and real sector is examined using various panel datasets. In this regard, our analysis consists of basically 4 parts which can be outlined as follows:
+
+* Classification of firms based on their size on a sectoral level
+* Gender distribution in real sector firms
+* Financial analysis of the economy as a whole and sectoral level using sectoral company accounts data (prepared and published by [TURKSTAT](https://data.tuik.gov.tr/Bulten/Index?p=Company-Accounts-2021-45741) & [CBRT](https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Main+Menu/Statistics/Real+Sector+Statistics/Company+Accounts/) together)
+* Relationship between macro indicators and sectoral financial indicators based on micro_level sectoral data.
+
+
 ### Load Necessary Packages for EDA
+
+The libraries used in our analysis is given below:
 
 ```{r library, message=FALSE, warning=FALSE}
 library(tidyr)
@@ -30,6 +48,8 @@ library(viridis)
 
 ### Load Necessary Datasets for EDA
 
+Our raw data obtained from [TURKSTAT](https://www.tuik.gov.tr/Home/Index) in xlsx format is processed in the previous section and converted to .rds file formats.
+
 ```{r datasets, message=FALSE, warning=FALSE}
 
 bs <- readRDS("docs/Project_Data/balance_sheet.rds")
@@ -41,6 +61,8 @@ gdp_df <- readRDS("docs/Project_Data/gdp.rds")
 ```
 
 ### Few Data Manipulation Steps to Prepare Data for Final Stage
+
+Before proceeding to EDA, a few minor data manipulation is accomplished to ready data for final use in our analysis.
 
 ```{r data_preparation, message=FALSE, warning=FALSE}
 
@@ -68,15 +90,25 @@ bs_df <- bs_df %>% mutate(net_income_is = net_income)
 
 ## Financial Indicators
 
-Liquidity:
+In this section, we introduce three main financial indicators to be used in out analysis:
+
+**1) Liquidity Indicator:**
+
+Liquidity is a measure of a company’s ability to pay off its short-term liabilities—those that will come due in less than a year. **Current Ratio** is calculated as liquidity indicator as below:
 
 $Current\,Ratio = \frac{Current\,Assets}{Short\,Term\,Liabilities}$
 
-Leverage:
+A higher ratio indicates the business is more capable of paying off its short-term debts. These ratios will differ according to the industry, but in general ratios from 1.5 to 2.5 is acceptable. Lower ratios could indicate liquidity problems, while higher ones could signal there may be too much working capital tied up in inventory.
+
+**2) Leverage Indicator:**
+
+A leverage ratio is any one of several financial measurements that look at how much capital comes in the form of debt (loans) or assesses the ability of a company to meet its financial obligations. **Ratio of total loans to total assets** is used in our analysis to observe the reliance on liabilities.
 
 $Leverage = \frac{Total\,Loans}{Total\,Assets}$
 
-Profitability:
+**3) Profitability Indicator:**
+
+Return on assets (ROA) is used in our analysis as a profitability indicator which refers to a financial ratio that indicates how profitable a company is in relation to its total assets. Market participants use ROA to see how well a company uses its assets to generate profit. Our calculation is based on the formula given below:
 
 $Return\,on\,Assets = \frac{Net\,Profit}{Total\,Assets}$
 
@@ -97,6 +129,16 @@ bs_df_new <- bs_df_new %>%
 ```
 
 ### Basic Financial Indicators of Turkish Economy
+
+In this section, sectoral averages and standard devations of financial indicators are obtained and aggregated by using total assets of each sector as weights to obtain economy level financial indicators from 2009 to 2021.
+
+* Real sector firms are observed to rely more on liability sources and the economy as a whole has become more leveraged in this period.
+
+* Liquidity position of the firms deteriorated in this period although a slight correction is observed in the last few years.
+
+* Profitability of real sector firms stayed on the positive territory although it followed a volatile pattern throughout the period.
+
+* Interesting point regarding variation of these indicators among different sector is that leverage of real sector firms increase in a synchronised way so that the variation of leverage indicator between sectors diminishes significantly. On the contrary, an opposite picture is prevalent for liquidity and profitability of the sectors such that the variation across sectors increases significantly. 
 
 ```{r economy, message=FALSE, warning=FALSE}
 
@@ -140,6 +182,8 @@ bs_df_economy %>%
 
 ### Table of financial indicators for the economy from 2009 to 2021
 
+A table version of the previous plots is given below.
+
 ```{r table_fi}
 
 colnames(bs_df_economy_graph) <- c("Year", "Liquidity", "Leverage", "Profitability")
@@ -149,6 +193,14 @@ kable(bs_df_economy_graph)
 ```
 
 ### Time Series of Financial Indicators for each sector
+
+Financial indicators are given for each sector below.
+
+Construction, Mining, Information and Manufacturing are the sectors which have an upward trend in their liquidity position and deemed strong in terms of its level as of 2021 as compared to others.
+
+Leverage of real sector firms increased significantly in this period except **Construction** and **Electricity-Gas** sectors, which lowers the share of external liabilities in the financing of their assets and can be considered less risky as compared to the beginnning of the period.
+
+In terms of ability to return assets into profits, winner sectors are **Manufacturing, Information and Mining** where as the harming effect of the COVID-19 is observed in **Accomodation-Food, Entertainment and Transportation** which is not surprising as these sectors are more dependent on social mobility and the recovery in the period after March-2020 is only gradual. A more benign picture can be observed in 2022 when a complete normalisation in Covid related restrictive policies has been observed. Furthermore, a consistent deterioration in the profits of **Construction** sector is eye-catching
 
 ```{r time_series_fi}
 

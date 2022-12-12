@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.251">
+<meta name="generator" content="quarto-1.2.247">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -245,6 +245,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
@@ -253,8 +254,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="introduction" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">3.1</span> Introduction</h2>
+<p>In this report, an analysis of sectoral developments in Turkey for the period between 2009-2021 using various data sources from <a href="https://www.tuik.gov.tr/Home/Index">TURKSTAT</a> is presented. Main theme is industry in our project and real sector is examined using various panel datasets. In this regard, our analysis consists of basically 4 parts which can be outlined as follows:</p>
+<ul>
+<li>Classification of firms based on their size on a sectoral level</li>
+<li>Gender distribution in real sector firms</li>
+<li>Financial analysis of the economy as a whole and sectoral level using sectoral company accounts data (prepared and published by <a href="https://data.tuik.gov.tr/Bulten/Index?p=Company-Accounts-2021-45741">TURKSTAT</a> &amp; <a href="https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Main+Menu/Statistics/Real+Sector+Statistics/Company+Accounts/">CBRT</a> together)</li>
+<li>Relationship between macro indicators and sectoral financial indicators based on micro_level sectoral data.</li>
+</ul>
 <section id="load-necessary-packages-for-eda" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="load-necessary-packages-for-eda"><span class="header-section-number">3.1.1</span> Load Necessary Packages for EDA</h3>
+<p>The libraries used in our analysis is given below:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
@@ -274,6 +283,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="load-necessary-datasets-for-eda" class="level3" data-number="3.1.2">
 <h3 data-number="3.1.2" class="anchored" data-anchor-id="load-necessary-datasets-for-eda"><span class="header-section-number">3.1.2</span> Load Necessary Datasets for EDA</h3>
+<p>Our raw data obtained from <a href="https://www.tuik.gov.tr/Home/Index">TURKSTAT</a> in xlsx format is processed in the previous section and converted to .rds file formats.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>bs <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"docs/Project_Data/balance_sheet.rds"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>i_s <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"docs/Project_Data/income_statement.rds"</span>)</span>
@@ -284,6 +294,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="few-data-manipulation-steps-to-prepare-data-for-final-stage" class="level3" data-number="3.1.3">
 <h3 data-number="3.1.3" class="anchored" data-anchor-id="few-data-manipulation-steps-to-prepare-data-for-final-stage"><span class="header-section-number">3.1.3</span> Few Data Manipulation Steps to Prepare Data for Final Stage</h3>
+<p>Before proceeding to EDA, a few minor data manipulation is accomplished to ready data for final use in our analysis.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bs<span class="sc">$</span>accounts <span class="ot">&lt;-</span> bs<span class="sc">$</span>accounts <span class="sc">%&gt;%</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">"_"</span>, .)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -308,11 +319,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="financial-indicators" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="financial-indicators"><span class="header-section-number">3.2</span> Financial Indicators</h2>
-<p>Liquidity:</p>
+<p>In this section, we introduce three main financial indicators to be used in out analysis:</p>
+<p><strong>1) Liquidity Indicator:</strong></p>
+<p>Liquidity is a measure of a company’s ability to pay off its short-term liabilities—those that will come due in less than a year. <strong>Current Ratio</strong> is calculated as liquidity indicator as below:</p>
 <p><span class="math inline">\(Current\,Ratio = \frac{Current\,Assets}{Short\,Term\,Liabilities}\)</span></p>
-<p>Leverage:</p>
+<p>A higher ratio indicates the business is more capable of paying off its short-term debts. These ratios will differ according to the industry, but in general ratios from 1.5 to 2.5 is acceptable. Lower ratios could indicate liquidity problems, while higher ones could signal there may be too much working capital tied up in inventory.</p>
+<p><strong>2) Leverage Indicator:</strong></p>
+<p>A leverage ratio is any one of several financial measurements that look at how much capital comes in the form of debt (loans) or assesses the ability of a company to meet its financial obligations. <strong>Ratio of total loans to total assets</strong> is used in our analysis to observe the reliance on liabilities.</p>
 <p><span class="math inline">\(Leverage = \frac{Total\,Loans}{Total\,Assets}\)</span></p>
-<p>Profitability:</p>
+<p><strong>3) Profitability Indicator:</strong></p>
+<p>Return on assets (ROA) is used in our analysis as a profitability indicator which refers to a financial ratio that indicates how profitable a company is in relation to its total assets. Market participants use ROA to see how well a company uses its assets to generate profit. Our calculation is based on the formula given below:</p>
 <p><span class="math inline">\(Return\,on\,Assets = \frac{Net\,Profit}{Total\,Assets}\)</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bs_df_new <span class="ot">&lt;-</span> bs_df <span class="sc">%&gt;%</span> </span>
@@ -329,6 +345,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <section id="basic-financial-indicators-of-turkish-economy" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="basic-financial-indicators-of-turkish-economy"><span class="header-section-number">3.2.1</span> Basic Financial Indicators of Turkish Economy</h3>
+<p>In this section, sectoral averages and standard devations of financial indicators are obtained and aggregated by using total assets of each sector as weights to obtain economy level financial indicators from 2009 to 2021.</p>
+<ul>
+<li><p>Real sector firms are observed to rely more on liability sources and the economy as a whole has become more leveraged in this period.</p></li>
+<li><p>Liquidity position of the firms deteriorated in this period although a slight correction is observed in the last few years.</p></li>
+<li><p>Profitability of real sector firms stayed on the positive territory although it followed a volatile pattern throughout the period.</p></li>
+<li><p>Interesting point regarding variation of these indicators among different sector is that leverage of real sector firms increase in a synchronised way so that the variation of leverage indicator between sectors diminishes significantly. On the contrary, an opposite picture is prevalent for liquidity and profitability of the sectors such that the variation across sectors increases significantly.</p></li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculation and plot of weighted average financial indicators</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>bs_df_economy <span class="ot">&lt;-</span> bs_df <span class="sc">%&gt;%</span> </span>
@@ -374,6 +397,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="table-of-financial-indicators-for-the-economy-from-2009-to-2021" class="level3" data-number="3.2.2">
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="table-of-financial-indicators-for-the-economy-from-2009-to-2021"><span class="header-section-number">3.2.2</span> Table of financial indicators for the economy from 2009 to 2021</h3>
+<p>A table version of the previous plots is given below.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(bs_df_economy_graph) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Year"</span>, <span class="st">"Liquidity"</span>, <span class="st">"Leverage"</span>, <span class="st">"Profitability"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>bs_df_economy_graph[,<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(bs_df_economy_graph[,<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>], </span>
@@ -475,6 +499,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="time-series-of-financial-indicators-for-each-sector" class="level3" data-number="3.2.3">
 <h3 data-number="3.2.3" class="anchored" data-anchor-id="time-series-of-financial-indicators-for-each-sector"><span class="header-section-number">3.2.3</span> Time Series of Financial Indicators for each sector</h3>
+<p>Financial indicators are given for each sector below.</p>
+<p>Construction, Mining, Information and Manufacturing are the sectors which have an upward trend in their liquidity position and deemed strong in terms of its level as of 2021 as compared to others.</p>
+<p>Leverage of real sector firms increased significantly in this period except <strong>Construction</strong> and <strong>Electricity-Gas</strong> sectors, which lowers the share of external liabilities in the financing of their assets and can be considered less risky as compared to the beginnning of the period.</p>
+<p>In terms of ability to return assets into profits, winner sectors are <strong>Manufacturing, Information and Mining</strong> where as the harming effect of the COVID-19 is observed in <strong>Accomodation-Food, Entertainment and Transportation</strong> which is not surprising as these sectors are more dependent on social mobility and the recovery in the period after March-2020 is only gradual. A more benign picture can be observed in 2022 when a complete normalisation in Covid related restrictive policies has been observed. Furthermore, a consistent deterioration in the profits of <strong>Construction</strong> sector is eye-catching</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> bs_df_new[bs_df_new<span class="sc">$</span>Indicator <span class="sc">==</span> <span class="st">"current_ratio"</span>,], <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> Value)) <span class="sc">+</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
@@ -703,12 +731,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(heatmap_df[,<span class="dv">5</span>]), <span class="fu">max</span>(heatmap_df[,<span class="dv">5</span>]))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="xfwhiqxzwi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="xrygpmlxlx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#xfwhiqxzwi) .gt_table {
+:where(#xrygpmlxlx) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -733,7 +761,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-:where(#xfwhiqxzwi) .gt_heading {
+:where(#xrygpmlxlx) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -745,12 +773,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#xfwhiqxzwi) .gt_caption {
+:where(#xrygpmlxlx) .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-:where(#xfwhiqxzwi) .gt_title {
+:where(#xrygpmlxlx) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -762,7 +790,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-:where(#xfwhiqxzwi) .gt_subtitle {
+:where(#xrygpmlxlx) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -774,13 +802,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-:where(#xfwhiqxzwi) .gt_bottom_border {
+:where(#xrygpmlxlx) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#xfwhiqxzwi) .gt_col_headings {
+:where(#xrygpmlxlx) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -795,7 +823,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#xfwhiqxzwi) .gt_col_heading {
+:where(#xrygpmlxlx) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -815,7 +843,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#xfwhiqxzwi) .gt_column_spanner_outer {
+:where(#xrygpmlxlx) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -827,15 +855,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-:where(#xfwhiqxzwi) .gt_column_spanner_outer:first-child {
+:where(#xrygpmlxlx) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#xfwhiqxzwi) .gt_column_spanner_outer:last-child {
+:where(#xrygpmlxlx) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#xfwhiqxzwi) .gt_column_spanner {
+:where(#xrygpmlxlx) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -847,7 +875,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-:where(#xfwhiqxzwi) .gt_group_heading {
+:where(#xrygpmlxlx) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -873,7 +901,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   text-align: left;
 }
 
-:where(#xfwhiqxzwi) .gt_empty_group_heading {
+:where(#xrygpmlxlx) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -888,15 +916,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#xfwhiqxzwi) .gt_from_md > :first-child {
+:where(#xrygpmlxlx) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#xfwhiqxzwi) .gt_from_md > :last-child {
+:where(#xrygpmlxlx) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#xfwhiqxzwi) .gt_row {
+:where(#xrygpmlxlx) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -915,7 +943,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#xfwhiqxzwi) .gt_stub {
+:where(#xrygpmlxlx) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -928,7 +956,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#xfwhiqxzwi) .gt_stub_row_group {
+:where(#xrygpmlxlx) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -942,11 +970,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-:where(#xfwhiqxzwi) .gt_row_group_first td {
+:where(#xrygpmlxlx) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#xfwhiqxzwi) .gt_summary_row {
+:where(#xrygpmlxlx) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -956,16 +984,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#xfwhiqxzwi) .gt_first_summary_row {
+:where(#xrygpmlxlx) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#xfwhiqxzwi) .gt_first_summary_row.thick {
+:where(#xrygpmlxlx) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#xfwhiqxzwi) .gt_last_summary_row {
+:where(#xrygpmlxlx) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -975,7 +1003,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#xfwhiqxzwi) .gt_grand_summary_row {
+:where(#xrygpmlxlx) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -985,7 +1013,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#xfwhiqxzwi) .gt_first_grand_summary_row {
+:where(#xrygpmlxlx) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -995,11 +1023,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-:where(#xfwhiqxzwi) .gt_striped {
+:where(#xrygpmlxlx) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#xfwhiqxzwi) .gt_table_body {
+:where(#xrygpmlxlx) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1008,7 +1036,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#xfwhiqxzwi) .gt_footnotes {
+:where(#xrygpmlxlx) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1022,7 +1050,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#xfwhiqxzwi) .gt_footnote {
+:where(#xrygpmlxlx) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1031,7 +1059,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#xfwhiqxzwi) .gt_sourcenotes {
+:where(#xrygpmlxlx) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1045,7 +1073,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#xfwhiqxzwi) .gt_sourcenote {
+:where(#xrygpmlxlx) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1053,64 +1081,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#xfwhiqxzwi) .gt_left {
+:where(#xrygpmlxlx) .gt_left {
   text-align: left;
 }
 
-:where(#xfwhiqxzwi) .gt_center {
+:where(#xrygpmlxlx) .gt_center {
   text-align: center;
 }
 
-:where(#xfwhiqxzwi) .gt_right {
+:where(#xrygpmlxlx) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#xfwhiqxzwi) .gt_font_normal {
+:where(#xrygpmlxlx) .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#xfwhiqxzwi) .gt_font_bold {
+:where(#xrygpmlxlx) .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#xfwhiqxzwi) .gt_font_italic {
+:where(#xrygpmlxlx) .gt_font_italic {
   font-style: italic;
 }
 
-:where(#xfwhiqxzwi) .gt_super {
+:where(#xrygpmlxlx) .gt_super {
   font-size: 65%;
 }
 
-:where(#xfwhiqxzwi) .gt_footnote_marks {
+:where(#xrygpmlxlx) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#xfwhiqxzwi) .gt_asterisk {
+:where(#xrygpmlxlx) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#xfwhiqxzwi) .gt_indent_1 {
+:where(#xrygpmlxlx) .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#xfwhiqxzwi) .gt_indent_2 {
+:where(#xrygpmlxlx) .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#xfwhiqxzwi) .gt_indent_3 {
+:where(#xrygpmlxlx) .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#xfwhiqxzwi) .gt_indent_4 {
+:where(#xrygpmlxlx) .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#xfwhiqxzwi) .gt_indent_5 {
+:where(#xrygpmlxlx) .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1745,7 +1773,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -1781,24 +1826,42 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
