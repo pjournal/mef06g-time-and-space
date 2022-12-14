@@ -232,6 +232,14 @@ ggplot(data = bs_df_new[bs_df_new$Indicator == "return_on_assets",], aes(x = yea
 
 ### Scatter Plots of Financial Indicators
 
+In the previous section, one dimensional evolution of sectors in time is outlined. Having obtained indicators for financial overview of Turkish Economy on a sectoral basis, temporal relationship between them is worth analysing.
+
+Regarding liquidity and leverage, there exists a clear negative association which is in effect for almost all of the sectors albeit with different degrees.The exception is **Mining** sector which experiences rise in leverage and liquidity positions at the same time. 
+
+For liquidity and profitability, expected outcome is observed such that real sector firms have a better liquidity when they are more profitable for the period in consider.
+
+Lastly, profitability and leverage indicators among sectors demonstrate a trade-off such that in general firms with lower profit encounters a decline in the share of equity as a source of financing.
+
 ```{r scatter_fi}
 
 bs_df_new %>% 
@@ -261,6 +269,15 @@ bs_df_new %>%
 ```
 
 ### 2009 - 2019 Period Average of Financial Indicators
+
+A closer look for the perfomance of Turkish economy in the last two years is aimed to be investigated in comparison to previous years. 2020 and 2021 is important especially for diagnosing the effect of Covid-19 outbreak and its consequent impact on the financial status of real sector firms. 
+
+Firstly, **Transportation, Accomodation-Food, Real Estate and Professional Activities** are the sectors whose liquidity position deteriorate most during Covid-19. This result is not abnormal as social distancing measures and decline in mobility affect those sectors most.The rest seems to be less affected and even there are sectors who experience a considerable improvement in terms of liquidity which might be due to frequency of our data. The covid-19 outbreak started in first quarter of 2020 and then the government policies to support the economy could be one reason for the improvement of the sectors. 
+
+
+Secondly, leverage indicator seemed to rise throughout the economy except a few sectors which is considered natural in response to credit oriented policies of government to support real sector firms against Covid-19 shock.
+
+Finally, the winners are **Mining, Manufacturing, Information and Health** in terms of improvement in their profits and this improvement seemed to continue in 2021. On the other end of the picture, **Transportation and Services** sectors were seen to be in trouble in terms of profitability.
 
 Liquidity Indicator
 
@@ -360,6 +377,8 @@ bs_df_new %>% pivot_wider(names_from = Indicator, values_from = Value) %>%
 ```
 
 ## Financial Fragility Index
+
+Up until now, financial position of Turkish economy is evaluated based on the three indicators obtained through balance sheets and income statements of sectors. In this section, an index demonstrating financial healthiness of the sectors is constructed so that a comparative analysis of Turkish economy through time can be conducted on a holistic perspective.
 
 ```{r}
 

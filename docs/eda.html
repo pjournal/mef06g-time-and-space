@@ -535,6 +535,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="scatter-plots-of-financial-indicators" class="level3" data-number="3.2.4">
 <h3 data-number="3.2.4" class="anchored" data-anchor-id="scatter-plots-of-financial-indicators"><span class="header-section-number">3.2.4</span> Scatter Plots of Financial Indicators</h3>
+<p>In the previous section, one dimensional evolution of sectors in time is outlined. Having obtained indicators for financial overview of Turkish Economy on a sectoral basis, temporal relationship between them is worth analysing.</p>
+<p>Regarding liquidity and leverage, there exists a clear negative association which is in effect for almost all of the sectors albeit with different degrees.The exception is <strong>Mining</strong> sector which experiences rise in leverage and liquidity positions at the same time.</p>
+<p>For liquidity and profitability, expected outcome is observed such that real sector firms have a better liquidity when they are more profitable for the period in consider.</p>
+<p>Lastly, profitability and leverage indicators among sectors demonstrate a trade-off such that in general firms with lower profit encounters a decline in the share of equity as a source of financing.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>bs_df_new <span class="sc">%&gt;%</span> </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"Indicator"</span>, <span class="at">values_from =</span> <span class="st">"Value"</span>) <span class="sc">%&gt;%</span> </span>
@@ -570,6 +574,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="period-average-of-financial-indicators" class="level3" data-number="3.2.5">
 <h3 data-number="3.2.5" class="anchored" data-anchor-id="period-average-of-financial-indicators"><span class="header-section-number">3.2.5</span> 2009 - 2019 Period Average of Financial Indicators</h3>
+<p>A closer look for the perfomance of Turkish economy in the last two years is aimed to be investigated in comparison to previous years. 2020 and 2021 is important especially for diagnosing the effect of Covid-19 outbreak and its consequent impact on the financial status of real sector firms.</p>
+<p>Firstly, <strong>Transportation, Accomodation-Food, Real Estate and Professional Activities</strong> are the sectors whose liquidity position deteriorate most during Covid-19. This result is not abnormal as social distancing measures and decline in mobility affect those sectors most.The rest seems to be less affected and even there are sectors who experience a considerable improvement in terms of liquidity which might be due to frequency of our data. The covid-19 outbreak started in first quarter of 2020 and then the government policies to support the economy could be one reason for the improvement of the sectors.</p>
+<p>Secondly, leverage indicator seemed to rise throughout the economy except a few sectors which is considered natural in response to credit oriented policies of government to support real sector firms against Covid-19 shock.</p>
+<p>Finally, the winners are <strong>Mining, Manufacturing, Information and Health</strong> in terms of improvement in their profits and this improvement seemed to continue in 2021. On the other end of the picture, <strong>Transportation and Services</strong> sectors were seen to be in trouble in terms of profitability.</p>
 <p>Liquidity Indicator</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>bs_df_average <span class="ot">&lt;-</span>  bs_df_new <span class="sc">%&gt;%</span> </span>
@@ -680,6 +688,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="financial-fragility-index" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="financial-fragility-index"><span class="header-section-number">3.3</span> Financial Fragility Index</h2>
+<p>Up until now, financial position of Turkish economy is evaluated based on the three indicators obtained through balance sheets and income statements of sectors. In this section, an index demonstrating financial healthiness of the sectors is constructed so that a comparative analysis of Turkish economy through time can be conducted on a holistic perspective.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>bs_df_ffi <span class="ot">&lt;-</span> bs_df_new <span class="sc">%&gt;%</span> </span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"Indicator"</span>, <span class="at">values_from =</span> <span class="st">"Value"</span>) <span class="sc">%&gt;%</span> </span>
@@ -731,12 +740,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">domain =</span> <span class="fu">c</span>(<span class="fu">min</span>(heatmap_df[,<span class="dv">5</span>]), <span class="fu">max</span>(heatmap_df[,<span class="dv">5</span>]))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="xrygpmlxlx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="bnsnacjrrd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-:where(#xrygpmlxlx) .gt_table {
+:where(#bnsnacjrrd) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -761,7 +770,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-:where(#xrygpmlxlx) .gt_heading {
+:where(#bnsnacjrrd) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -773,12 +782,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#xrygpmlxlx) .gt_caption {
+:where(#bnsnacjrrd) .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-:where(#xrygpmlxlx) .gt_title {
+:where(#bnsnacjrrd) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -790,7 +799,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-:where(#xrygpmlxlx) .gt_subtitle {
+:where(#bnsnacjrrd) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -802,13 +811,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-:where(#xrygpmlxlx) .gt_bottom_border {
+:where(#bnsnacjrrd) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-:where(#xrygpmlxlx) .gt_col_headings {
+:where(#bnsnacjrrd) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -823,7 +832,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#xrygpmlxlx) .gt_col_heading {
+:where(#bnsnacjrrd) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -843,7 +852,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#xrygpmlxlx) .gt_column_spanner_outer {
+:where(#bnsnacjrrd) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -855,15 +864,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-:where(#xrygpmlxlx) .gt_column_spanner_outer:first-child {
+:where(#bnsnacjrrd) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-:where(#xrygpmlxlx) .gt_column_spanner_outer:last-child {
+:where(#bnsnacjrrd) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-:where(#xrygpmlxlx) .gt_column_spanner {
+:where(#bnsnacjrrd) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -875,7 +884,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-:where(#xrygpmlxlx) .gt_group_heading {
+:where(#bnsnacjrrd) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -901,7 +910,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   text-align: left;
 }
 
-:where(#xrygpmlxlx) .gt_empty_group_heading {
+:where(#bnsnacjrrd) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -916,15 +925,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-:where(#xrygpmlxlx) .gt_from_md > :first-child {
+:where(#bnsnacjrrd) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-:where(#xrygpmlxlx) .gt_from_md > :last-child {
+:where(#bnsnacjrrd) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-:where(#xrygpmlxlx) .gt_row {
+:where(#bnsnacjrrd) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -943,7 +952,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-:where(#xrygpmlxlx) .gt_stub {
+:where(#bnsnacjrrd) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -956,7 +965,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#xrygpmlxlx) .gt_stub_row_group {
+:where(#bnsnacjrrd) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -970,11 +979,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-:where(#xrygpmlxlx) .gt_row_group_first td {
+:where(#bnsnacjrrd) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-:where(#xrygpmlxlx) .gt_summary_row {
+:where(#bnsnacjrrd) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -984,16 +993,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#xrygpmlxlx) .gt_first_summary_row {
+:where(#bnsnacjrrd) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-:where(#xrygpmlxlx) .gt_first_summary_row.thick {
+:where(#bnsnacjrrd) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-:where(#xrygpmlxlx) .gt_last_summary_row {
+:where(#bnsnacjrrd) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1003,7 +1012,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#xrygpmlxlx) .gt_grand_summary_row {
+:where(#bnsnacjrrd) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1013,7 +1022,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#xrygpmlxlx) .gt_first_grand_summary_row {
+:where(#bnsnacjrrd) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1023,11 +1032,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-:where(#xrygpmlxlx) .gt_striped {
+:where(#bnsnacjrrd) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-:where(#xrygpmlxlx) .gt_table_body {
+:where(#bnsnacjrrd) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1036,7 +1045,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-:where(#xrygpmlxlx) .gt_footnotes {
+:where(#bnsnacjrrd) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1050,7 +1059,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#xrygpmlxlx) .gt_footnote {
+:where(#bnsnacjrrd) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1059,7 +1068,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#xrygpmlxlx) .gt_sourcenotes {
+:where(#bnsnacjrrd) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1073,7 +1082,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-:where(#xrygpmlxlx) .gt_sourcenote {
+:where(#bnsnacjrrd) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1081,64 +1090,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-:where(#xrygpmlxlx) .gt_left {
+:where(#bnsnacjrrd) .gt_left {
   text-align: left;
 }
 
-:where(#xrygpmlxlx) .gt_center {
+:where(#bnsnacjrrd) .gt_center {
   text-align: center;
 }
 
-:where(#xrygpmlxlx) .gt_right {
+:where(#bnsnacjrrd) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-:where(#xrygpmlxlx) .gt_font_normal {
+:where(#bnsnacjrrd) .gt_font_normal {
   font-weight: normal;
 }
 
-:where(#xrygpmlxlx) .gt_font_bold {
+:where(#bnsnacjrrd) .gt_font_bold {
   font-weight: bold;
 }
 
-:where(#xrygpmlxlx) .gt_font_italic {
+:where(#bnsnacjrrd) .gt_font_italic {
   font-style: italic;
 }
 
-:where(#xrygpmlxlx) .gt_super {
+:where(#bnsnacjrrd) .gt_super {
   font-size: 65%;
 }
 
-:where(#xrygpmlxlx) .gt_footnote_marks {
+:where(#bnsnacjrrd) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-:where(#xrygpmlxlx) .gt_asterisk {
+:where(#bnsnacjrrd) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-:where(#xrygpmlxlx) .gt_indent_1 {
+:where(#bnsnacjrrd) .gt_indent_1 {
   text-indent: 5px;
 }
 
-:where(#xrygpmlxlx) .gt_indent_2 {
+:where(#bnsnacjrrd) .gt_indent_2 {
   text-indent: 10px;
 }
 
-:where(#xrygpmlxlx) .gt_indent_3 {
+:where(#bnsnacjrrd) .gt_indent_3 {
   text-indent: 15px;
 }
 
-:where(#xrygpmlxlx) .gt_indent_4 {
+:where(#bnsnacjrrd) .gt_indent_4 {
   text-indent: 20px;
 }
 
-:where(#xrygpmlxlx) .gt_indent_5 {
+:where(#bnsnacjrrd) .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
