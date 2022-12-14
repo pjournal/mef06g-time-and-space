@@ -380,6 +380,21 @@ bs_df_new %>% pivot_wider(names_from = Indicator, values_from = Value) %>%
 
 Up until now, financial position of Turkish economy is evaluated based on the three indicators obtained through balance sheets and income statements of sectors. In this section, an index demonstrating financial healthiness of the sectors is constructed so that a comparative analysis of Turkish economy through time can be conducted on a holistic perspective.
 
+The methodology used in the construction of **Financial Fragility Index (FFI)** consists of the following steps:
+
+1- For each financial indicator (Liquidity, Leverage and Profitability) percentile of each sector is found. To be more specific, the higher the rank of a sector, the worse it is in terms of financial soundness. In other words, for liquidity, the sector is less liquid, for leverage, the sector has higher leverage and for profitability, the sector is less profitable. 
+
+2- After finding each sectors' rank for each financial indicator, simple average is calculated and index value is obtained.
+
+3- The steps described above is repeated for each year between 2009-2021 and a time series of the index is found.
+
+
+After obtaining FFI, evolution of the index for each sector is illustrated in the graph below.
+
+* Services sectors such as **Accomodation-Food, Real Estate and Transportation** have performed worse than other sectors and found themselves in a much more fragile position in terms of financial soundness
+
+* Although the index alone can not be taken into account alone to conclude that a certain sector is riskier than others financially for a specific time point, time series evolution gives a glimpse of where the sectors are heading into in terms of their financial strength.
+
 ```{r}
 
 bs_df_ffi <- bs_df_new %>% 
@@ -403,6 +418,12 @@ bs_df_ffi %>%
 ```
 
 ### Heatmap for 2021
+
+For 2021, a cross sectional analysis demonstrates that services related sectors are considered most risky in terms of financial metrics defined previously.
+
+* Education is considered most risky sector mostly due to its poor liquidity and high leverage which increases the firms' probability of default as it raises doubts about payment of short term debts. 
+
+* Mining sector is the leading sector in terms of financial soundness according to all of the predefined metrics. 
 
 ```{r fi_heatmap}
 heatmap_df <- bs_df_economy %>% 
