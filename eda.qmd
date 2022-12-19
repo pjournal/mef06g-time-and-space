@@ -1,13 +1,11 @@
 ---
 title: "Group Project EDA"
-output:
-  html_document:
-      toc: true # table of content true
-      toc_depth: 3  # upto two depths of headings (specified by #, ## and ###)
-      number_sections: true  ## if you want number sections at each table header
-      theme: united  # many options for theme, this one is my favorite.
-      highlight: tango  # specifies the syntax highlighting style
-      code_folding: hide
+editor: visual
+format: 
+  html:
+    code-fold: true
+    number-sections: false
+    toc: true
 ---
 
 ```{r include=FALSE}
