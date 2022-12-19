@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Time and Space Progress Journal",
     "section": "",
-    "text": "Image Source\nThis progress journal covers Time and Space’s work during their term at BDA 503 Fall 2022.\nEach section is an assignment or an individual work.\n\n\n\nGülhan Demirel Dilek\nOrhun Doğan\nYener Alboğa\nYiğit Onay\nZeynep Yağmur Güner\n\n\n\n\nOur group project is about exploration of financial status of real sector companies and their connection with macro indicators.\nShortly, our study aims to present a description of financial status of real sector companies based on their financial tables and their status of employment (labor cost, gender distribution), international trade (competitive advantage, export/import potential), growth dynamics and cost structures (producer prices)."
+    "text": "Introduction\nThis progress journal covers Time and Space’s work during their term at BDA 503 Fall 2022.\nEach section is an assignment or an individual work."
   },
   {
     "objectID": "assignment1.html",
@@ -81,7 +81,7 @@
     "href": "index.html#group-project-details",
     "title": "Time and Space Progress Journal",
     "section": "Group Project Details",
-    "text": "Group Project Details\nOur group project is about exploration of financial status of real sector companies and their connection with macro indicators.\nShortly, our study aims to present a description of financial status of real sector companies based on their financial tables and their status of employment (labor cost, gender distribution), international trade (competitive advantage, export/import potential), growth dynamics and cost structures (producer prices)."
+    "text": "Group Project Details\nOur group project is about exploration of financial soundness of Turkish economy based on micro data of real sector companies.\nTo be specific, our study aims to present an overview of financial status of real sector companies based on their financial statements such as balance sheets and income statements. Liquidity, Leverage and Profitability metrics are used to assess financial fragility/strength of the economy for the period between 2009 and 2021. In this respect, a scorecard based on derived Financial Fragility Index for each sector has been constructed to evaluate sectors comparatively. Finally, a brief analysis of sectors is presented with respect to their position in international trade."
   },
   {
     "objectID": "data_prep.html#main-data-for-our-project",
