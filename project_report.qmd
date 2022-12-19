@@ -1,0 +1,416 @@
+---
+title: "Project Report"
+editor: visual
+format: 
+  html:
+    code-fold: true
+    number-sections: false
+    toc: true
+---
+
+# Financial Overview of Turkish Economy
+
+```{r include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+In this report, an analysis of sectoral financial developments in Turkey for the period between 2009-2021 using various datasets from [TURKSTAT](https://www.tuik.gov.tr/Home/Index) is presented. Widely used financial metrics are employed in our analysis in order to overview financial position of real sector Turkish economy. These metrics are then used to construct a **Financial Fragility Index** in an attempt to gauge financial position of each sector compared to each other.
+
+![](https://nuvest.net/wp-content/uploads/2017/06/finanicial-statements.jpg)
+
+```{r library, include=FALSE}
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(readxl)
+library(ggridges)
+library(scales)
+library(gt)
+library(rmarkdown)
+library(quarto)
+library(knitr)
+library(data.table)
+library(ggthemes)
+library(viridis)
+```
+
+## Key Takeaways
+
+1.  Real sector firms are observed to rely more on liability sources and the economy as a whole has become more leveraged in this period, which is considered a natural result of credit oriented policies for the last decade in the Turkish Economy.
+
+2.  Liquidity position of the firms deteriorated in this period although a slight correction is observed in the last few years. **Transportation, Accomodation-Food, Real Estate and Professional Activities** are the sectors whose liquidity position deteriorate most during Covid-19.
+
+3.  Profitability of real sector firms stayed on the positive territory although it followed a volatile pattern throughout the period. During Covid-19, the winners are **Mining, Manufacturing, Information and Health** in terms of improvement in their profits and this improvement seemed to continue in 2021. On the opposite end of the picture, **Transportation and Services** sectors were seen to be in trouble in terms of profitability.
+
+4.  **Leverage** of real sector firms increase in a synchronised way whereas variation across sectors increases significantly for **liquidity and profitability** indicators.
+
+5.  For 2021, a cross sectional analysis demonstrates that **services related sectors** are considered most risky in terms of financial metrics defined. To be specific, **Education** is considered most risky sector mostly due to its poor liquidity and high leverage which increases the firms' probability of default as it raises doubts about payment of short term debts.
+
+## Introduction
+
+```{r datasets, include=FALSE}
+
+#Our raw data obtained from [TURKSTAT](https://www.tuik.gov.tr/Home/Index) in xlsx format is processed in the previous section and converted to .rds file formats.
+
+bs <- readRDS("docs/Project_Data/balance_sheet.rds")
+i_s <- readRDS("docs/Project_Data/income_statement.rds")
+trade_df <- readRDS("docs/Project_Data/trade.rds")
+price_df <- readRDS("docs/Project_Data/input_cost.rds")
+gdp_df <- readRDS("docs/Project_Data/gdp.rds")
+
+```
+
+
+```{r data_preparation, include=FALSE}
+
+#Before proceeding to EDA, a few minor data manipulation is accomplished to ready data for final use in our analysis.
+
+bs$accounts <- bs$accounts %>% gsub("\\s+", "_", .)
+
+bs_df <- bs %>% 
+  filter(accounts %in% c("I-Current_assets", 
+                         "III-Short-term_liabilities", 
+                         "IV-Long-term_liabilities", 
+                         "Total_assets", 
+                         "V-Own_funds")) %>%
+  pivot_wider(names_from = accounts, values_from = value)
+
+i_s$accounts <- i_s$accounts %>% gsub("\\s+", "_", .)
+
+net_income <- i_s %>% 
+  filter(accounts == "Net_profit_or_loss_for_the_financial_year") %>% 
+  pivot_wider(names_from = accounts, values_from = value) %>% 
+  pull(Net_profit_or_loss_for_the_financial_year)
+  
+bs_df <- bs_df %>% mutate(net_income_is = net_income)
+
+
+```
+
+## Financial Metrics
+
+```{r Financial_Indicators}
+
+bs_df_new <- bs_df %>% 
+  mutate(current_ratio = bs_df$"I-Current_assets" / bs_df$"III-Short-term_liabilities", 
+         leverage = bs_df$"III-Short-term_liabilities" / bs_df$"Total_assets",
+         return_on_equity = bs_df$"net_income_is" / bs_df$"V-Own_funds",
+         return_on_assets = bs_df$"net_income_is" / bs_df$"Total_assets") %>% 
+  select(c(sector_code:year),c(current_ratio:return_on_assets))
+
+bs_df_new <- bs_df_new %>% 
+  pivot_longer(cols = c("current_ratio", "leverage", "return_on_equity", "return_on_assets"), 
+               names_to = "Indicator", 
+               values_to = "Value")
+
+```
+
+In this section, we introduce three main financial indicators to be used in out analysis:
+
+**1) Liquidity Indicator:**
+
+Liquidity is a measure of a company's ability to pay off its short-term liabilities---those that will come due in less than a year. **Current Ratio** is calculated as liquidity indicator as below:
+
+$Current\,Ratio = \frac{Current\,Assets}{Short\,Term\,Liabilities}$
+
+A higher ratio indicates the business is more capable of paying off its short-term debts. These ratios will differ according to the industry, but in general ratios from 1.5 to 2.5 is acceptable. Lower ratios could indicate liquidity problems, while higher ones could signal there may be too much working capital tied up in inventory.
+
+**2) Leverage Indicator:**
+
+A leverage ratio is any one of several financial measurements that look at how much capital comes in the form of debt (loans) or assesses the ability of a company to meet its financial obligations. **Ratio of total loans to total assets** is used in our analysis to observe the reliance on liabilities.
+
+$Leverage = \frac{Total\,Loans}{Total\,Assets}$
+
+**3) Profitability Indicator:**
+
+Return on assets (ROA) is used in our analysis as a profitability indicator which refers to a financial ratio that indicates how profitable a company is in relation to its total assets. Market participants use ROA to see how well a company uses its assets to generate profit. Our calculation is based on the formula given below:
+
+$Return\,on\,Assets = \frac{Net\,Profit}{Total\,Assets}$
+
+### General Overview
+
+```{r economy}
+
+#Calculation and plot of weighted average financial indicators
+bs_df_economy <- bs_df %>% 
+  mutate(current_ratio = bs_df$"I-Current_assets" / bs_df$"III-Short-term_liabilities", 
+         leverage = bs_df$"III-Short-term_liabilities" / bs_df$"Total_assets",
+         return_on_equity = bs_df$"net_income_is" / bs_df$"V-Own_funds",
+         return_on_assets = bs_df$"net_income_is" / bs_df$"Total_assets") %>% 
+  select(c(sector_code:year),c(current_ratio:return_on_assets), Total_assets)
+
+
+bs_df_economy_graph <- bs_df_economy %>% 
+  group_by(year) %>% 
+  summarize(Liquidity = weighted.mean(current_ratio, Total_assets) * 100,
+            Leverage = weighted.mean(leverage, Total_assets) * 100,
+            Profitability = weighted.mean(return_on_assets, Total_assets) * 100)
+
+bs_df_economy_graph %>% 
+  pivot_longer(-year, names_to = "indicator_yearly", values_to = "value") %>% 
+  ggplot(aes(x = year, y = value)) +
+  geom_line() +
+  facet_wrap(~indicator_yearly, scales = "free") +
+  theme_bw() +
+  labs(y = "Levels", title = "Weighted Average of Financial Indicators")
+
+#Calculation and plot of standard deviation of financial indicators
+bs_df_economy %>% 
+  group_by(year) %>% 
+  summarize(Liquidity = sd(current_ratio) * 10,
+            Leverage = sd(leverage) * 10,
+            Profitability = sd(return_on_assets) * 10) %>% 
+  pivot_longer(-year, names_to = "std_yearly", values_to = "value") %>% 
+  ggplot(aes(x = year, y = value)) +
+  geom_line() +
+  facet_wrap(~std_yearly, scales = "free") +
+  theme_bw()+
+  labs(y = "Levels", title = "Standard Deviation of Financial Indicators")
+
+```
+
+### Sectoral Overview
+
+Construction, Mining, Information and Manufacturing are the sectors which have an upward trend in their *liquidity* position and deemed strong in terms of its level as of 2021 as compared to others.
+
+Leverage of real sector firms increased significantly in this period except **Construction** and **Electricity-Gas** sectors, which lowers the share of external liabilities in the financing of their assets and can be considered less risky as compared to the beginnning of the period.
+
+In terms of ability to return assets into profits, winner sectors are **Manufacturing, Information and Mining** where as the harming effect of the COVID-19 is observed in **Accomodation-Food, Entertainment and Transportation** which is not surprising as these sectors are more dependent on social mobility and the recovery in the period after March-2020 is only gradual. A more benign picture can be observed in 2022 when a complete normalisation in Covid related restrictive policies has been observed. Furthermore, a consistent deterioration in the profits of **Construction** sector is eye-catching.
+
+```{r time_series_fi}
+
+ggplot(data = bs_df_new[bs_df_new$Indicator == "current_ratio",], aes(x = year, y = Value)) +
+  geom_line() +
+  labs(title = "Liquidity Indicator of Real Sector Companies from 2009 to 2021", x = "Year") +
+  facet_wrap(~sector_name, scales = "free") +
+  theme(panel.grid = element_blank()) +
+  theme_bw()
+
+
+ggplot(data = bs_df_new[bs_df_new$Indicator == "leverage",], aes(x = year, y = Value)) +
+  geom_line() +
+  labs(title = "Leverage Indicator of Real Sector Companies from 2009 to 2021", x = "Year") +
+  facet_wrap(~sector_name, scales = "free") +
+  theme(panel.grid = element_blank()) +
+  theme_bw()
+
+
+ggplot(data = bs_df_new[bs_df_new$Indicator == "return_on_assets",], aes(x = year, y = Value)) +
+  geom_line() +
+  labs(title = "Profitability (ROA) Indicator of Real Sector Companies from 2009 to 2021", x = "Year") +
+  facet_wrap(~sector_name, scales = "free") +
+  theme(panel.grid = element_blank()) +
+  theme_bw()
+
+
+```
+
+
+### Covid-19 Shock and Sectoral Financial Developments
+
+A closer look for the perfomance of Turkish economy in the last two years is aimed to be investigated in comparison to previous years. 2020 and 2021 is important especially for diagnosing the effect of Covid-19 outbreak and its consequent impact on the financial status of real sector firms.
+
+Firstly, **Transportation, Accomodation-Food, Real Estate and Professional Activities** are the sectors whose liquidity position deteriorate most during Covid-19. This result is not abnormal as social distancing measures and decline in mobility affect those sectors most.The rest seems to be less affected and even there are sectors who experience a considerable improvement in terms of liquidity which might be due to frequency of our data. The covid-19 outbreak started in first quarter of 2020 and then the government policies to support the economy could be one reason for the improvement of the sectors.
+
+Secondly, leverage indicator seemed to rise throughout the economy except a few sectors which is considered natural in response to credit oriented policies of government to support real sector firms against Covid-19 shock.
+
+Finally, the winners are **Mining, Manufacturing, Information and Health** in terms of improvement in their profits and this improvement seemed to continue in 2021. On the other end of the picture, **Transportation and Services** sectors were seen to be in trouble in terms of profitability.
+
+```{r liq_ave}
+#Liquidity Indicator
+bs_df_average <-  bs_df_new %>% 
+  pivot_wider(names_from = Indicator, values_from = Value) %>% 
+  filter(year %in% 2009:2019) %>% 
+  group_by(sector_name) %>% 
+  summarise(liq_ave = mean(current_ratio), lev_ave = mean(leverage), pro_ave = mean(return_on_assets))
+
+bs_df_new %>% 
+  pivot_wider(names_from = Indicator, values_from = Value) %>% 
+  filter(year %in% 2020:2021) %>% 
+  select(c(sector_name, year, current_ratio)) %>% 
+  pivot_wider(names_from = year, values_from = current_ratio) %>% 
+  left_join(bs_df_average[,c("sector_name", "liq_ave")], by = "sector_name") %>% 
+  rename("2009_2019_average" = "liq_ave") %>% 
+  pivot_longer(-sector_name, names_to = "period") %>% 
+  ggplot(aes(x = sector_name, y = value, fill = factor(period))) +
+  geom_col(position = "dodge2")+
+  coord_flip() +
+  labs(y = "Current Ratio", x = "Sectors", title = "Liquidity Indicator", fill = "Years") +
+  theme_bw()
+```
+
+
+
+```{r lev_ave}
+#Leverage Indicator
+bs_df_new %>% 
+  pivot_wider(names_from = Indicator, values_from = Value) %>% 
+  filter(year %in% 2020:2021) %>% 
+  select(c(sector_name, year, leverage)) %>% 
+  pivot_wider(names_from = year, values_from = leverage) %>% 
+  left_join(bs_df_average[,c("sector_name", "lev_ave")], by = "sector_name") %>% 
+  rename("2009_2019_average" = "lev_ave") %>% 
+  pivot_longer(-sector_name, names_to = "period") %>% 
+  ggplot(aes(x = sector_name, y = value, fill = factor(period))) +
+  geom_col(position = "dodge2")+
+  coord_flip() +
+  labs(y = "Leverage", x = "Sectors", title = "Leverage Indicator", fill = "Years") + theme_bw() 
+```
+
+
+
+```{r pro_ave}
+#Profitability Indicator
+bs_df_new %>% 
+  pivot_wider(names_from = Indicator, values_from = Value) %>% 
+  filter(year %in% 2020:2021) %>% 
+  select(c(sector_name, year, return_on_assets)) %>% 
+  pivot_wider(names_from = year, values_from = return_on_assets) %>% 
+  left_join(bs_df_average[,c("sector_name", "pro_ave")], by = "sector_name") %>% 
+  rename("2009_2019_average" = "pro_ave") %>% 
+  pivot_longer(-sector_name, names_to = "period") %>% 
+  ggplot(aes(x = sector_name, y = value, fill = factor(period))) +
+  geom_col(position = "dodge2")+
+  coord_flip() +
+  labs(y = "Profitability", x = "Sectors", title = "Return on Assets", fill = "Years") +
+  theme_bw()
+```
+
+
+### Financial Fragility Index (FFI)
+
+Up until now, financial position of Turkish economy is evaluated based on the three indicators obtained through balance sheets and income statements of sectors. In this section, an index demonstrating financial healthiness of the sectors is constructed so that a comparative analysis of Turkish economy through time can be conducted on a holistic perspective.
+
+The methodology used in the construction of **Financial Fragility Index (FFI)** consists of the following steps:
+
+1. For each financial indicator (Liquidity, Leverage and Profitability) percentile of each sector is found. To be more specific, the higher the rank of a sector, the worse it is in terms of financial soundness. In other words, for liquidity, the sector is less liquid, for leverage, the sector has higher leverage and for profitability, the sector is less profitable.
+
+2. After finding each sectors' rank for each financial indicator, simple average is calculated and index value is obtained.
+
+3. The steps described above is repeated for each year between 2009-2021 and a time series of the index is found.
+
+Although the index alone can not be taken into account alone to conclude that a certain sector is riskier than others financially for a specific time point, time series evolution gives a glimpse of where the sectors are heading into in terms of their financial strength.
+
+Services sectors such as **Accomodation-Food, Real Estate and Transportation** have performed worse than other sectors and found themselves in a much more fragile position in terms of financial soundness.
+
+```{r}
+
+bs_df_ffi <- bs_df_new %>% 
+  pivot_wider(names_from = "Indicator", values_from = "Value") %>% 
+  group_by(year) %>% 
+  mutate(liq_rank = percent_rank(current_ratio*-1), 
+         lev_rank = percent_rank(leverage), 
+         profit_rank = percent_rank(return_on_assets*-1)) %>% 
+  mutate(fin_fra_index = (liq_rank + lev_rank + profit_rank)/3) %>% 
+  select(-c(current_ratio:return_on_assets))
+
+bs_df_ffi %>% 
+  select(c(sector_name, year, fin_fra_index)) %>% 
+  pivot_longer(-c(sector_name, year), names_to = "index", values_to = "value") %>% 
+  ggplot(aes(x = year, y = value)) +
+  geom_line() + 
+  facet_wrap(~sector_name, scales = "free") + 
+  labs(y = "Financial Fragility Index") +
+  theme_bw()
+
+```
+
+### FFI Scorecard for 2021
+
+For 2021, a cross sectional analysis demonstrates that services related sectors are considered most risky in terms of financial metrics defined previously.
+
+-   Education is considered most risky sector mostly due to its poor liquidity and high leverage which increases the firms' probability of default as it raises doubts about payment of short term debts.
+
+-   Mining sector is the leading sector in terms of financial soundness according to all of the predefined metrics.
+
+```{r fi_heatmap}
+heatmap_df <- bs_df_economy %>% 
+  filter(year == 2021) %>% 
+  select(sector_name, current_ratio, leverage, return_on_assets) %>% 
+  mutate(ffi = bs_df_ffi %>% select(year, sector_name, fin_fra_index) %>% filter(year == 2021) %>% pull(fin_fra_index)) %>% 
+  arrange(desc(ffi)) 
+
+colnames(heatmap_df) <- c("Sectors", "Liquidity", "Leverage", "Profitability", "Financial Fragility Index")
+
+heatmap_df[,2:5] <- lapply(heatmap_df[,2:5], FUN = function(x) round(x*100, 2))
+
+heatmap_df %>% 
+  gt() %>% 
+  data_color(columns = 'Liquidity', 
+             colors = col_numeric(palette = c("red", "white", "green"), 
+                                  domain = c(min(heatmap_df[,2]), max(heatmap_df[,2])))) %>% 
+  data_color(columns = 'Leverage', 
+             colors = col_numeric(palette = c("green", "white", "red"), 
+                                  domain = c(min(heatmap_df[,3]), max(heatmap_df[,3])))) %>% 
+  data_color(columns = 'Profitability', 
+             colors = col_numeric(palette = c("red", "white", "green"), 
+                                  domain = c(min(heatmap_df[,4]), max(heatmap_df[,4])))) %>% 
+  data_color(columns = 'Financial Fragility Index', 
+             colors = col_numeric(palette = c("green", "white", "red"), 
+                                  domain = c(min(heatmap_df[,5]), max(heatmap_df[,5]))))
+```
+
+
+### Does International Trade Matter for Financial Strength?
+
+```{r trade, include=FALSE}
+trade_df_new <- 
+  trade_df %>% 
+  mutate(net_export = (export - import)/1e6) %>% 
+  filter(year != 2022) %>% 
+  select(sector_name, year, net_export)
+
+df_fin <- bs_df_new %>% pivot_wider(names_from = Indicator, values_from = Value)
+
+
+trade_df_new %>% 
+  ggplot(aes(x = year, y = net_export))+
+  geom_line() +
+  facet_wrap(~sector_name, scales = "free")
+  
+
+trade_df_new %>% 
+  group_by(sector_name) %>% 
+  summarize(average = round(mean(net_export), 2)) %>% 
+  arrange(average) %>% 
+  kable(caption = "Average Net Exports")
+
+trade_df_new %>% 
+  filter(sector_name %in% c("Agriculture", "Manufacturing", "Mining", "Water_Supply")) %>% 
+  inner_join(df_fin %>% select(-sector_code, -group), by = c("sector_name", "year")) %>% 
+  ggplot(aes(x = net_export, y = return_on_assets))+
+  geom_point() + 
+  geom_smooth(method='lm', formula= y~x, se = FALSE) + 
+  facet_wrap(~sector_name, scales = "free")
+
+trade_df_new %>% 
+  filter(sector_name %in% c("Agriculture", "Manufacturing", "Mining", "Water_Supply")) %>% 
+  inner_join(df_fin %>% select(-sector_code, -group), by = c("sector_name", "year")) %>% inner_join(bs_df_ffi %>% select(sector_name, year, fin_fra_index), by = c("sector_name", "year")) %>% 
+  ggplot(aes(x = net_export, y = fin_fra_index))+
+  geom_point() + 
+  geom_smooth(method='lm', formula= y~x) + 
+  facet_wrap(~sector_name, scales = "free")
+```
+
+
+```{r trade_split}
+
+tradables <- c("Agriculture", "Manufacturing", "Mining", "Water_Supply")
+
+df_fin <- df_fin %>% inner_join(bs_df_ffi %>% select(sector_name, year, fin_fra_index), by = c("sector_name", "year"))
+
+df_fin %>% 
+  select(-sector_code, -group) %>% 
+  mutate(trade_group = ifelse(sector_name %in% tradables, "tradable", "non_tradable")) %>% 
+  group_by(year, trade_group) %>% 
+  summarize(financial_fragility_index = mean(fin_fra_index)) %>% 
+  ggplot(aes(year, financial_fragility_index, color = trade_group)) + 
+  geom_line() +
+  labs(x = "Year", y = "Financial Fragility Index")
+
+```
+
+## Conclusion
+
+xxx
