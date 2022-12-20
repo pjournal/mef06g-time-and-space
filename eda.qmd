@@ -14,14 +14,12 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 
 ## Introduction
 
-In this report, an analysis of sectoral developments in Turkey for the period between 2009-2021 using various data sources from [TURKSTAT](https://www.tuik.gov.tr/Home/Index) is presented.
-Main theme is industry in our project and real sector is examined using various panel datasets. In this regard, our analysis consists of basically 4 parts which can be outlined as follows:
+In this report, an analysis of sectoral developments in Turkey for the period between 2009-2021 using various data sources from [TURKSTAT](https://www.tuik.gov.tr/Home/Index) is presented. Main theme is industry in our project and real sector is examined using various panel datasets. In this regard, our analysis consists of basically 4 parts which can be outlined as follows:
 
-* Classification of firms based on their size on a sectoral level
-* Gender distribution in real sector firms
-* Financial analysis of the economy as a whole and sectoral level using sectoral company accounts data (prepared and published by [TURKSTAT](https://data.tuik.gov.tr/Bulten/Index?p=Company-Accounts-2021-45741) & [CBRT](https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Main+Menu/Statistics/Real+Sector+Statistics/Company+Accounts/) together)
-* Relationship between macro indicators and sectoral financial indicators based on micro_level sectoral data.
-
+-   Classification of firms based on their size on a sectoral level
+-   Gender distribution in real sector firms
+-   Financial analysis of the economy as a whole and sectoral level using sectoral company accounts data (prepared and published by [TURKSTAT](https://data.tuik.gov.tr/Bulten/Index?p=Company-Accounts-2021-45741) & [CBRT](https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Main+Menu/Statistics/Real+Sector+Statistics/Company+Accounts/) together)
+-   Relationship between macro indicators and sectoral financial indicators based on micro_level sectoral data.
 
 ### Load Necessary Packages for EDA
 
@@ -92,7 +90,7 @@ In this section, we introduce three main financial indicators to be used in out 
 
 **1) Liquidity Indicator:**
 
-Liquidity is a measure of a company’s ability to pay off its short-term liabilities—those that will come due in less than a year. **Current Ratio** is calculated as liquidity indicator as below:
+Liquidity is a measure of a company's ability to pay off its short-term liabilities---those that will come due in less than a year. **Current Ratio** is calculated as liquidity indicator as below:
 
 $Current\,Ratio = \frac{Current\,Assets}{Short\,Term\,Liabilities}$
 
@@ -130,13 +128,13 @@ bs_df_new <- bs_df_new %>%
 
 In this section, sectoral averages and standard devations of financial indicators are obtained and aggregated by using total assets of each sector as weights to obtain economy level financial indicators from 2009 to 2021.
 
-* Real sector firms are observed to rely more on liability sources and the economy as a whole has become more leveraged in this period.
+-   Real sector firms are observed to rely more on liability sources and the economy as a whole has become more leveraged in this period.
 
-* Liquidity position of the firms deteriorated in this period although a slight correction is observed in the last few years.
+-   Liquidity position of the firms deteriorated in this period although a slight correction is observed in the last few years.
 
-* Profitability of real sector firms stayed on the positive territory although it followed a volatile pattern throughout the period.
+-   Profitability of real sector firms stayed on the positive territory although it followed a volatile pattern throughout the period.
 
-* Interesting point regarding variation of these indicators among different sector is that leverage of real sector firms increase in a synchronised way so that the variation of leverage indicator between sectors diminishes significantly. On the contrary, an opposite picture is prevalent for liquidity and profitability of the sectors such that the variation across sectors increases significantly. 
+-   Interesting point regarding variation of these indicators among different sector is that leverage of real sector firms increase in a synchronised way so that the variation of leverage indicator between sectors diminishes significantly. On the contrary, an opposite picture is prevalent for liquidity and profitability of the sectors such that the variation across sectors increases significantly.
 
 ```{r economy, message=FALSE, warning=FALSE}
 
@@ -232,7 +230,7 @@ ggplot(data = bs_df_new[bs_df_new$Indicator == "return_on_assets",], aes(x = yea
 
 In the previous section, one dimensional evolution of sectors in time is outlined. Having obtained indicators for financial overview of Turkish Economy on a sectoral basis, temporal relationship between them is worth analysing.
 
-Regarding liquidity and leverage, there exists a clear negative association which is in effect for almost all of the sectors albeit with different degrees.The exception is **Mining** sector which experiences rise in leverage and liquidity positions at the same time. 
+Regarding liquidity and leverage, there exists a clear negative association which is in effect for almost all of the sectors albeit with different degrees.The exception is **Mining** sector which experiences rise in leverage and liquidity positions at the same time.
 
 For liquidity and profitability, expected outcome is observed such that real sector firms have a better liquidity when they are more profitable for the period in consider.
 
@@ -268,10 +266,9 @@ bs_df_new %>%
 
 ### 2009 - 2019 Period Average of Financial Indicators
 
-A closer look for the perfomance of Turkish economy in the last two years is aimed to be investigated in comparison to previous years. 2020 and 2021 is important especially for diagnosing the effect of Covid-19 outbreak and its consequent impact on the financial status of real sector firms. 
+A closer look for the perfomance of Turkish economy in the last two years is aimed to be investigated in comparison to previous years. 2020 and 2021 is important especially for diagnosing the effect of Covid-19 outbreak and its consequent impact on the financial status of real sector firms.
 
-Firstly, **Transportation, Accomodation-Food, Real Estate and Professional Activities** are the sectors whose liquidity position deteriorate most during Covid-19. This result is not abnormal as social distancing measures and decline in mobility affect those sectors most.The rest seems to be less affected and even there are sectors who experience a considerable improvement in terms of liquidity which might be due to frequency of our data. The covid-19 outbreak started in first quarter of 2020 and then the government policies to support the economy could be one reason for the improvement of the sectors. 
-
+Firstly, **Transportation, Accomodation-Food, Real Estate and Professional Activities** are the sectors whose liquidity position deteriorate most during Covid-19. This result is not abnormal as social distancing measures and decline in mobility affect those sectors most.The rest seems to be less affected and even there are sectors who experience a considerable improvement in terms of liquidity which might be due to frequency of our data. The covid-19 outbreak started in first quarter of 2020 and then the government policies to support the economy could be one reason for the improvement of the sectors.
 
 Secondly, leverage indicator seemed to rise throughout the economy except a few sectors which is considered natural in response to credit oriented policies of government to support real sector firms against Covid-19 shock.
 
@@ -338,6 +335,15 @@ bs_df_new %>%
 
 ### Density Plots of Financial Indicators
 
+Density plots make it possible to observe complete distribution of indicators among sectors in a specific year. In the plots below, distributions are segmented by colors with respect to 25^th^, 50^th^ and 75^th^ percentiles where white shaded region denotes sectors that are below the 25^th^ percentile and dark blue region corresponds to sectors above 75^th^ percentile of the distribution with respect to the financial indicator.
+
+For liquidity, the distribution seems to became right skewed at the end of 2021 vs its left skewed shape back in 2009 which implies that firms\' liquidity position decreases on average while there exists sectors that are in a stronger position in terms of liquidity.
+
+For leverage, aside from increasing median leverage among sectors, no significant change in the shape of the distribution is observed.
+
+For profitability, the obvious picture is that deviation of profitability across sectors increased considerably. Pandemic shock resulted in higher portion of sectors within the economy incurring higher net losses in 2020 as compared to 2019. Although a rebound is expected in profitability of sectors in 2021, distribution presents a different picture where a clear separation between sectors exist such that sectors in loss at the end of 2020 incur higher losses. On the other hand, the gains of some sectors
+increased comparatively higher in this period and the distribution became flat with outliers in the both end.
+
 ```{r}
 # Liquidity
 bs_df_new %>% pivot_wider(names_from = Indicator, values_from = Value) %>% 
@@ -380,18 +386,17 @@ Up until now, financial position of Turkish economy is evaluated based on the th
 
 The methodology used in the construction of **Financial Fragility Index (FFI)** consists of the following steps:
 
-1- For each financial indicator (Liquidity, Leverage and Profitability) percentile of each sector is found. To be more specific, the higher the rank of a sector, the worse it is in terms of financial soundness. In other words, for liquidity, the sector is less liquid, for leverage, the sector has higher leverage and for profitability, the sector is less profitable. 
+1- For each financial indicator (Liquidity, Leverage and Profitability) percentile of each sector is found. To be more specific, the higher the rank of a sector, the worse it is in terms of financial soundness. In other words, for liquidity, the sector is less liquid, for leverage, the sector has higher leverage and for profitability, the sector is less profitable.
 
 2- After finding each sectors' rank for each financial indicator, simple average is calculated and index value is obtained.
 
 3- The steps described above is repeated for each year between 2009-2021 and a time series of the index is found.
 
-
 After obtaining FFI, evolution of the index for each sector is illustrated in the graph below.
 
-* Services sectors such as **Accomodation-Food, Real Estate and Transportation** have performed worse than other sectors and found themselves in a much more fragile position in terms of financial soundness
+-   Services sectors such as **Accomodation-Food, Real Estate and Transportation** have performed worse than other sectors and found themselves in a much more fragile position in terms of financial soundness
 
-* Although the index alone can not be taken into account alone to conclude that a certain sector is riskier than others financially for a specific time point, time series evolution gives a glimpse of where the sectors are heading into in terms of their financial strength.
+-   Although the index alone can not be taken into account alone to conclude that a certain sector is riskier than others financially for a specific time point, time series evolution gives a glimpse of where the sectors are heading into in terms of their financial strength.
 
 ```{r}
 
@@ -419,9 +424,9 @@ bs_df_ffi %>%
 
 For 2021, a cross sectional analysis demonstrates that services related sectors are considered most risky in terms of financial metrics defined previously.
 
-* Education is considered most risky sector mostly due to its poor liquidity and high leverage which increases the firms' probability of default as it raises doubts about payment of short term debts. 
+-   Education is considered most risky sector mostly due to its poor liquidity and high leverage which increases the firms' probability of default as it raises doubts about payment of short term debts.
 
-* Mining sector is the leading sector in terms of financial soundness according to all of the predefined metrics. 
+-   Mining sector is the leading sector in terms of financial soundness according to all of the predefined metrics.
 
 ```{r fi_heatmap}
 heatmap_df <- bs_df_economy %>% 
@@ -451,6 +456,10 @@ heatmap_df %>%
 ```
 
 ### International Trade
+
+The graphs below demonstrate the evolution of yearly net export of each sector (in billion USD). We analysed the relation of sectors' net exports with their profitability and financial fragility status only for the first four sectors in terms of the size of net imports.
+
+Since the imports of sectors is mainly driven by economic growth performance, it is not surprising to see sectors having stronger financial position in periods with high net imports.
 
 ```{r trade}
 trade_df_new <- 
@@ -511,13 +520,15 @@ df_fin %>%
 
 ### Producer Price Inflation
 
+Producer price index (PPI) is a measure of inflation containing prices of a basket of goods paid to producers and aim to measure wholesale inflation. Therefore, year over year percentage change in PPI gives us the yearly changes in wholesale prices of the firms in the economy.
+
 For each sector, average increases in producer prices (aka input costs) is calculated and given in the table below.
 
-Table shows average increases in input costs of sectors in Turkey from 2017 to 2021.
+Table shows average increases in prices of sectors in Turkey from 2017 to 2021.
 
 -   Top 3 sectors with highest average price increases are **Electricity-Gas**, **Manufacturing** and **Transportation** with average price increases %23.4, %20.2 and %19.5 consecutively.
 
--   Information sector is the one experiencing the lowest inrease in its inputs.
+-   Information sector is the one experiencing the lowest price increase in its prices
 
 ```{r ppi}
 
@@ -564,6 +575,9 @@ inner_join(bs_df_new %>%
 ```
 
 ### Growth Dynamics
+
+Growth dynamics of the country is an important determinant of country\'s financial performance as yearly GDP growth measures the performance of the country\'s economy in terms of goods and services produced in that year.
+Since 2009, highest average growth is achieved by Financial and insurance activities where as the lowest average growth is achieved by Agriculture, forestry and fishing sectors.
 
 ```{r growth}
 

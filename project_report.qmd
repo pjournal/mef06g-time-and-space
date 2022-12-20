@@ -14,7 +14,7 @@ format:
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 ```
 
-In this report, an analysis of sectoral financial developments in Turkey for the period between 2009-2021 using various datasets from [TURKSTAT](https://www.tuik.gov.tr/Home/Index) is presented. Widely used financial metrics are employed in our analysis in order to overview financial position of real sector Turkish economy. These metrics are then used to construct a **Financial Fragility Index** in an attempt to gauge financial position of each sector compared to each other.
+In this report, an analysis of sectoral financial developments in Turkey for the period between 2009-2021 using various datasets from [TURKSTAT](https://www.tuik.gov.tr/Home/Index) is presented. Widely used financial metrics are employed in our analysis in order to overview financial position of real sector in Turkish economy. These metrics are then used to construct a **Financial Fragility Index** in an attempt to gauge financial position of each sector compared to each other.
 
 ![](https://nuvest.net/wp-content/uploads/2017/06/finanicial-statements.jpg)
 
@@ -60,7 +60,6 @@ price_df <- readRDS("docs/Project_Data/input_cost.rds")
 gdp_df <- readRDS("docs/Project_Data/gdp.rds")
 
 ```
-
 
 ```{r data_preparation, include=FALSE}
 
@@ -129,6 +128,12 @@ Return on assets (ROA) is used in our analysis as a profitability indicator whic
 $Return\,on\,Assets = \frac{Net\,Profit}{Total\,Assets}$
 
 ### General Overview
+
+Real sector firms are observed to rely more on liability sources and the economy as a whole has become more leveraged in this period, which is considered a natural result of credit oriented policies for the last decade in the Turkish Economy.
+
+Liquidity position of the firms deteriorated in this period although a slight correction is observed in the last few years.
+
+Profitability of real sector firms stayed on the positive territory although it followed a volatile pattern throughout the period.
 
 ```{r economy}
 
@@ -206,6 +211,49 @@ ggplot(data = bs_df_new[bs_df_new$Indicator == "return_on_assets",], aes(x = yea
 
 ```
 
+Density plots make it possible to observe complete distribution of indicators among sectors in a specific year. In the plots below, distributions are segmented by colors with respect to 25th, 50th and 75th percentiles where white shaded region denotes sectors that are below the 25th percentile and dark blue region corresponds to sectors above 75th percentile of the distribution with respect to the financial indicator.
+
+For liquidity, the distribution seems to became right skewed at the end of 2021 vs its left skewed shape back in 2009 which implies that firms' liquidity position decreases on average while there exists sectors that are in a stronger position in terms of liquidity.
+
+For leverage, aside from increasing median leverage among sectors, no significant change in the shape of the distribution is observed.
+
+For profitability, the obvious picture is that deviation of profitability across sectors increased considerably. Pandemic shock resulted in higher portion of sectors within the economy incurring higher net losses in 2020 as compared to 2019. Although a rebound is expected in profitability of sectors in 2021, distribution presents a different picture where a clear separation between sectors exist such that sectors in loss at the end of 2020 incur higher losses. On the other hand, the gains of some sectors increased comparatively higher in this period and the distribution became flat with outliers in the both end.
+
+```{r}
+# Liquidity
+bs_df_new %>% pivot_wider(names_from = Indicator, values_from = Value) %>% 
+  select(year, current_ratio) %>% 
+  arrange(year) %>% 
+  ggplot(aes(x = current_ratio, y = factor(year), fill = stat(quantile))) +
+  stat_density_ridges(quantile_lines = FALSE,
+                      calc_ecdf = TRUE,
+                      geom = "density_ridges_gradient", rel_min_height = 0.005) +
+  scale_fill_brewer(name = "") +
+  labs(y = "Year", x = "Liquidity")
+
+# Leverage
+bs_df_new %>% pivot_wider(names_from = Indicator, values_from = Value) %>% 
+  select(year, leverage) %>% 
+  arrange(year) %>% 
+  ggplot(aes(x = leverage, y = factor(year), fill = stat(quantile))) +
+  stat_density_ridges(quantile_lines = FALSE,
+                      calc_ecdf = TRUE,
+                      geom = "density_ridges_gradient", rel_min_height = 0.005) +
+  scale_fill_brewer(name = "") +
+  labs(y = "Year", x = "Leverage")
+
+# Profitability
+bs_df_new %>% pivot_wider(names_from = Indicator, values_from = Value) %>% 
+  select(year, return_on_assets) %>% 
+  arrange(year) %>% 
+  ggplot(aes(x = return_on_assets, y = factor(year), fill = stat(quantile))) +
+  stat_density_ridges(quantile_lines = FALSE,
+                      calc_ecdf = TRUE,
+                      geom = "density_ridges_gradient", rel_min_height = 0.005) +
+  scale_fill_brewer(name = "") + 
+  labs(y = "Year", x = "Return on Assets")
+
+```
 
 ### Covid-19 Shock and Sectoral Financial Developments
 
@@ -240,8 +288,6 @@ bs_df_new %>%
   theme_bw()
 ```
 
-
-
 ```{r lev_ave}
 #Leverage Indicator
 bs_df_new %>% 
@@ -257,8 +303,6 @@ bs_df_new %>%
   coord_flip() +
   labs(y = "Leverage", x = "Sectors", title = "Leverage Indicator", fill = "Years") + theme_bw() 
 ```
-
-
 
 ```{r pro_ave}
 #Profitability Indicator
@@ -277,18 +321,17 @@ bs_df_new %>%
   theme_bw()
 ```
 
-
 ### Financial Fragility Index (FFI)
 
 Up until now, financial position of Turkish economy is evaluated based on the three indicators obtained through balance sheets and income statements of sectors. In this section, an index demonstrating financial healthiness of the sectors is constructed so that a comparative analysis of Turkish economy through time can be conducted on a holistic perspective.
 
 The methodology used in the construction of **Financial Fragility Index (FFI)** consists of the following steps:
 
-1. For each financial indicator (Liquidity, Leverage and Profitability) percentile of each sector is found. To be more specific, the higher the rank of a sector, the worse it is in terms of financial soundness. In other words, for liquidity, the sector is less liquid, for leverage, the sector has higher leverage and for profitability, the sector is less profitable.
+1.  For each financial indicator (Liquidity, Leverage and Profitability) percentile of each sector is found. To be more specific, the higher the rank of a sector, the worse it is in terms of financial soundness. In other words, for liquidity, the sector is less liquid, for leverage, the sector has higher leverage and for profitability, the sector is less profitable.
 
-2. After finding each sectors' rank for each financial indicator, simple average is calculated and index value is obtained.
+2.  After finding each sectors' rank for each financial indicator, simple average is calculated and index value is obtained.
 
-3. The steps described above is repeated for each year between 2009-2021 and a time series of the index is found.
+3.  The steps described above is repeated for each year between 2009-2021 and a time series of the index is found.
 
 Although the index alone can not be taken into account alone to conclude that a certain sector is riskier than others financially for a specific time point, time series evolution gives a glimpse of where the sectors are heading into in terms of their financial strength.
 
@@ -351,8 +394,9 @@ heatmap_df %>%
                                   domain = c(min(heatmap_df[,5]), max(heatmap_df[,5]))))
 ```
 
-
 ### Does International Trade Matter for Financial Strength?
+
+Tradable sectors are determined with respect to their trade volume such that "Agriculture", "Manufacturing", "Mining", "Water_Supply" are considered in this group with highest trade volume. The rest is grouped as Non-Tradable sectors.
 
 ```{r trade, include=FALSE}
 trade_df_new <- 
@@ -393,6 +437,7 @@ trade_df_new %>%
   facet_wrap(~sector_name, scales = "free")
 ```
 
+Two groups are compared with respect to financial fragility index. Sectors that are more export/import oriented are found to be less vulnerable where as non-tradable sectors that has higher exposure to local markets are considered to be riskier.
 
 ```{r trade_split}
 
