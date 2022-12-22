@@ -475,3 +475,13 @@ shiny::runGitHub("pjournal/mef06g-time-and-space",subdir="app/")
 To sum up, Turkey has reached an average real growth rate of xx % for the period between 2009 and 2021. Credit oriented policies to finance growth and stimulate employment resulted in significant rise in leverage of Turkish firms. Besides, their liquidity positions deteriorate and profitabilities followed an oscillating pattern in the positive territory. 
 
 Financial Fragility Index points out that services sectors are financially most vulnerable to adverse shocks. Covid-19 period amplified their vulnerabilities. In this period, operations of companies become less profitable which is expected as volatility in financial markets increase and supply chain disruptions distort inventory management of companies on top of increasing production costs. 
+
+## References
+
+* https://www.investopedia.com/terms/l/liquidity.asp
+* https://www.investopedia.com/terms/l/leverage.asp
+* https://www.investopedia.com/terms/r/returnonassets.asp#toc-understanding-return-on-assets-roa
+* https://stackoverflow.com/
+
+
+
