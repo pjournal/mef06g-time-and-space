@@ -49,7 +49,7 @@ library(viridis)
 
 ## Introduction
 
-Financial overview of turkish real sector firms is aimed to be presented through financial statements within a simple framework. A special emphasis is given to Covid-19 period to determine how financial indicators of sectors are affected from the pandemic. 
+Financial overview of Turkish real sector firms is aimed to be presented through financial statements within a simple framework. A special emphasis is given to Covid-19 period to determine how financial indicators of sectors are affected from the pandemic. 
 
 ```{r datasets, include=FALSE}
 
@@ -107,7 +107,7 @@ bs_df_new <- bs_df_new %>%
 
 ```
 
-In this section, we introduce three main financial indicators to be used in out analysis:
+In this section, we introduce three main financial indicators to be used in our analysis.
 
 **1) Liquidity Indicator:**
 
