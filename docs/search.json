@@ -222,5 +222,12 @@
     "title": "4  Project Report",
     "section": "Conclusion",
     "text": "Conclusion\nxxx"
+  },
+  {
+    "objectID": "project_report.html#shiny-application",
+    "href": "project_report.html#shiny-application",
+    "title": "4  Project Report",
+    "section": "Shiny Application",
+    "text": "Shiny Application\nShiny web application for Scorecard can be accessed via this link\nCommand Line for the Shinny Web Application is as follows:\n\n\nCode\nshiny::runGitHub(\"pjournal/mef06g-time-and-space\",subdir=\"app/\")"
   }
 ]

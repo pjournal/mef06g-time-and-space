@@ -456,6 +456,16 @@ df_fin %>%
 
 ```
 
+## Shiny Application
+
+Shiny web application for **Scorecard** can be accessed via this [link](https://y94k9h-yigit-onay.shinyapps.io/myapp/)
+
+Command Line for the Shinny Web Application is as follows:
+
+```{r eval=FALSE}
+shiny::runGitHub("pjournal/mef06g-time-and-space",subdir="app/")
+```
+
 ## Conclusion
 
 xxx
