@@ -14,7 +14,7 @@ format:
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 ```
 
-In this report, an analysis of sectoral financial developments in Turkey for the period between 2009-2021 using various datasets from [TURKSTAT](https://www.tuik.gov.tr/Home/Index) is presented. Widely used financial metrics are employed in our analysis in order to overview financial position of real sector in Turkish economy. These metrics are then used to construct a **Financial Fragility Index** in an attempt to gauge financial position of each sector compared to each other.
+In this report, an analysis of sectoral financial developments in Turkey for the period between 2009-2021 using various datasets from [TURKSTAT](https://www.tuik.gov.tr/Home/Index) is presented. Widely used financial metrics are employed in our analysis in order to overview financial position of real sector in Turkish economy. These metrics are then used to construct a **Financial Fragility Index** in an attempt to gauge financial soundness of each sector compared to each other.
 
 ![](https://nuvest.net/wp-content/uploads/2017/06/finanicial-statements.jpg)
 
@@ -48,6 +48,8 @@ library(viridis)
 5.  For 2021, a cross sectional analysis demonstrates that **services related sectors** are considered most risky in terms of financial metrics defined. To be specific, **Education** is considered most risky sector mostly due to its poor liquidity and high leverage which increases the firms' probability of default as it raises doubts about payment of short term debts.
 
 ## Introduction
+
+Financial overview of turkish real sector firms is aimed to be presented through financial statements within a simple framework. A special emphasis is given to Covid-19 period to determine how financial indicators of sectors are affected from the pandemic. 
 
 ```{r datasets, include=FALSE}
 
@@ -87,7 +89,7 @@ bs_df <- bs_df %>% mutate(net_income_is = net_income)
 
 ```
 
-## Financial Metrics
+## Methodology and Results
 
 ```{r Financial_Indicators}
 
@@ -359,13 +361,15 @@ bs_df_ffi %>%
 
 ```
 
-### FFI Scorecard for 2021
+### Financial Risk Scorecard in 2021
 
 For 2021, a cross sectional analysis demonstrates that services related sectors are considered most risky in terms of financial metrics defined previously.
 
 -   Education is considered most risky sector mostly due to its poor liquidity and high leverage which increases the firms' probability of default as it raises doubts about payment of short term debts.
 
 -   Mining sector is the leading sector in terms of financial soundness according to all of the predefined metrics.
+
+Further details regarding the whole period of 2009-2021 can be gained through the [scorecard Application](https://y94k9h-yigit-onay.shinyapps.io/myapp/).
 
 ```{r fi_heatmap}
 heatmap_df <- bs_df_economy %>% 
@@ -468,4 +472,6 @@ shiny::runGitHub("pjournal/mef06g-time-and-space",subdir="app/")
 
 ## Conclusion
 
-xxx
+To sum up, Turkey has reached an average real growth rate of xx % for the period between 2009 and 2021. Credit oriented policies to finance growth and stimulate employment resulted in significant rise in leverage of Turkish firms. Besides, their liquidity positions deteriorate and profitabilities followed an oscillating pattern in the positive territory. 
+
+Financial Fragility Index points out that services sectors are financially most vulnerable to adverse shocks. Covid-19 period amplified their vulnerabilities. In this period, operations of companies become less profitable which is expected as volatility in financial markets increase and supply chain disruptions distort inventory management of companies on top of increasing production costs. 
