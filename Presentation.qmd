@@ -8,7 +8,6 @@ format:
     toc: true
 ---
 
-
 You can access the presentation titled **"Financial Overview of Turkish Economy"** from this [link](https://github.com/pjournal/mef06g-time-and-space/blob/main/docs/Project_Presentation.pdf).
 
-![Title](title.jpg)
+![](title.jpg)

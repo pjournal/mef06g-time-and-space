@@ -193,7 +193,7 @@
     "href": "project_report.html",
     "title": "4  Project Report",
     "section": "",
-    "text": "Financial Overview of Turkish Economy\nIn this report, an analysis of sectoral financial developments in Turkey for the period between 2009-2021 using various datasets from TURKSTAT is presented. Widely used financial metrics are employed in our analysis in order to overview financial position of real sector in Turkish economy. These metrics are then used to construct a Financial Fragility Index in an attempt to gauge financial soundness of each sector compared to each other."
+    "text": "Financial Overview of Turkish Economy\nIn this report, an analysis of sectoral financial developments in Turkey for the period between 2009-2021 using various datasets from TURKSTAT is presented. Widely used financial metrics are employed in our analysis in order to overview financial position of real sector in Turkish economy. These metrics are then used to construct a Financial Fragility Index in an attempt to gauge financial soundness of each sector compared to each other.\nDatasets we used in our analysis are as follows:"
   },
   {
     "objectID": "project_report.html#introduction",
@@ -249,6 +249,6 @@
     "href": "Presentation.html",
     "title": "5  Presentation",
     "section": "",
-    "text": "You can access the presentation titled “Financial Overview of Turkish Economy” from this link.\n\n\n\nTitle"
+    "text": "You can access the presentation titled “Financial Overview of Turkish Economy” from this link."
   }
 ]
