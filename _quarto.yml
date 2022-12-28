@@ -11,6 +11,7 @@ book:
     - dataprepturkstat.qmd
     - eda.qmd
     - project_report.qmd
+    - Presentation.qmd
   page-footer: 
     center: "[MEF BDA 503](https://mef-bda503.github.io)" 
   sharing: [twitter, facebook]

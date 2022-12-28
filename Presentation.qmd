@@ -1,0 +1,14 @@
+---
+title: "Presentation"
+editor: visual
+format: 
+  html:
+    code-fold: true
+    number-sections: false
+    toc: true
+---
+
+
+You can access the presentation titled **"Financial Overview of Turkish Economy"** from this [link](https://github.com/pjournal/mef06g-time-and-space/blob/main/docs/Project_Presentation.pdf).
+
+![Title](/Users/yigitonay/Documents/GitHub/mef06g-time-and-space/title.jpg)
