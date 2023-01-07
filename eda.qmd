@@ -51,7 +51,6 @@ Our raw data obtained from [TURKSTAT](https://www.tuik.gov.tr/Home/Index) in xls
 bs <- readRDS("docs/Project_Data/balance_sheet.rds")
 i_s <- readRDS("docs/Project_Data/income_statement.rds")
 trade_df <- readRDS("docs/Project_Data/trade.rds")
-price_df <- readRDS("docs/Project_Data/input_cost.rds")
 gdp_df <- readRDS("docs/Project_Data/gdp.rds")
 
 ```
@@ -337,12 +336,11 @@ bs_df_new %>%
 
 Density plots make it possible to observe complete distribution of indicators among sectors in a specific year. In the plots below, distributions are segmented by colors with respect to 25^th^, 50^th^ and 75^th^ percentiles where white shaded region denotes sectors that are below the 25^th^ percentile and dark blue region corresponds to sectors above 75^th^ percentile of the distribution with respect to the financial indicator.
 
-For liquidity, the distribution seems to became right skewed at the end of 2021 vs its left skewed shape back in 2009 which implies that firms\' liquidity position decreases on average while there exists sectors that are in a stronger position in terms of liquidity.
+For liquidity, the distribution seems to became right skewed at the end of 2021 vs its left skewed shape back in 2009 which implies that firms' liquidity position decreases on average while there exists sectors that are in a stronger position in terms of liquidity.
 
 For leverage, aside from increasing median leverage among sectors, no significant change in the shape of the distribution is observed.
 
-For profitability, the obvious picture is that deviation of profitability across sectors increased considerably. Pandemic shock resulted in higher portion of sectors within the economy incurring higher net losses in 2020 as compared to 2019. Although a rebound is expected in profitability of sectors in 2021, distribution presents a different picture where a clear separation between sectors exist such that sectors in loss at the end of 2020 incur higher losses. On the other hand, the gains of some sectors
-increased comparatively higher in this period and the distribution became flat with outliers in the both end.
+For profitability, the obvious picture is that deviation of profitability across sectors increased considerably. Pandemic shock resulted in higher portion of sectors within the economy incurring higher net losses in 2020 as compared to 2019. Although a rebound is expected in profitability of sectors in 2021, distribution presents a different picture where a clear separation between sectors exist such that sectors in loss at the end of 2020 incur higher losses. On the other hand, the gains of some sectors increased comparatively higher in this period and the distribution became flat with outliers in the both end.
 
 ```{r}
 # Liquidity
@@ -518,66 +516,10 @@ df_fin %>%
 
 ```
 
-### Producer Price Inflation
-
-Producer price index (PPI) is a measure of inflation containing prices of a basket of goods paid to producers and aim to measure wholesale inflation. Therefore, year over year percentage change in PPI gives us the yearly changes in wholesale prices of the firms in the economy.
-
-For each sector, average increases in producer prices (aka input costs) is calculated and given in the table below.
-
-Table shows average increases in prices of sectors in Turkey from 2017 to 2021.
-
--   Top 3 sectors with highest average price increases are **Electricity-Gas**, **Manufacturing** and **Transportation** with average price increases %23.4, %20.2 and %19.5 consecutively.
-
--   Information sector is the one experiencing the lowest price increase in its prices
-
-```{r ppi}
-
-pct_change <- function(x){(x / lag(x, 12) -1)*100}
-
-price_df <- price_df %>% filter(date >= as.Date("2017-01-01") & date < as.Date("2022-01-01")) %>% 
-  select(-sector_code, -group) %>% 
-  pivot_wider(names_from = sector_name, values_from = index)
-
-price_change_df <- cbind(date = price_df$date, sapply(price_df[,2 : 11], pct_change) %>% as_tibble())
-  
-year_end_inf <- price_change_df %>% 
-  filter(!is.na(Mining) & month(date) == 1) %>% 
-  pivot_longer(-date, names_to = "sector_name", values_to = "inflation") 
-
-year_end_inf$date <- year(year_end_inf$date)
-
-year_end_inf <- rename(year_end_inf, "year" = "date")
-
-#Average Inflation for the period 2018-2021
-table_inflation <- year_end_inf %>% 
-  group_by(sector_name) %>% 
-  summarize(average_inflation = round(mean(inflation),2)) %>% 
-  arrange(desc(average_inflation))
-
-colnames(table_inflation) <- c("Sector Name", "Inflation (%, YoY)")
-
-kable(table_inflation, caption = "Average Increases in Input Costs")
-```
-
-### Financial Indicators with Inflation data
-
-```{r fi-ppi}
-
-inner_join(bs_df_new %>% 
-  select(-sector_code, -group) %>% 
-  pivot_wider(names_from = Indicator, values_from = Value) %>% 
-  filter(year >= 2018), year_end_inf, by = c("sector_name", "year")) %>%
-  filter(inflation < 50) %>% # Omit outlier observation
-  ggplot(aes(x = inflation, y = return_on_assets)) + 
-  geom_point() + 
-  geom_smooth(method='lm', formula= y~x, se = FALSE)
-
-```
 
 ### Growth Dynamics
 
-Growth dynamics of the country is an important determinant of country\'s financial performance as yearly GDP growth measures the performance of the country\'s economy in terms of goods and services produced in that year.
-Since 2009, highest average growth is achieved by Financial and insurance activities where as the lowest average growth is achieved by Agriculture, forestry and fishing sectors.
+Growth dynamics of the country is an important determinant of country's financial performance as yearly GDP growth measures the performance of the country's economy in terms of goods and services produced in that year. Since 2009, highest average growth is achieved by Financial and insurance activities where as the lowest average growth is achieved by Agriculture, forestry and fishing sectors.
 
 ```{r growth}
 
