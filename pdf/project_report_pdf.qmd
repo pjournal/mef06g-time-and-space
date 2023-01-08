@@ -2,7 +2,7 @@
 title: "Project Report"
 editor: visual
 format: 
-  html:
+  pdf:
     code-fold: true
     number-sections: false
     toc: true
@@ -16,7 +16,6 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 
 In this report, an analysis of sectoral financial developments in Turkey for the period between 2009-2021 using various datasets from [TURKSTAT](https://www.tuik.gov.tr/Home/Index) is presented. Widely used financial metrics are employed in our analysis in order to overview financial position of real sector in Turkish economy. These metrics are then used to construct a **Financial Fragility Index** in an attempt to gauge financial soundness of each sector compared to each other.
 
-![](https://nuvest.net/wp-content/uploads/2017/06/finanicial-statements.jpg)
 
 ```{r library, include=FALSE}
 library(tidyr)
@@ -65,9 +64,9 @@ Financial overview of Turkish real sector firms is aimed to be presented through
 
 #Our raw data obtained from [TURKSTAT](https://www.tuik.gov.tr/Home/Index) in xlsx format is processed in the previous section and converted to .rds file formats.
 
-bs <- readRDS("docs/Project_Data/balance_sheet.rds")
-i_s <- readRDS("docs/Project_Data/income_statement.rds")
-trade_df <- readRDS("docs/Project_Data/trade.rds")
+bs <- readRDS("balance_sheet.rds")
+i_s <- readRDS("income_statement.rds")
+trade_df <- readRDS("trade.rds")
 
 ```
 
@@ -109,7 +108,8 @@ bs_df_new <- bs_df %>%
   select(c(sector_code:year),c(current_ratio:return_on_assets))
 
 bs_df_new <- bs_df_new %>% 
-  pivot_longer(cols = c("current_ratio", "leverage", "return_on_equity", "return_on_assets"), 
+  pivot_longer(cols = c("current_ratio", "leverage", 
+                        "return_on_equity", "return_on_assets"), 
                names_to = "Indicator", 
                values_to = "Value")
 
@@ -195,25 +195,31 @@ In terms of ability to return assets into profits, winner sectors are **Manufact
 
 ```{r time_series_fi}
 
-ggplot(data = bs_df_new[bs_df_new$Indicator == "current_ratio",], aes(x = year, y = Value)) +
+ggplot(data = bs_df_new[bs_df_new$Indicator == "current_ratio",], 
+       aes(x = year, y = Value)) +
   geom_line() +
-  labs(title = "Liquidity Indicator of Real Sector Companies from 2009 to 2021", x = "Year") +
+  labs(title = "Liquidity Indicator of Real Sector Companies from 2009 to 2021", 
+       x = "Year") +
   facet_wrap(~sector_name, scales = "free") +
   theme(panel.grid = element_blank()) +
   theme_bw()
 
 
-ggplot(data = bs_df_new[bs_df_new$Indicator == "leverage",], aes(x = year, y = Value)) +
+ggplot(data = bs_df_new[bs_df_new$Indicator == "leverage",], 
+       aes(x = year, y = Value)) +
   geom_line() +
-  labs(title = "Leverage Indicator of Real Sector Companies from 2009 to 2021", x = "Year") +
+  labs(title = "Leverage Indicator of Real Sector Companies from 2009 to 2021", 
+       x = "Year") +
   facet_wrap(~sector_name, scales = "free") +
   theme(panel.grid = element_blank()) +
   theme_bw()
 
 
-ggplot(data = bs_df_new[bs_df_new$Indicator == "return_on_assets",], aes(x = year, y = Value)) +
+ggplot(data = bs_df_new[bs_df_new$Indicator == "return_on_assets",], 
+       aes(x = year, y = Value)) +
   geom_line() +
-  labs(title = "Profitability (ROA) Indicator of Real Sector Companies from 2009 to 2021", x = "Year") +
+  labs(title = "Profitability (ROA) Indicator of Real Sector Companies from 2009 to 2021", 
+       x = "Year") +
   facet_wrap(~sector_name, scales = "free") +
   theme(panel.grid = element_blank()) +
   theme_bw()
@@ -281,7 +287,8 @@ bs_df_average <-  bs_df_new %>%
   pivot_wider(names_from = Indicator, values_from = Value) %>% 
   filter(year %in% 2009:2019) %>% 
   group_by(sector_name) %>% 
-  summarise(liq_ave = mean(current_ratio), lev_ave = mean(leverage), pro_ave = mean(return_on_assets))
+  summarise(liq_ave = mean(current_ratio), lev_ave = mean(leverage), 
+            pro_ave = mean(return_on_assets))
 
 bs_df_new %>% 
   pivot_wider(names_from = Indicator, values_from = Value) %>% 
@@ -294,7 +301,8 @@ bs_df_new %>%
   ggplot(aes(x = sector_name, y = value, fill = factor(period))) +
   geom_col(position = "dodge2")+
   coord_flip() +
-  labs(y = "Current Ratio", x = "Sectors", title = "Liquidity Indicator", fill = "Years") +
+  labs(y = "Current Ratio", x = "Sectors", 
+       title = "Liquidity Indicator", fill = "Years") +
   theme_bw()
 ```
 
@@ -311,7 +319,8 @@ bs_df_new %>%
   ggplot(aes(x = sector_name, y = value, fill = factor(period))) +
   geom_col(position = "dodge2")+
   coord_flip() +
-  labs(y = "Leverage", x = "Sectors", title = "Leverage Indicator", fill = "Years") + theme_bw() 
+  labs(y = "Leverage", x = "Sectors", title = "Leverage Indicator", 
+       fill = "Years") + theme_bw() 
 ```
 
 ```{r pro_ave}
@@ -327,7 +336,8 @@ bs_df_new %>%
   ggplot(aes(x = sector_name, y = value, fill = factor(period))) +
   geom_col(position = "dodge2")+
   coord_flip() +
-  labs(y = "Profitability", x = "Sectors", title = "Return on Assets", fill = "Years") +
+  labs(y = "Profitability", x = "Sectors", title = "Return on Assets", 
+       fill = "Years") +
   theme_bw()
 ```
 
@@ -383,7 +393,9 @@ Further details regarding the whole period of 2009-2021 can be gained through th
 heatmap_df <- bs_df_economy %>% 
   filter(year == 2021) %>% 
   select(sector_name, current_ratio, leverage, return_on_assets) %>% 
-  mutate(ffi = bs_df_ffi %>% select(year, sector_name, fin_fra_index) %>% filter(year == 2021) %>% pull(fin_fra_index)) %>% 
+  mutate(ffi = bs_df_ffi %>% 
+  select(year, sector_name, fin_fra_index) %>% filter(year == 2021) %>% 
+  pull(fin_fra_index)) %>% 
   arrange(desc(ffi)) 
 
 colnames(heatmap_df) <- c("Sectors", "Liquidity", "Leverage", "Profitability", "Financial Fragility Index")
@@ -393,17 +405,25 @@ heatmap_df[,2:5] <- lapply(heatmap_df[,2:5], FUN = function(x) round(x*100, 2))
 heatmap_df %>% 
   gt() %>% 
   data_color(columns = 'Liquidity', 
-             colors = col_numeric(palette = c("red", "white", "green"), 
-                                  domain = c(min(heatmap_df[,2]), max(heatmap_df[,2])))) %>% 
+             colors = 
+               col_numeric(palette = c("red", "white", "green"), 
+                           domain = c(min(heatmap_df[,2]), 
+                                      max(heatmap_df[,2])))) %>% 
   data_color(columns = 'Leverage', 
-             colors = col_numeric(palette = c("green", "white", "red"), 
-                                  domain = c(min(heatmap_df[,3]), max(heatmap_df[,3])))) %>% 
+             colors = 
+               col_numeric(palette = c("green", "white", "red"), 
+                                  domain = c(min(heatmap_df[,3]),
+                                             max(heatmap_df[,3])))) %>% 
   data_color(columns = 'Profitability', 
-             colors = col_numeric(palette = c("red", "white", "green"), 
-                                  domain = c(min(heatmap_df[,4]), max(heatmap_df[,4])))) %>% 
+             colors = 
+               col_numeric(palette = c("red", "white", "green"), 
+                           domain = c(min(heatmap_df[,4]), 
+                                      max(heatmap_df[,4])))) %>% 
   data_color(columns = 'Financial Fragility Index', 
-             colors = col_numeric(palette = c("green", "white", "red"), 
-                                  domain = c(min(heatmap_df[,5]), max(heatmap_df[,5]))))
+             colors = 
+               col_numeric(palette = c("green", "white", "red"), 
+                           domain = c(min(heatmap_df[,5]), 
+                                      max(heatmap_df[,5]))))
 ```
 
 ### Does International Trade Matter for Financial Strength?
@@ -417,7 +437,9 @@ trade_df_new <-
   filter(year != 2022) %>% 
   select(sector_name, year, net_export)
 
-df_fin <- bs_df_new %>% pivot_wider(names_from = Indicator, values_from = Value)
+df_fin <- 
+  bs_df_new %>% 
+  pivot_wider(names_from = Indicator, values_from = Value)
 
 
 trade_df_new %>% 
@@ -455,11 +477,14 @@ Two groups are compared with respect to financial fragility index. Sectors that 
 
 tradables <- c("Agriculture", "Manufacturing", "Mining", "Water_Supply")
 
-df_fin <- df_fin %>% inner_join(bs_df_ffi %>% select(sector_name, year, fin_fra_index), by = c("sector_name", "year"))
+df_fin <- df_fin %>% 
+  inner_join(bs_df_ffi %>% 
+               select(sector_name, year, fin_fra_index), by = c("sector_name", "year"))
 
 df_fin %>% 
   select(-sector_code, -group) %>% 
-  mutate(trade_group = ifelse(sector_name %in% tradables, "tradable", "non_tradable")) %>% 
+  mutate(trade_group = ifelse(sector_name %in% tradables, 
+                              "tradable", "non_tradable")) %>% 
   group_by(year, trade_group) %>% 
   summarize(financial_fragility_index = mean(fin_fra_index)) %>% 
   ggplot(aes(year, financial_fragility_index, color = trade_group)) + 
