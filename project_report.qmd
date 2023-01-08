@@ -1,11 +1,7 @@
 ---
 title: "Project Report"
+format: pdf
 editor: visual
-format: 
-  html:
-    code-fold: true
-    number-sections: false
-    toc: true
 ---
 
 # Financial Overview of Turkish Economy
@@ -37,13 +33,13 @@ library(viridis)
 
 Datasets we used in our analysis are as follows:
 
-- [Balance Sheet](https://github.com/pjournal/mef06g-time-and-space/blob/main/docs/Project_Data/balance_sheet.rds)
-- [Income Statement](https://github.com/pjournal/mef06g-time-and-space/blob/main/docs/Project_Data/income_statement.rds)
-- [Gross Domestic Product](https://github.com/pjournal/mef06g-time-and-space/blob/main/docs/Project_Data/gdp.rds)
-- [International Trade](https://github.com/pjournal/mef06g-time-and-space/blob/main/docs/Project_Data/trade.rds)
-- [Sector Information](https://github.com/pjournal/mef06g-time-and-space/blob/main/docs/Project_Data/sector_information.rds)
-- [Sector Classification](https://github.com/pjournal/mef06g-time-and-space/blob/main/docs/Project_Data/sector_grouping.rds)
-- [Employment](https://github.com/pjournal/mef06g-time-and-space/blob/main/docs/Project_Data/employment.rds)
+-   [Balance Sheet](https://github.com/pjournal/mef06g-time-and-space/blob/main/docs/Project_Data/balance_sheet.rds)
+-   [Income Statement](https://github.com/pjournal/mef06g-time-and-space/blob/main/docs/Project_Data/income_statement.rds)
+-   [Gross Domestic Product](https://github.com/pjournal/mef06g-time-and-space/blob/main/docs/Project_Data/gdp.rds)
+-   [International Trade](https://github.com/pjournal/mef06g-time-and-space/blob/main/docs/Project_Data/trade.rds)
+-   [Sector Information](https://github.com/pjournal/mef06g-time-and-space/blob/main/docs/Project_Data/sector_information.rds)
+-   [Sector Classification](https://github.com/pjournal/mef06g-time-and-space/blob/main/docs/Project_Data/sector_grouping.rds)
+-   [Employment](https://github.com/pjournal/mef06g-time-and-space/blob/main/docs/Project_Data/employment.rds)
 
 ## Key Takeaways
 
@@ -68,8 +64,6 @@ Financial overview of Turkish real sector firms is aimed to be presented through
 bs <- readRDS("docs/Project_Data/balance_sheet.rds")
 i_s <- readRDS("docs/Project_Data/income_statement.rds")
 trade_df <- readRDS("docs/Project_Data/trade.rds")
-price_df <- readRDS("docs/Project_Data/input_cost.rds")
-gdp_df <- readRDS("docs/Project_Data/gdp.rds")
 
 ```
 
