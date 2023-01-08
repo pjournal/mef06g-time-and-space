@@ -28,6 +28,8 @@ To be specific, our study aims to present an overview of financial status of rea
 
 - [Project Report](https://pjournal.github.io/mef06g-time-and-space/project_report.html)
 
+- [Project Report (pdf)](https://github.com/pjournal/mef06g-time-and-space/blob/main/project_report_pdf.pdf)
+
 - [Presentation](https://pjournal.github.io/mef06g-time-and-space/Presentation.html)
   
 - [Shiny App](https://y94k9h-yigit-onay.shinyapps.io/myapp/) 
